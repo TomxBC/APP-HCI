@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">TurnSmart-HCI</string>
+    <string name="app_name" translatable="false">TurnSmart</string>
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="home_label">Home</string>
+    <string name="automation_label">Automation</string>
+    <string name="devices_label">Devices</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="spanish">Spanish</string>
+    <string name="notifications">Notifications</string>
 </resources>
