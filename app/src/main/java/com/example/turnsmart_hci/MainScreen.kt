@@ -1,4 +1,4 @@
-package com.example.turnsmart.screens
+package com.example.turnsmart_hci
 
 //import androidx.compose.runtime.Composable
 //import androidx.compose.foundation.Image
@@ -13,9 +13,9 @@ package com.example.turnsmart.screens
 //import androidx.navigation.compose.NavHost
 //import androidx.navigation.compose.composable
 //import androidx.navigation.compose.rememberNavController
-//import com.example.turnsmart.R
-//import com.example.turnsmart.ui.navBars.TurnSmartBottomNavigationBar
-//import com.example.turnsmart.ui.screens.*
+//import com.example.turnsmart_hci.R
+////import com.example.turnsmart_hci.navBars.TurnSmartBottomNavigationBar
+//import com.example.turnsmart_hci.ui.screens.*
 
 //@OptIn(ExperimentalMaterial3Api::class)
 //@Composable
@@ -33,7 +33,7 @@ package com.example.turnsmart.screens
 //                    if (enableBackButton) {
 //                        IconButton(onClick = { navController.navigateUp() }) {
 //                            Icon(
-//                                painter = painterResource(id = R.drawable.arrow_back),
+//                                painter = painterResource(id = R.drawable.back_arrow),
 //                                contentDescription = null
 //                            )
 //                        }
@@ -45,9 +45,9 @@ package com.example.turnsmart.screens
 //                            navController.navigate("settings")
 //                            topBarTitle = "Settings"
 //                        }) {
-//                            Image(
-//                                painter = painterResource(id = R.drawable.setting_white),
-//                                contentDescription = stringResource(id = R.string.settings)
+//                            Icon(
+//                                painter = painterResource(id = R.drawable.settings),
+//                                contentDescription = null
 //                            )
 //                        }
 //                    }
@@ -56,10 +56,7 @@ package com.example.turnsmart.screens
 //        },
 //        bottomBar = {
 //            if (showBottomNav) {
-////                TurnSmartBottomNavigationBar {
-////                    val items = listOf("home", "devices", "automation")
-////                    items.forEach { item ->
-////                }
+//                //TurnSmartBottomNavigationBar()
 //            }
 //        },
 //        content = { padding ->

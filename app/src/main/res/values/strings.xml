@@ -4,6 +4,7 @@
     <string name="home_label">Home</string>
     <string name="automation_label">Automation</string>
     <string name="devices_label">Devices</string>
+    <string name="settings_label">Settings</string>
     <string name="language">Language</string>
     <string name="english">English</string>
     <string name="spanish">Spanish</string>

@@ -2,8 +2,11 @@ package com.example.turnsmart_hci.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val darkAppBar = Color(0xFF817F7F)
-val lightAppBar = Color(0xFF000000)
+val darkBottomAppBar = Color(0xFF4D4B4B)
+val lightBottomAppBar = Color(0xFFBBB8B8)
+
+val lightToolbar = Color(0xFF000000)
+val darkToolbar = Color(0xFFFFFFFF)
 
 val darkText = Color(0xFF000000)
 val lightText = Color(0xFFFFFFFF)
