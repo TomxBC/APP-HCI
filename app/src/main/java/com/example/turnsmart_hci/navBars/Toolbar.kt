@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -21,12 +22,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.screens.Screens
 import com.example.turnsmart_hci.ui.theme.lightText
+import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TurnSmartToolbar(navController: NavController, currentScreenTitle: MutableState<String>) {
     TopAppBar(
-        title = { Text(text = currentScreenTitle.value) },
+        title = { Text(text = currentScreenTitle.value, fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium) },
         navigationIcon = {
             if (navController.currentDestination?.route == Screens.Settings.route) {
                 IconButton(onClick = { navController.navigateUp() }) {

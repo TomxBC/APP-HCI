@@ -17,8 +17,11 @@ import androidx.compose.material3.*
 import androidx.navigation.NavHostController
 import com.example.turnsmart_hci.screens.Screens
 import androidx.compose.material3.Text
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import com.example.turnsmart_hci.ui.theme.lightBottomAppBar
 import com.example.turnsmart_hci.ui.theme.lightText
+import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_purple
 
 @Composable
@@ -40,7 +43,7 @@ fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Mod
                 )
             },
             label = {
-                Text(stringResource(R.string.home_label))
+                Text(stringResource(R.string.home_label), fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium)
             },
             selected = selected.value == Screens.Home.route,
             colors = NavigationBarItemDefaults.colors(
@@ -68,7 +71,7 @@ fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Mod
                 )
             },
             label = {
-                Text(stringResource(R.string.devices_label))
+                Text(stringResource(R.string.devices_label), fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium)
             },
             selected = selected.value == Screens.Devices.route,
             colors = NavigationBarItemDefaults.colors(
@@ -96,7 +99,7 @@ fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Mod
                 )
             },
             label = {
-                Text(stringResource(R.string.automation_label))
+                Text(stringResource(R.string.automation_label), fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium)
             },
             selected = selected.value == Screens.Automation.route,
             colors = NavigationBarItemDefaults.colors(

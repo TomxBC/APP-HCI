@@ -9,8 +9,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.turnsmart_hci.ui.theme.Purple40
+import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 
 @Composable
 fun AutomationScreen() {
@@ -21,7 +23,7 @@ fun AutomationScreen() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Automation Screen", fontSize = 30.sp, color = Purple40)
+            Text(text = "Automation Screen", fontFamily = montserratFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 30.sp, color = Purple40)
         }
     }
 }
