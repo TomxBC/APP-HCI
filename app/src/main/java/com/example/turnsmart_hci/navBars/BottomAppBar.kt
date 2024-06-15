@@ -25,105 +25,100 @@ import com.example.turnsmart_hci.ui.theme.pale_purple
 
 @Composable
 fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Modifier = Modifier, onTitleChange: (String) -> Unit) {
-    val selected = remember { mutableStateOf("home") }
+    val selected = remember { mutableStateOf(Screens.Home.route) }
 
-    Scaffold(
-        bottomBar = {
-            NavigationBar(
-                modifier = modifier,
-                containerColor = lightBottomAppBar,
-                contentColor = lightText
-            ) {
-                NavigationBarItem(
-                    icon = {
-                        Icon(
-                            painterResource(
-                                if (selected.value == Screens.Home.route) R.drawable.home_fill else R.drawable.home
-                            ),
-                            contentDescription = stringResource(id = R.string.home_label)
-                        )
-                    },
-                    label = {
-                        Text(stringResource(R.string.home_label))
-                    },
-                    selected = selected.value == "home",
-                    colors = NavigationBarItemDefaults.colors(
-                        indicatorColor = pale_purple
+    NavigationBar(
+        modifier = modifier,
+        containerColor = lightBottomAppBar,
+        contentColor = lightText
+    ) {
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    painterResource(
+                        if (selected.value == Screens.Home.route) R.drawable.home_fill else R.drawable.home
                     ),
-                    onClick = {
-                        selected.value = "home"
-                        navController.navigate(Screens.Home.route) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                        onTitleChange(Screens.Home.title)
-                    }
+                    contentDescription = stringResource(id = R.string.home_label)
                 )
-                NavigationBarItem(
-                    icon = {
-                        Icon(
-                            painterResource(
-                                if (selected.value == Screens.Devices.route) R.drawable.devices_fill else R.drawable.devices
-                            ),
-                            contentDescription = stringResource(id = R.string.devices_label)
-                        )
-                    },
-                    label = {
-                        Text(stringResource(R.string.devices_label))
-                    },
-                    selected = selected.value == "devices",
-                    colors = NavigationBarItemDefaults.colors(
-                        indicatorColor = pale_purple
-                    ),
-                    onClick = {
-                        selected.value = "devices"
-                        navController.navigate(Screens.Devices.route) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                        onTitleChange(Screens.Devices.title)
+            },
+            label = {
+                Text(stringResource(R.string.home_label))
+            },
+            selected = selected.value == Screens.Home.route,
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor = pale_purple
+            ),
+            onClick = {
+                selected.value = Screens.Home.route
+                navController.navigate(Screens.Home.route) {
+                    popUpTo(navController.graph.startDestinationId) {
+                        saveState = true
                     }
-                )
-                NavigationBarItem(
-                    icon = {
-                        Icon(
-                            painterResource(
-                                if (selected.value == Screens.Automation.route) R.drawable.calendar_fill else R.drawable.calendar
-                            ),
-                            contentDescription = stringResource(id = R.string.automation_label)
-                        )
-                    },
-                    label = {
-                        Text(stringResource(R.string.automation_label))
-                    },
-                    selected = selected.value == "automations",
-                    colors = NavigationBarItemDefaults.colors(
-                        indicatorColor = pale_purple
-                    ),
-                    onClick = {
-                        selected.value = "automations"
-                        navController.navigate(Screens.Automation.route) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                        onTitleChange(Screens.Automation.title)
-                    }
-                )
+                    launchSingleTop = true
+                    restoreState = true
+                }
+                onTitleChange(Screens.Home.title)
             }
-        }
-    ) { innerPadding ->
-        MainNavHost(navController = navController, modifier = Modifier.padding(innerPadding))
+        )
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    painterResource(
+                        if (selected.value == Screens.Devices.route) R.drawable.devices_fill else R.drawable.devices
+                    ),
+                    contentDescription = stringResource(id = R.string.devices_label)
+                )
+            },
+            label = {
+                Text(stringResource(R.string.devices_label))
+            },
+            selected = selected.value == Screens.Devices.route,
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor = pale_purple
+            ),
+            onClick = {
+                selected.value = Screens.Devices.route
+                navController.navigate(Screens.Devices.route) {
+                    popUpTo(navController.graph.startDestinationId) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+                onTitleChange(Screens.Devices.title)
+            }
+        )
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    painterResource(
+                        if (selected.value == Screens.Automation.route) R.drawable.calendar_fill else R.drawable.calendar
+                    ),
+                    contentDescription = stringResource(id = R.string.automation_label)
+                )
+            },
+            label = {
+                Text(stringResource(R.string.automation_label))
+            },
+            selected = selected.value == Screens.Automation.route,
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor = pale_purple
+            ),
+            onClick = {
+                selected.value = Screens.Automation.route
+                navController.navigate(Screens.Automation.route) {
+                    popUpTo(navController.graph.startDestinationId) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+                onTitleChange(Screens.Automation.title)
+            }
+        )
     }
 }
+
 
 
 
