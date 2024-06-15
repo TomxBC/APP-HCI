@@ -1,5 +1,6 @@
 package com.example.turnsmart_hci.navBars
 
+import android.annotation.SuppressLint
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -64,6 +65,7 @@ fun TurnSmartToolbar(navController: NavController, currentScreenTitle: MutableSt
 
 }
 
+@SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true)
 @Composable
 fun PreviewTurnSmartToolbar() {

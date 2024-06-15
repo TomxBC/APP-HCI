@@ -9,4 +9,12 @@
     <string name="english">English</string>
     <string name="spanish">Spanish</string>
     <string name="notifications">Notifications</string>
+    <string name="lights">Lights</string>
+    <string name="speakers">Speakers</string>
+    <string name="ac">Air Conditioner</string>
+    <string name="blinds">Blinds</string>
+    <string name="turn_on">On</string>
+    <string name="turn_off">Off</string>
+
+
 </resources>

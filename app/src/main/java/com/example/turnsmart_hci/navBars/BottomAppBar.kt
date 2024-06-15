@@ -2,7 +2,6 @@ package com.example.turnsmart.navBars
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -18,7 +17,6 @@ import androidx.compose.material3.*
 import androidx.navigation.NavHostController
 import com.example.turnsmart_hci.screens.Screens
 import androidx.compose.material3.Text
-import com.example.turnsmart_hci.MainNavHost
 import com.example.turnsmart_hci.ui.theme.lightBottomAppBar
 import com.example.turnsmart_hci.ui.theme.lightText
 import com.example.turnsmart_hci.ui.theme.pale_purple
