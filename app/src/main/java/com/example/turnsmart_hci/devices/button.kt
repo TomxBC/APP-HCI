@@ -47,7 +47,7 @@ fun CustomButton(
             modifier = Modifier.padding(start = 0.dp).size(24.dp),
             tint = Color.Black
         )
-        Spacer(modifier = Modifier.width(60.dp))
+        Spacer(modifier = Modifier.width(10.dp))
         Text(
             text = label,
             color = textColor,
@@ -55,7 +55,7 @@ fun CustomButton(
             fontFamily = montserratFontFamily,
             fontWeight = FontWeight.Medium
         )
-        Spacer(modifier = Modifier.width(80.dp))
+        Spacer(modifier = Modifier.width(100.dp))
         IconButton(
             onClick = { }
         ){
