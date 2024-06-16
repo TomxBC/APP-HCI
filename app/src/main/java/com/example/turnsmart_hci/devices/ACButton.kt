@@ -3,7 +3,9 @@ package com.example.turnsmart_hci.devices
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -46,16 +48,16 @@ fun AirConditionerScreen(
     val verticalSwingPositions = listOf("Auto", "0°", "22°","45°","67°","90°")
     val fanSpeedPositions = listOf("Auto", "25%", "50%", "75%", "100%")
 
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .background(Color.White, shape = RoundedCornerShape(8.dp))
-            .padding(16.dp)
+    Box(modifier = Modifier.verticalScroll(rememberScrollState())
+        .fillMaxWidth()
+        .background(Color.White, shape = RoundedCornerShape(8.dp))
+        .padding(16.dp)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .padding(16.dp)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ac),
@@ -193,9 +195,18 @@ fun AirConditionerScreen(
 
             //Vertical Swings
             Text(
-                text = "Vertical Swing: ${verticalSwingPositions[verticalSwing]}",
+                text = "Vertical Swing:",
                 color = textColor,
                 fontSize = 16.sp,
+                fontFamily = montserratFontFamily,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.align(Alignment.Start)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = verticalSwingPositions[verticalSwing],
+                color = textColor,
+                fontSize = 25.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
             )
@@ -228,9 +239,18 @@ fun AirConditionerScreen(
 
             //Horizontal Swings
             Text(
-                text = "Horizontal Swing: ${horizontalSwingPositions[horizontalSwing]}",
+                text = "Horizontal Swing:",
                 color = textColor,
                 fontSize = 16.sp,
+                fontFamily = montserratFontFamily,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.align(Alignment.Start)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = horizontalSwingPositions[horizontalSwing],
+                color = textColor,
+                fontSize = 25.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
             )
@@ -262,9 +282,18 @@ fun AirConditionerScreen(
 
             //Fan Speed
             Text(
-                text = "Fan Speed: ${if (fanSpeed == 0) "Auto" else "$fanSpeed%"}",
+                text = "Fan Speed:",
                 color = textColor,
                 fontSize = 16.sp,
+                fontFamily = montserratFontFamily,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.align(Alignment.Start)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = "$fanSpeed%",
+                color = textColor,
+                fontSize = 25.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
             )
