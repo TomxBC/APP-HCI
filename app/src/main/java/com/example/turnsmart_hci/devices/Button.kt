@@ -24,11 +24,12 @@ import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_blue
 
 @Composable
-fun RoutineButton(
+fun DeviceButton(
     label: String,
     onClick: () -> Unit,
     backgroundColor: Color,
     textColor: Color = darkText,
+    icon: Int,
     modifier: Modifier = Modifier
 ) {
     Button(
@@ -40,16 +41,12 @@ fun RoutineButton(
             .padding(8.dp)
             .size(width = 300.dp, height = 50.dp),
     ) {
-        IconButton(
-            onClick = { }, // ESTE EJECUTARIA
-            modifier = Modifier.size(24.dp)
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.favorite), // CAMBIAR EL LOGO A PLAY
-                contentDescription = null,
-                tint = Color.Black
-            )
-        }
+        Icon(
+            painter = painterResource(icon),
+            contentDescription = null,
+            modifier = Modifier.padding(start = 0.dp).size(24.dp),
+            tint = Color.Black
+        )
         Spacer(modifier = Modifier.width(10.dp))
         Text(
             text = label,
@@ -58,7 +55,7 @@ fun RoutineButton(
             fontFamily = montserratFontFamily,
             fontWeight = FontWeight.Medium
         )
-        Spacer(modifier = Modifier.width(60.dp))
+        Spacer(modifier = Modifier.width(100.dp))
         IconButton(
             onClick = { }
         ){
@@ -74,6 +71,8 @@ fun RoutineButton(
 
 @Preview
 @Composable
-fun RoutineButtonPreview() {
-    RoutineButton(label = "RoutineName", onClick = {}, backgroundColor = pale_blue)
+fun DeviceButtonPreview() {
+    DeviceButton(
+        label = stringResource(id = R.string.lights), onClick = {},
+        icon = R.drawable.lights, backgroundColor = pale_blue)
 }
