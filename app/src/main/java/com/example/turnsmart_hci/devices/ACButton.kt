@@ -43,9 +43,7 @@ fun AirConditionerScreen(
     val modes = listOf("Fan", "Cooling", "Heating")
     var expanded by remember { mutableStateOf(false) }
     val horizontalSwingPositions = listOf("-90°", "-45°", "0°", "45°", "90°")
-    val horizontalSwingValues = listOf(-90, -45, 0, 45, 90)
     val verticalSwingPositions = listOf("Auto", "0°", "22°","45°","67°","90°")
-    val verticalSwingValues = listOf(0, 22, 45, 67, 90)
     val fanSpeedPositions = listOf("Auto", "25%", "50%", "75%", "100%")
 
     Box(
@@ -208,7 +206,9 @@ fun AirConditionerScreen(
                 Slider(
                     value = verticalSwing.toFloat(),
                     onValueChange = { newValue ->
-                        onSetVerticalSwing(verticalSwingValues[newValue.toInt()])
+                        //index is 0 for auto
+                        //set vertical swing gets index value therefore in set should modify accordingly
+                        onSetVerticalSwing(newValue.toInt())
                     },
                     valueRange = 0f..5f,
                     steps = 5, // Ensures the slider snaps to integer values
@@ -228,7 +228,7 @@ fun AirConditionerScreen(
 
             //Horizontal Swings
             Text(
-                text = "Horizontal Swing: ${horizontalSwingValues[horizontalSwing]}°",
+                text = "Horizontal Swing: ${horizontalSwingPositions[horizontalSwing]}",
                 color = textColor,
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
@@ -241,7 +241,9 @@ fun AirConditionerScreen(
                 Slider(
                     value = horizontalSwing.toFloat(),
                     onValueChange = { newValue ->
-                        onSetHorizontalSwing(horizontalSwingValues[newValue.toInt()])
+                        //index is 0 is for -90°
+                        //set horizontal swing gets index value therefore in set should modify accordingly
+                        onSetHorizontalSwing(newValue.toInt())
                     },
                     valueRange = 0f..4f,
                     steps = 4,
@@ -319,9 +321,9 @@ fun AirConditionerScreenPreview() {
                 mode = mode,
                 onSetMode = { mode = it },
                 verticalSwing = verticalSwing,
-                onSetVerticalSwing = { verticalSwing = it },
+                onSetVerticalSwing = {verticalSwing = it },
                 horizontalSwing = horizontalSwing,
-                onSetHorizontalSwing = { horizontalSwing = it },
+                onSetHorizontalSwing = {horizontalSwing = it },
                 fanSpeed = fanSpeed,
                 onSetFanSpeed = { fanSpeed = it }
             )
