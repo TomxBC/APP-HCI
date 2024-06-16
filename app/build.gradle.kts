@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 android {
@@ -23,10 +24,11 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            buildConfigField ("String", "API_BASE_URL", "\"http://10.0.2.2:8080/api\"")
+        }
+        debug {
+            buildConfigField ("String", "API_BASE_URL", "\"http://10.0.2.2:8080/api\"")
         }
     }
     compileOptions {
@@ -63,6 +65,8 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
+    implementation(libs.converter.kotlin.serialization)
+    implementation(libs.coil.compose)
     implementation(libs.converter.gson)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.gson)
