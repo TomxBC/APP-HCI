@@ -1,6 +1,7 @@
 package com.example.turnsmart_hci.devices
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_blue
+import com.example.turnsmart_hci.ui.theme.pale_red
 
 @Composable
 fun SpeakerButton() {
@@ -106,75 +108,166 @@ fun SpeakerScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
             // Now Playing Text
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .border(width = 2.dp, color = Color.LightGray, shape = RoundedCornerShape(10.dp))
+            ){
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.padding(25.dp)
+                ){
+                    Text(
+                        text = "Now Playing: $currentSong",
+                        color = textColor,
+                        fontSize = 16.sp,
+                        fontFamily = montserratFontFamily,
+                        fontWeight = FontWeight.Medium,
+                    )
+                    Spacer(modifier = Modifier.height(25.dp))
+
+                    Slider(
+                        value = 0f,
+                        onValueChange = { /* Do nothing */ },
+                        valueRange = 0f..10f,
+                        steps = 0, // Ensures the slider snaps to integer values
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    // Music Control Icons
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        IconButton(onClick = onPrevious) {
+                            Icon(
+                                painter = painterResource(R.drawable.skip_previous),
+                                contentDescription = "Previous",
+                                tint = textColor,
+                                modifier = Modifier.size(32.dp)
+                            )
+                        }
+                        IconButton(onClick = onStop) {
+                            Icon(
+                                painter = painterResource(R.drawable.stop),
+                                contentDescription = "Stop",
+                                tint = textColor,
+                                modifier = Modifier.size(32.dp)
+                            )
+                        }
+                        IconButton(onClick = {
+                            if (isPlaying) {
+                                onPause()
+                            } else {
+                                onPlay()
+                            }
+                            isPlaying = !isPlaying
+                        }) {
+                            Icon(
+                                painter = if (isPlaying) painterResource(R.drawable.pause_circle) else painterResource(R.drawable.play_circle),
+                                contentDescription = if (isPlaying) "Pause" else "Play",
+                                tint = textColor,
+                                modifier = Modifier.size(40.dp)
+                            )
+                        }
+                        IconButton(onClick = onNext) {
+                            Icon(
+                                painter = painterResource(R.drawable.skip_next),
+                                contentDescription = "Next",
+                                tint = textColor,
+                                modifier = Modifier.size(32.dp)
+                            )
+                        }
+                        IconButton(onClick = { showDialog = true }) {
+                            Icon(
+                                painter = painterResource(R.drawable.queue_music),
+                                contentDescription = "Queue",
+                                tint = textColor,
+                                modifier = Modifier.size(32.dp)
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(25.dp))
+
+                    // Genre Selection
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            text = "Genre:",
+                            color = textColor,
+                            fontSize = 16.sp,
+                            fontFamily = montserratFontFamily,
+                            fontWeight = FontWeight.Medium,
+                        )
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Box {
+                            Text(
+                                text = genre,
+                                color = textColor,
+                                fontSize = 16.sp,
+                                fontFamily = montserratFontFamily,
+                                fontWeight = FontWeight.Medium,
+                                modifier = Modifier
+                                    .background(Color.LightGray)
+                                    .padding(8.dp)
+                                    .fillMaxWidth()
+                                    .clickable { expanded = !expanded }
+                            )
+                            DropdownMenu(
+                                expanded = expanded,
+                                onDismissRequest = { expanded = false }
+                            ) {
+                                genres.forEach { selectedGenre ->
+                                    DropdownMenuItem(
+                                        text = { Text(selectedGenre) },
+                                        onClick = {
+                                            onGenreSelect(selectedGenre)
+                                            expanded = false
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    if (showDialog) {
+                        AlertDialog(
+                            onDismissRequest = { showDialog = false },
+                            title = { Text(text = "Playlist: $genre") },
+                            text = {
+                                Column {
+                                    songs.forEach { song ->
+                                        Text(text = song)
+                                    }
+                                }
+                            },
+                            confirmButton = {
+                                Button(onClick = { showDialog = false }) {
+                                    Text("Close")
+                                }
+                            }
+                        )
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(25.dp))
+            // Volume Slider
             Text(
-                text = "Now Playing: $currentSong",
+                text = "Volume:",
                 color = textColor,
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
+                modifier = Modifier.align(Alignment.Start)
             )
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Music Control Icons
-            Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                IconButton(onClick = onPrevious) {
-                    Icon(
-                        painter = painterResource(R.drawable.skip_previous),
-                        contentDescription = "Previous",
-                        tint = textColor,
-                        modifier = Modifier.size(32.dp)
-                    )
-                }
-                IconButton(onClick = onStop) {
-                    Icon(
-                        painter = painterResource(R.drawable.stop),
-                        contentDescription = "Stop",
-                        tint = textColor,
-                        modifier = Modifier.size(32.dp)
-                    )
-                }
-                IconButton(onClick = {
-                    if (isPlaying) {
-                        onPause()
-                    } else {
-                        onPlay()
-                    }
-                    isPlaying = !isPlaying
-                }) {
-                    Icon(
-                        painter = if (isPlaying) painterResource(R.drawable.pause_circle) else painterResource(R.drawable.play_circle),
-                        contentDescription = if (isPlaying) "Pause" else "Play",
-                        tint = textColor,
-                        modifier = Modifier.size(40.dp)
-                    )
-                }
-                IconButton(onClick = onNext) {
-                    Icon(
-                        painter = painterResource(R.drawable.skip_next),
-                        contentDescription = "Next",
-                        tint = textColor,
-                        modifier = Modifier.size(32.dp)
-                    )
-                }
-                IconButton(onClick = { showDialog = true }) {
-                    Icon(
-                        painter = painterResource(R.drawable.queue_music),
-                        contentDescription = "Queue",
-                        tint = textColor,
-                        modifier = Modifier.size(32.dp)
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Volume Slider
+            Spacer(modifier = Modifier.height(10.dp))
             Text(
-                text = "Volume: $volume",
+                text = "$volume",
                 color = textColor,
-                fontSize = 16.sp,
+                fontSize = 25.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
             )
@@ -215,69 +308,6 @@ fun SpeakerScreen(
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
-
-            // Genre Selection
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = "Genre:",
-                    color = textColor,
-                    fontSize = 16.sp,
-                    fontFamily = montserratFontFamily,
-                    fontWeight = FontWeight.Medium,
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                Box {
-                    Text(
-                        text = genre,
-                        color = textColor,
-                        fontSize = 16.sp,
-                        fontFamily = montserratFontFamily,
-                        fontWeight = FontWeight.Medium,
-                        modifier = Modifier
-                            .background(Color.LightGray)
-                            .padding(8.dp)
-                            .fillMaxWidth()
-                            .clickable { expanded = !expanded }
-                    )
-                    DropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false }
-                    ) {
-                        genres.forEach { selectedGenre ->
-                            DropdownMenuItem(
-                                text = { Text(selectedGenre) },
-                                onClick = {
-                                    onGenreSelect(selectedGenre)
-                                    expanded = false
-                                }
-                            )
-                        }
-                    }
-                }
-            }
-
-            if (showDialog) {
-                AlertDialog(
-                    onDismissRequest = { showDialog = false },
-                    title = { Text(text = "Playlist: $genre") },
-                    text = {
-                        Column {
-                            songs.forEach { song ->
-                                Text(text = song)
-                            }
-                        }
-                    },
-                    confirmButton = {
-                        Button(onClick = { showDialog = false }) {
-                            Text("Close")
-                        }
-                    }
-                )
-            }
         }
     }
 }
