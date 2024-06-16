@@ -9,7 +9,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -18,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.screens.Screens
@@ -27,16 +30,26 @@ import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TurnSmartToolbar(navController: NavController, currentScreenTitle: MutableState<String>) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination?.route
+    val previousScreenTitle = remember { mutableStateOf("") }
+
     TopAppBar(
         title = { Text(text = currentScreenTitle.value, fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium) },
         navigationIcon = {
-            if (navController.currentDestination?.route == Screens.Settings.route) {
-                IconButton(onClick = { navController.navigateUp() }) {
+            if (currentDestination == Screens.Settings.route) {
+                IconButton(
+                    onClick = {
+                        navController.popBackStack()
+                        currentScreenTitle.value = previousScreenTitle.value
+                    }
+                ){
                     Icon(
                         painter = painterResource(id = R.drawable.back_arrow),
                         contentDescription = null,
-                        tint = lightText
+                        tint = Color.White
                     )
+
                 }
             }
         },
@@ -48,12 +61,16 @@ fun TurnSmartToolbar(navController: NavController, currentScreenTitle: MutableSt
             if (navController.currentDestination?.route != Screens.Settings.route) {
                 IconButton(onClick = {
                     navController.navigate(Screens.Settings.route) {
-                        popUpTo(navController.graph.startDestinationId) {
-                            saveState = true
+                        navController.previousBackStackEntry?.destination?.id?.let {
+                            popUpTo(it) {
+                                saveState = true
+                            }
                         }
                         launchSingleTop = true
                         restoreState = true
                     }
+                    previousScreenTitle.value = currentScreenTitle.value
+                    currentScreenTitle.value = "Settings"
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.settings),

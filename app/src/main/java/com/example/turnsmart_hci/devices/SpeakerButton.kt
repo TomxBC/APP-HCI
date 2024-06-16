@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_blue
+import com.example.turnsmart_hci.ui.theme.pale_green
 import com.example.turnsmart_hci.ui.theme.pale_red
 
 @Composable

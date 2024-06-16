@@ -1,28 +1,114 @@
 package com.example.turnsmart.screens
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.turnsmart_hci.ui.theme.Purple40
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 
 @Composable
 fun SettingsScreen() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier.fillMaxSize()
-                .align(Alignment.Center),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "Settings Screen", fontFamily = montserratFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 30.sp, color = Purple40)
+    var selectedLanguage by remember { mutableStateOf("English") }
+    var notificationsEnabled by remember { mutableStateOf(true) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        LanguageSelector(
+            selectedLanguage = selectedLanguage,
+            onLanguageSelected = { language ->
+                selectedLanguage = language
+                // Implement logic to change app language
+            }
+        )
+
+        NotificationsSwitch(
+            notificationsEnabled = notificationsEnabled,
+            onToggleNotifications = { enabled ->
+                notificationsEnabled = enabled
+                // Implement logic to handle notifications
+            }
+        )
+    }
+}
+
+@Composable
+fun LanguageSelector(
+    selectedLanguage: String,
+    onLanguageSelected: (String) -> Unit
+) {
+    val languages = listOf("English", "Spanish")
+
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            text = "Select Language:",
+            modifier = Modifier.padding(bottom = 8.dp),
+            fontFamily = montserratFontFamily,
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp,
+        )
+        languages.forEach { language ->
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(bottom = 8.dp)
+            ) {
+                RadioButton(
+                    selected = selectedLanguage == language,
+                    onClick = { onLanguageSelected(language) }
+                )
+                Text(
+                    text = language,
+                    modifier = Modifier.padding(start = 8.dp),
+                    fontFamily = montserratFontFamily,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 18.sp,
+                )
+            }
         }
     }
+}
+
+@Composable
+fun NotificationsSwitch(
+    notificationsEnabled: Boolean,
+    onToggleNotifications: (Boolean) -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "Notifications:",
+            modifier = Modifier.weight(1f),
+            fontFamily = montserratFontFamily,
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp,
+        )
+        Switch(
+            checked = notificationsEnabled,
+            onCheckedChange = { isChecked ->
+                onToggleNotifications(isChecked)
+            }
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SettingsScreenPreview() {
+    SettingsScreen()
 }
