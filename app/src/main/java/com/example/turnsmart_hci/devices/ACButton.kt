@@ -148,9 +148,18 @@ fun AirConditionerScreen(
 
             //Temperature
             Text(
-                text = "Temperature: $temperature °C",
+                text = "Temperature:",
                 color = textColor,
                 fontSize = 16.sp,
+                fontFamily = montserratFontFamily,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.align(Alignment.Start)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = "$temperature°C",
+                color = textColor,
+                fontSize = 25.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
             )
