@@ -1,9 +1,9 @@
-package com.example.turnsmart_hci.model
+package com.example.turnsmart_hci.data.remote.api.model
 
 //Importar el jsonAnswerClass
 
 sealed interface  ApiState {
-    data class Success(val answer: ) : ApiState
+    //data class Success(val answer: ) : ApiState
     data object Error: ApiState
     data object Loading: ApiState
 }
