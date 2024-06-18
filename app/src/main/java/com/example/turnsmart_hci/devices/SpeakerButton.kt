@@ -44,7 +44,7 @@ import com.example.turnsmart_hci.ui.theme.pale_red
 @Composable
 fun SpeakerButton() {
     DeviceButton(
-        label = "Speaker",
+        label = R.string.speakers,
         onClick = {},
         backgroundColor = pale_blue,
         icon = R.drawable.speaker

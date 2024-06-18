@@ -42,7 +42,7 @@ import com.example.turnsmart_hci.ui.theme.pale_yellow
 @Composable
 fun BlindsButton() {
     DeviceButton(
-        label = "Blinds",
+        label = R.string.blinds,
         onClick = {},
         backgroundColor = pale_blue,
         icon = R.drawable.blinds

@@ -1,5 +1,6 @@
 package com.example.turnsmart_hci.devices
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -19,16 +20,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.turnsmart_hci.R
-import com.example.turnsmart_hci.ui.theme.darkText
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
-import com.example.turnsmart_hci.ui.theme.pale_blue
+import com.example.turnsmart_hci.ui.theme.ThemeColors
 
 @Composable
 fun DeviceButton(
-    label: String,
+    @StringRes label: Int,
+    enabled: Boolean = true,
     onClick: () -> Unit,
     backgroundColor: Color,
-    textColor: Color = darkText,
+    textColor: Color = ThemeColors.DARK_TEXT.color,
     icon: Int,
     modifier: Modifier = Modifier
 ) {
@@ -40,16 +41,19 @@ fun DeviceButton(
         modifier = modifier
             .padding(8.dp)
             .size(width = 300.dp, height = 50.dp),
+        enabled = enabled
     ) {
         Icon(
             painter = painterResource(icon),
             contentDescription = null,
-            modifier = Modifier.padding(start = 0.dp).size(24.dp),
+            modifier = Modifier
+                .padding(start = 0.dp)
+                .size(24.dp),
             tint = Color.Black
         )
         Spacer(modifier = Modifier.width(10.dp))
         Text(
-            text = label,
+            text = stringResource(id = label),
             color = textColor,
             fontSize = 18.sp,
             fontFamily = montserratFontFamily,
@@ -73,7 +77,6 @@ fun DeviceButton(
 @Composable
 fun DeviceButtonPreview() {
     DeviceButton(
-        label = stringResource(id = R.string.lights), onClick = {},
-        icon = R.drawable.lights, backgroundColor = pale_blue)
+        label = R.string.lights, onClick = {},
+        icon = R.drawable.lights, backgroundColor = ThemeColors.PALE_BLUE.color)
 }
-

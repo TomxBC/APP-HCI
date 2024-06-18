@@ -46,7 +46,7 @@ import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 @Composable
 fun LightButton() {
     DeviceButton(
-        label = "Light",
+        label = R.string.lights,
         onClick = {},
         backgroundColor = pale_yellow,
         icon = R.drawable.lights
