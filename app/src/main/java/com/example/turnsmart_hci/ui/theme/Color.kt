@@ -28,3 +28,24 @@ val Pink40 = Color(0xFF7D5260)
 //navbar
 val selected_navbar = Color(0xFF6650a4)
 val background_navbar = Color(0xFFD0BCFF)
+enum class ThemeColors(val color: Color) {
+    DARK_BOTTOM_APP_BAR(Color(0xFF4D4B4B)),
+    LIGHT_BOTTOM_APP_BAR(Color(0xFFEBE5E5)),
+    LIGHT_TOOLBAR(Color(0xFF000000)),
+    DARK_TOOLBAR(Color(0xFFFFFFFF)),
+    DARK_TEXT(Color(0xFF000000)),
+    LIGHT_TEXT(Color(0xFFFFFFFF)),
+    PALE_BLUE(Color(0xFFA3CEFF)),
+    PALE_GREEN(Color(0xFFD3FCD5)),
+    PALE_RED(Color(0xFFFCCDCD)),
+    PALE_YELLOW(Color(0xFFF4F9BA)),
+    PALE_PURPLE(Color(0xFFDBC3F7)),
+    PURPLE_80(Color(0xFFD0BCFF)),
+    PURPLE_GREY_80(Color(0xFFCCC2DC)),
+    PINK_80(Color(0xFFEFB8C8)),
+    PURPLE_40(Color(0xFF6650a4)),
+    PURPLE_GREY_40(Color(0xFF625b71)),
+    PINK_40(Color(0xFF7D5260)),
+    SELECTED_NAVBAR(Color(0xFF6650a4)),
+    BACKGROUND_NAVBAR(Color(0xFFD0BCFF))
+}
