@@ -76,3 +76,4 @@ fun DeviceButtonPreview() {
         label = stringResource(id = R.string.lights), onClick = {},
         icon = R.drawable.lights, backgroundColor = pale_blue)
 }
+
