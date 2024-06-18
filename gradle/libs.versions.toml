@@ -1,5 +1,6 @@
 [versions]
 agp = "8.4.0"
+coreKtxVersion = "2.2.0"
 coilCompose = "2.4.0"
 converterGson = "2.11.0"
 converterKotlinSerialization = "2.11.0"
@@ -21,6 +22,7 @@ serialization = "1.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-ktx-v220 = { module = "androidx.core:core-ktx", version.ref = "coreKtxVersion" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 converter-kotlin-serialization = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "converterKotlinSerialization" }
