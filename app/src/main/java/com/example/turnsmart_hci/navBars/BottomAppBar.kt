@@ -1,4 +1,4 @@
-package com.example.turnsmart.navBars
+package com.example.turnsmart_hci.navBars
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -18,10 +18,7 @@ import androidx.navigation.NavHostController
 import com.example.turnsmart_hci.screens.Screens
 import androidx.compose.material3.Text
 import androidx.compose.ui.text.font.FontWeight
-import com.example.turnsmart_hci.ui.theme.lightBottomAppBar
-import com.example.turnsmart_hci.ui.theme.lightText
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
-import com.example.turnsmart_hci.ui.theme.pale_purple
 
 @Composable
 fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Modifier = Modifier, onTitleChange: (String) -> Unit) {
@@ -29,8 +26,8 @@ fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Mod
 
     NavigationBar(
         modifier = modifier,
-        containerColor = lightBottomAppBar,
-        contentColor = lightText
+        containerColor = MaterialTheme.colorScheme.primary,
+        contentColor = MaterialTheme.colorScheme.onPrimary,
     ) {
         NavigationBarItem(
             icon = {
@@ -46,7 +43,7 @@ fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Mod
             },
             selected = selected.value == Screens.Home.route,
             colors = NavigationBarItemDefaults.colors(
-                indicatorColor = pale_purple
+                indicatorColor = MaterialTheme.colorScheme.onTertiary
             ),
             onClick = {
                 selected.value = Screens.Home.route
@@ -74,7 +71,7 @@ fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Mod
             },
             selected = selected.value == Screens.Devices.route,
             colors = NavigationBarItemDefaults.colors(
-                indicatorColor = pale_purple
+                indicatorColor = MaterialTheme.colorScheme.onTertiary
             ),
             onClick = {
                 selected.value = Screens.Devices.route
@@ -102,7 +99,7 @@ fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Mod
             },
             selected = selected.value == Screens.Automation.route,
             colors = NavigationBarItemDefaults.colors(
-                indicatorColor = pale_purple
+                indicatorColor = MaterialTheme.colorScheme.onTertiary
             ),
             onClick = {
                 selected.value = Screens.Automation.route

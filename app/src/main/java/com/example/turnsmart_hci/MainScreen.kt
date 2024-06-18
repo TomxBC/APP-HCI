@@ -14,7 +14,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.turnsmart.navBars.TurnSmartBottomNavigationBar
+import com.example.turnsmart_hci.navBars.TurnSmartBottomNavigationBar
 import com.example.turnsmart.screens.AutomationScreen
 import com.example.turnsmart.screens.DevicesScreen
 import com.example.turnsmart.screens.HomeScreen
