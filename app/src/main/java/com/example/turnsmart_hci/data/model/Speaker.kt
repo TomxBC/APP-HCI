@@ -7,7 +7,6 @@ import com.example.turnsmart_hci.data.remote.model.RemoteSpeaker
 class Speaker (
     id: String?,
     name: String,
-    val room: Room?,
     val status: Status,
     val song: String?,
     val volume: Int
@@ -22,7 +21,6 @@ class Speaker (
         val model = RemoteSpeaker()
         model.id = id
         model.name = name
-        model.room = room?.asRemoteModel()
         model.setState(state)
         return model
     }

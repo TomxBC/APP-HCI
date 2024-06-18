@@ -9,7 +9,6 @@ import com.example.turnsmart_hci.data.remote.model.RemoteLampState
 class Blind (
     id: String?,
     name: String,
-    val room: Room?,
     val status: Status,
     val level: Int
     ) : Device(id, name, DeviceType.BLINDS) {
@@ -21,7 +20,6 @@ class Blind (
         val model = RemoteBlind()
         model.id = id
         model.name = name
-        model.room = room?.asRemoteModel()
         model.setState(state)
         return model
     }

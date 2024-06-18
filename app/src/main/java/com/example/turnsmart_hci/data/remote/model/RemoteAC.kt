@@ -6,7 +6,6 @@ class RemoteAC : RemoteDevice<RemoteACState>() {
         return AC(
             id = id,
             name = name,
-            room = room?.asModel(),
             status = RemoteStatus.asModel(state.status),
             mode = state.mode,
             temperature = state.temperature,

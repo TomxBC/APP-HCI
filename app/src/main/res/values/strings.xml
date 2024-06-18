@@ -15,6 +15,7 @@
     <string name="blinds">Blinds</string>
     <string name="turn_on">On</string>
     <string name="turn_off">Off</string>
+    <string name="unknown">Error when …</string>
 
 
 </resources>

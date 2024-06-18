@@ -1,15 +1,12 @@
 package com.example.turnsmart_hci.data.model
 
-import android.health.connect.datatypes.units.Temperature
 import com.example.turnsmart_hci.data.remote.model.RemoteAC
 import com.example.turnsmart_hci.data.remote.model.RemoteACState
 import com.example.turnsmart_hci.data.remote.model.RemoteDevice
 
-
 class AC (
     id: String?,
     name: String,
-    val room: Room?,
     val status: Status,
     val mode: String,
     val temperature: Int,
@@ -30,7 +27,6 @@ class AC (
         val model = RemoteAC()
         model.id = id
         model.name = name
-        model.room = room?.asRemoteModel()
         model.setState(state)
         return model
     }

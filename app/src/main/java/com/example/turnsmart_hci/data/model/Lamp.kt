@@ -7,7 +7,6 @@ import com.example.turnsmart_hci.data.remote.model.RemoteLampState
 class Lamp(
     id: String?,
     name: String,
-    val room: Room?,
     val status: Status,
     val color: String,
     val brightness: Int
@@ -22,7 +21,6 @@ class Lamp(
         val model = RemoteLamp()
         model.id = id
         model.name = name
-        model.room = room?.asRemoteModel()
         model.setState(state)
         return model
     }

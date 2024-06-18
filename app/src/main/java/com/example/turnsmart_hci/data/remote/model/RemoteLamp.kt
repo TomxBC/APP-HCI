@@ -8,7 +8,6 @@ class RemoteLamp : RemoteDevice<RemoteLampState>() {
         return Lamp(
             id = id,
             name = name,
-            room = room?.asModel(),
             status = RemoteStatus.asModel(state.status),
             color = state.color,
             brightness = state.brightness

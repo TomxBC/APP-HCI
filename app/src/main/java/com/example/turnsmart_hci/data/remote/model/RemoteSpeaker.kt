@@ -7,7 +7,6 @@ class RemoteSpeaker : RemoteDevice<RemoteSpeakerState>(){
         return Speaker(
             id = id,
             name = name,
-            room = room?.asModel(),
             status = RemoteStatus.asModel(state.status),
             volume = state.volume,
             song = state.song

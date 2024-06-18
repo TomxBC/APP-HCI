@@ -9,7 +9,6 @@ class RemoteBlind : RemoteDevice<RemoteBlindState>() {
         return Blind(
             id = id,
             name = name,
-            room = room?.asModel(),
             status = RemoteStatus.asModel(state.status),
             level = state.level
         )
