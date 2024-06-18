@@ -27,6 +27,7 @@ class Blind (
     companion object {
         const val OPEN_ACTION = "open"
         const val CLOSE_ACTION = "close"
+        const val SET_LEVEL_ACTION = "setLevel"
     }
 
 }
