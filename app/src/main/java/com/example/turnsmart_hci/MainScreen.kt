@@ -25,6 +25,7 @@ import androidx.compose.material3.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.turnsmart_hci.notifications.NotificationViewModel
+import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 
 @Composable
 fun MainScreen(
@@ -34,35 +35,38 @@ fun MainScreen(
     val currentScreenTitle = remember { mutableStateOf(Screens.Home.route) }
     val context = LocalContext.current
 
-    Scaffold(
-        topBar = { TurnSmartToolbar(navController = navController, currentScreenTitle = currentScreenTitle) },
-        bottomBar = {
-            if (navController.currentDestination?.route != Screens.Settings.route) {
-                TurnSmartBottomNavigationBar(navController, onTitleChange = { title ->
-                    currentScreenTitle.value = title
-                })
+    TurnSmartTheme {
+        Scaffold(
+            topBar = { TurnSmartToolbar(navController = navController, currentScreenTitle = currentScreenTitle) },
+            bottomBar = {
+                if (navController.currentDestination?.route != Screens.Settings.route) {
+                    TurnSmartBottomNavigationBar(navController, onTitleChange = { title ->
+                        currentScreenTitle.value = title
+                    })
+                }
+            },
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = {
+                        viewModel.sendNotification(context)
+                    },
+                    modifier = Modifier.padding(16.dp) // Add padding to FAB
+                ) {
+                    Text("+")
+                }
+            },
+            content = { innerPadding ->
+                Box(
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize()
+                ) {
+                    MainNavHost(navController = navController)
+                }
             }
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    viewModel.sendNotification(context)
-                },
-                modifier = Modifier.padding(16.dp) // Add padding to FAB
-            ) {
-                Text("+")
-            }
-        },
-        content = { innerPadding ->
-            Box(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize()
-            ) {
-                MainNavHost(navController = navController)
-            }
-        }
-    )
+        )
+    }
+
 }
 
 @Composable

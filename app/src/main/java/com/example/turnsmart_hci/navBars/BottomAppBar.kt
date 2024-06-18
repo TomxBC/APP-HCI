@@ -26,8 +26,8 @@ fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Mod
 
     NavigationBar(
         modifier = modifier,
-        containerColor = MaterialTheme.colorScheme.primary,
-        contentColor = MaterialTheme.colorScheme.onPrimary,
+        containerColor = TurnSmartTheme.colors.primary,
+        contentColor = TurnSmartTheme.colors.onPrimary,
     ) {
         NavigationBarItem(
             icon = {
@@ -43,7 +43,7 @@ fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Mod
             },
             selected = selected.value == Screens.Home.route,
             colors = NavigationBarItemDefaults.colors(
-                indicatorColor = MaterialTheme.colorScheme.onTertiary
+                indicatorColor = TurnSmartTheme.colors.onTertiary
             ),
             onClick = {
                 selected.value = Screens.Home.route
@@ -71,7 +71,7 @@ fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Mod
             },
             selected = selected.value == Screens.Devices.route,
             colors = NavigationBarItemDefaults.colors(
-                indicatorColor = MaterialTheme.colorScheme.onTertiary
+                indicatorColor = TurnSmartTheme.colors.onTertiary
             ),
             onClick = {
                 selected.value = Screens.Devices.route
@@ -99,7 +99,7 @@ fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Mod
             },
             selected = selected.value == Screens.Automation.route,
             colors = NavigationBarItemDefaults.colors(
-                indicatorColor = MaterialTheme.colorScheme.onTertiary
+                indicatorColor = TurnSmartTheme.colors.onTertiary
             ),
             onClick = {
                 selected.value = Screens.Automation.route

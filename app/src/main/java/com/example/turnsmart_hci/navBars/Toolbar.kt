@@ -25,6 +25,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.screens.Screens
+import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.lightText
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 
@@ -55,8 +56,8 @@ fun TurnSmartToolbar(navController: NavController, currentScreenTitle: MutableSt
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.secondary,
-            titleContentColor = MaterialTheme.colorScheme.onSecondary
+            containerColor = TurnSmartTheme.colors.secondary,
+            titleContentColor = TurnSmartTheme.colors.onSecondary
         ),
         actions = {
             if (navController.currentDestination?.route != Screens.Settings.route) {
@@ -76,7 +77,7 @@ fun TurnSmartToolbar(navController: NavController, currentScreenTitle: MutableSt
                     Icon(
                         painter = painterResource(id = R.drawable.settings),
                         contentDescription = stringResource(id = R.string.settings_label),
-                        tint = MaterialTheme.colorScheme.onSecondary
+                        tint = TurnSmartTheme.colors.onSecondary
                     )
                 }
             }

@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 
 @Composable
@@ -21,27 +22,29 @@ fun SettingsScreen() {
     var selectedLanguage by remember { mutableStateOf("English") }
     var notificationsEnabled by remember { mutableStateOf(true) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        LanguageSelector(
-            selectedLanguage = selectedLanguage,
-            onLanguageSelected = { language ->
-                selectedLanguage = language
-                // Implement logic to change app language
-            }
-        )
+    TurnSmartTheme {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            LanguageSelector(
+                selectedLanguage = selectedLanguage,
+                onLanguageSelected = { language ->
+                    selectedLanguage = language
+                    // Implement logic to change app language
+                }
+            )
 
-        NotificationsSwitch(
-            notificationsEnabled = notificationsEnabled,
-            onToggleNotifications = { enabled ->
-                notificationsEnabled = enabled
-                // Implement logic to handle notifications
-            }
-        )
+            NotificationsSwitch(
+                notificationsEnabled = notificationsEnabled,
+                onToggleNotifications = { enabled ->
+                    notificationsEnabled = enabled
+                    // Implement logic to handle notifications
+                }
+            )
+        }
     }
 }
 

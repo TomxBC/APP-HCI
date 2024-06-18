@@ -3,6 +3,7 @@ package com.example.turnsmart_hci.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -18,11 +19,11 @@ private val DarkColorScheme = darkColorScheme(
 
     //bars
     primary = darkBottomAppBar,
-    secondary = darkToolbar,
+    secondary = darkBottomAppBar,
 
     //text and icons
     onPrimary = lightText,
-    onSecondary = darkText,
+    onSecondary = lightText,
 
     //selected item
     onTertiary = dark_purple,
@@ -67,4 +68,11 @@ fun TurnSmartTheme(
         typography = Typography,
         content = content
     )
+}
+
+object TurnSmartTheme {
+    val colors: ColorScheme
+        @Composable
+        get() = if (isSystemInDarkTheme()) DarkColorScheme else LightColorScheme
+
 }
