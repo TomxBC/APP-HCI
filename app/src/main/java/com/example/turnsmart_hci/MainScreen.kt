@@ -3,22 +3,12 @@ package com.example.turnsmart_hci
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -31,29 +21,50 @@ import com.example.turnsmart.screens.HomeScreen
 import com.example.turnsmart.screens.SettingsScreen
 import com.example.turnsmart_hci.navBars.TurnSmartToolbar
 import com.example.turnsmart_hci.screens.Screens
+import androidx.compose.material3.*
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import com.example.turnsmart_hci.notifications.NotificationViewModel
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    viewModel: NotificationViewModel
+) {
     val navController = rememberNavController()
     val currentScreenTitle = remember { mutableStateOf(Screens.Home.route) }
+    val context = LocalContext.current
 
     Scaffold(
         topBar = { TurnSmartToolbar(navController = navController, currentScreenTitle = currentScreenTitle) },
         bottomBar = {
             if (navController.currentDestination?.route != Screens.Settings.route) {
-                TurnSmartBottomNavigationBar(navController,  onTitleChange = { title ->
+                TurnSmartBottomNavigationBar(navController, onTitleChange = { title ->
                     currentScreenTitle.value = title
                 })
             }
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    viewModel.sendNotification(context)
+                },
+                modifier = Modifier.padding(16.dp) // Add padding to FAB
+            ) {
+                Text("+")
+            }
+        },
+        content = { innerPadding ->
+            Box(
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+            ) {
+                MainNavHost(navController = navController)
+            }
         }
-    ){ innerPadding ->
-        Box(modifier = Modifier
-            .padding(innerPadding)
-            .fillMaxSize()) {
-            MainNavHost(navController = navController)
-        }
-    }
+    )
 }
+
 @Composable
 fun MainNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(
@@ -79,5 +90,6 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier = Modifier)
 @Preview
 @Composable
 fun MainScreenPreview() {
-    MainScreen()
+    val viewModel = NotificationViewModel()
+    MainScreen(viewModel)
 }
