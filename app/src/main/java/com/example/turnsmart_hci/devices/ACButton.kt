@@ -35,11 +35,11 @@ fun AirConditionerScreen(
     mode: String,
     onSetMode: (String) -> Unit,
     verticalSwing: Int,
-    onSetVerticalSwing: (Int) -> Unit,
+    onSetVerticalSwing: (String) -> Unit,
     horizontalSwing: Int,
-    onSetHorizontalSwing: (Int) -> Unit,
+    onSetHorizontalSwing: (String) -> Unit,
     fanSpeed: Int,
-    onSetFanSpeed: (Int) -> Unit,
+    onSetFanSpeed: (String) -> Unit,
     textColor: Color = Color.Black
 ) {
     val modes = listOf("Fan", "Cooling", "Heating")
@@ -228,7 +228,7 @@ fun AirConditionerScreen(
                     onValueChange = { newValue ->
                         //index is 0 for auto
                         //set vertical swing gets index value therefore in set should modify accordingly
-                        onSetVerticalSwing(newValue.toInt())
+                        onSetVerticalSwing(verticalSwingPositions[newValue.toInt()])
                     },
                     valueRange = 0f..5f,
                     steps = 5, // Ensures the slider snaps to integer values
@@ -272,7 +272,7 @@ fun AirConditionerScreen(
                     onValueChange = { newValue ->
                         //index is 0 is for -90°
                         //set horizontal swing gets index value therefore in set should modify accordingly
-                        onSetHorizontalSwing(newValue.toInt())
+                        onSetHorizontalSwing(horizontalSwingPositions[newValue.toInt()])
                     },
                     valueRange = 0f..4f,
                     steps = 4,
@@ -314,7 +314,7 @@ fun AirConditionerScreen(
                     value = fanSpeed.toFloat(),
                     onValueChange = { newValue ->
                         // -25 is auto and the rest are in percentage
-                        onSetFanSpeed(newValue.toInt())
+                        onSetFanSpeed(newValue.toString())
                     },
                     valueRange = 0f..100f,
                     steps = 3,
@@ -359,11 +359,11 @@ fun AirConditionerScreenPreview() {
                 mode = mode,
                 onSetMode = { mode = it },
                 verticalSwing = verticalSwing,
-                onSetVerticalSwing = {verticalSwing = it },
+                onSetVerticalSwing = { },
                 horizontalSwing = horizontalSwing,
-                onSetHorizontalSwing = {horizontalSwing = it },
+                onSetHorizontalSwing = { },
                 fanSpeed = fanSpeed,
-                onSetFanSpeed = { fanSpeed = it }
+                onSetFanSpeed = { }
             )
         }
     }
