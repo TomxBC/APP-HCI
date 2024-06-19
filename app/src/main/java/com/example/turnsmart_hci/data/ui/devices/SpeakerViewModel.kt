@@ -28,7 +28,50 @@ class SpeakerViewModel(
         ) { state, response -> state.copy(currentDevice = response as Speaker?) }
     }
 
+    fun setVolume(volume: Int) = runOnViewModelScope(
+        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Speaker.SET_VOLUME_ACTION, arrayOf(volume)) },
+        { state, _ -> state }
+    )
 
+    fun play() = runOnViewModelScope(
+        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Speaker.PLAY_ACTION) },
+        { state, _ -> state }
+    )
+
+    fun stop() = runOnViewModelScope(
+        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Speaker.STOP_ACTION) },
+        { state, _ -> state }
+    )
+
+    fun pause() = runOnViewModelScope(
+        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Speaker.PAUSE_ACTION) },
+        { state, _ -> state }
+    )
+
+    fun resume() = runOnViewModelScope(
+        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Speaker.RESUME_ACTION) },
+        { state, _ -> state }
+    )
+
+    fun nextSong() = runOnViewModelScope(
+        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Speaker.NEXT_SONG_ACTION) },
+        { state, _ -> state }
+    )
+
+    fun previousSong() = runOnViewModelScope(
+        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Speaker.PREVIOUS_SONG_ACTION) },
+        { state, _ -> state}
+    )
+
+    fun setGenre(genre: String) = runOnViewModelScope(
+        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Speaker.SET_GENRE_ACTION, arrayOf(genre)) },
+        { state, _ -> state }
+    )
+
+    fun getPlaylist() = runOnViewModelScope(
+        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Speaker.GET_PLAYLIST_ACTION) },
+        { state, _ -> state }
+    )
 
     private fun <T> collectOnViewModelScope(
         flow: Flow<T>,
