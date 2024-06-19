@@ -17,7 +17,7 @@ import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 
 
 @Composable
-fun HomeScreen() {
+fun FavoriteScreen() {
     TurnSmartTheme {
         Box(modifier = Modifier.fillMaxSize()) {
             Column(

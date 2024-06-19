@@ -17,7 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.turnsmart_hci.navBars.TurnSmartBottomNavigationBar
 import com.example.turnsmart_hci.screens.AutomationScreen
 import com.example.turnsmart_hci.data.ui.devices.DevicesScreen
-import com.example.turnsmart_hci.screens.HomeScreen
+import com.example.turnsmart_hci.screens.FavoriteScreen
 import com.example.turnsmart_hci.screens.SettingsScreen
 import com.example.turnsmart_hci.navBars.TurnSmartToolbar
 import com.example.turnsmart_hci.screens.Screens
@@ -32,7 +32,7 @@ fun MainScreen(
     viewModel: NotificationViewModel
 ) {
     val navController = rememberNavController()
-    val currentScreenTitle = remember { mutableStateOf(Screens.Home.route) }
+    val currentScreenTitle = remember { mutableStateOf(Screens.Favorite.route) }
     val context = LocalContext.current
 
     TurnSmartTheme {
@@ -73,11 +73,11 @@ fun MainScreen(
 fun MainNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(
         navController = navController,
-        startDestination = Screens.Home.route,
+        startDestination = Screens.Favorite.route,
         modifier = modifier
     ) {
-        composable(Screens.Home.route) {
-            HomeScreen()
+        composable(Screens.Favorite.route) {
+            FavoriteScreen()
         }
         composable(Screens.Devices.route) {
             DevicesScreen()

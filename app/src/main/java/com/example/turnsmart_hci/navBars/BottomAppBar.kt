@@ -22,7 +22,7 @@ import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 
 @Composable
 fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Modifier = Modifier, onTitleChange: (String) -> Unit) {
-    val selected = remember { mutableStateOf(Screens.Home.route) }
+    val selected = remember { mutableStateOf(Screens.Favorite.route) }
 
     NavigationBar(
         modifier = modifier,
@@ -33,28 +33,28 @@ fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Mod
             icon = {
                 Icon(
                     painterResource(
-                        if (selected.value == Screens.Home.route) R.drawable.home_fill else R.drawable.home
+                        if (selected.value == Screens.Favorite.route) R.drawable.favorite_fill else R.drawable.favorite
                     ),
-                    contentDescription = stringResource(id = R.string.home_label)
+                    contentDescription = stringResource(id = R.string.favorite_label)
                 )
             },
             label = {
-                Text(stringResource(R.string.home_label), fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium)
+                Text(stringResource(R.string.favorite_label), fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium)
             },
-            selected = selected.value == Screens.Home.route,
+            selected = selected.value == Screens.Favorite.route,
             colors = NavigationBarItemDefaults.colors(
                 indicatorColor = TurnSmartTheme.colors.onTertiary
             ),
             onClick = {
-                selected.value = Screens.Home.route
-                navController.navigate(Screens.Home.route) {
+                selected.value = Screens.Favorite.route
+                navController.navigate(Screens.Favorite.route) {
                     popUpTo(navController.graph.startDestinationId) {
                         saveState = true
                     }
                     launchSingleTop = true
                     restoreState = true
                 }
-                onTitleChange(Screens.Home.title)
+                onTitleChange(Screens.Favorite.title)
             }
         )
         NavigationBarItem(
