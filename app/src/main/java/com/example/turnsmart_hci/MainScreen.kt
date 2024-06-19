@@ -15,10 +15,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.turnsmart_hci.navBars.TurnSmartBottomNavigationBar
-import com.example.turnsmart.screens.AutomationScreen
-import com.example.turnsmart.screens.DevicesScreen
-import com.example.turnsmart.screens.HomeScreen
-import com.example.turnsmart.screens.SettingsScreen
+import com.example.turnsmart_hci.screens.AutomationScreen
+import com.example.turnsmart_hci.data.ui.devices.DevicesScreen
+import com.example.turnsmart_hci.screens.HomeScreen
+import com.example.turnsmart_hci.screens.SettingsScreen
 import com.example.turnsmart_hci.navBars.TurnSmartToolbar
 import com.example.turnsmart_hci.screens.Screens
 import androidx.compose.material3.*

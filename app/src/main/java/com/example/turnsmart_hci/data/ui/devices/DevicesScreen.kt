@@ -100,9 +100,3 @@ fun DevicesScreen(
 //        }
     }
 }
-
-@Preview
-@Composable
-fun DevicesScreenPreview() {
-    DevicesScreen()
-}

@@ -1,4 +1,4 @@
-package com.example.turnsmart.screens
+package com.example.turnsmart_hci.screens
 
 
 import androidx.compose.foundation.layout.Arrangement
