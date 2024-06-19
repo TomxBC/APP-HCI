@@ -24,7 +24,10 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -41,16 +44,29 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.turnsmart_hci.ui.theme.pale_yellow
 import com.example.turnsmart_hci.R
+import com.example.turnsmart_hci.data.model.Status
+import com.example.turnsmart_hci.data.ui.devices.LampViewModel
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 
 @Composable
-fun LightButton() {
+fun LightButton(lampViewModel: LampViewModel) {
+    var showDialog by remember { mutableStateOf(false) }
+
     DeviceButton(
         label = R.string.lights,
-        onClick = {},
+        onClick = {showDialog = true},
         backgroundColor = pale_yellow,
         icon = R.drawable.lights
     )
+
+    if (showDialog) {
+        Dialog(onDismissRequest = { showDialog = false }) {
+            LightsControlScreen(
+                onDismiss = { showDialog = false },
+                lampViewModel = lampViewModel
+            )
+        }
+    }
 }
 
 @Composable
@@ -62,7 +78,7 @@ fun LightsScreen(
     onIntensityChange: (Int) -> Unit,
     lightColor: Color,
     onColorChange: (Color) -> Unit,
-    textColor: Color = Color.Black
+    textColor: Color = Color.Black,
 ) {
     Box(
         modifier = Modifier
@@ -176,7 +192,7 @@ fun ColorSlider(
     selectedColor: Color,
     onColorSelected: (Color) -> Unit
 ) {
-    var sliderPosition by remember { mutableStateOf(0f) }
+    var sliderPosition by remember { mutableFloatStateOf(0f) }
 
     val colors = listOf(
         Color.Red,
@@ -230,25 +246,65 @@ fun ColorSlider(
 
 
 @Composable
-fun LightsControlScreen() {
-    var isOn by remember { mutableStateOf(false) }
-    var lightIntensity by remember { mutableStateOf(50) }
+fun LightsControlScreen(
+    onDismiss: () -> Unit,
+    lampViewModel: LampViewModel
+) {
+    val uiLampState by lampViewModel.uiState.collectAsState()
+
+    var isOn by remember { mutableStateOf(uiLampState.currentDevice?.status == Status.ON) }
+    var lightIntensity by remember { mutableIntStateOf(uiLampState.currentDevice?.brightness ?: 50) }
     var lightColor by remember { mutableStateOf(Color.White) }
 
-    LightsScreen(
-        deviceName = "Living Room Light",
-        isOn = isOn,
-        onToggle = { isOn = it },
-        lightIntensity = lightIntensity,
-        onIntensityChange = { lightIntensity = it },
-        lightColor = lightColor,
-        onColorChange = { lightColor = it },
-    )
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.padding(16.dp)
+    ) {
+        Text("Modify Light Settings", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Switch(
+            checked = isOn,
+            onCheckedChange = {
+                isOn = it
+                if (isOn) lampViewModel.turnOn() else lampViewModel.turnOff()
+            }
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Slider(
+            value = lightIntensity.toFloat(),
+            onValueChange = {
+                lightIntensity = it.toInt()
+                lampViewModel.setBrightness(lightIntensity)
+            },
+            valueRange = 0f..100f
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        ColorSlider(
+            selectedColor = lightColor,
+            onColorSelected = {
+                lightColor = it
+                lampViewModel.setColor(it.toString()) // Convierte a String el color
+            }
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(onClick = onDismiss) {
+            Text("Close")
+        }
+    }
 }
+
 
 @Preview
 @Composable
 fun ButtonPreview() {
-    LightButton()
-    LightsControlScreen()
+
 }

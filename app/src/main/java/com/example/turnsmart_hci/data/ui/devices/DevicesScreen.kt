@@ -18,6 +18,7 @@ import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.devices.DeviceButton
 import com.example.turnsmart_hci.data.model.Status
 import com.example.turnsmart_hci.data.ui.getViewModelFactory
+import com.example.turnsmart_hci.devices.LightButton
 import com.example.turnsmart_hci.ui.theme.ThemeColors
 
 
@@ -32,27 +33,30 @@ fun DevicesScreen(
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-        when (uiLampState.currentDevice?.status) {
-            Status.ON -> {
-                DeviceButton(
-                    label = R.string.turn_off,
-                    enabled = uiLampState.canExecuteAction,
-                    onClick = { lampViewModel.turnOff() },
-                    backgroundColor = ThemeColors.PALE_YELLOW.color,
-                    icon = R.drawable.lights
-                )
-            }
+        LightButton(lampViewModel = lampViewModel)
 
-            else -> {
-                DeviceButton(
-                    label = R.string.turn_on,
-                    enabled = uiLampState.canExecuteAction,
-                    onClick = { lampViewModel.turnOn() },
-                    backgroundColor = ThemeColors.PALE_YELLOW.color,
-                    icon = R.drawable.lights
-                )
-            }
-        }
+//        when (uiLampState.currentDevice?.status) {
+//            Status.ON -> {
+//                DeviceButton(
+//                    label = R.string.turn_off,
+//                    enabled = uiLampState.canExecuteAction,
+//                    onClick = { lampViewModel.turnOff() },
+//                    backgroundColor = ThemeColors.PALE_YELLOW.color,
+//                    icon = R.drawable.lights
+//                )
+//            }
+//
+//            else -> {
+//                DeviceButton(
+//                    label = R.string.turn_on,
+//                    enabled = uiLampState.canExecuteAction,
+//                    onClick = { lampViewModel.turnOn() },
+//                    backgroundColor = ThemeColors.PALE_YELLOW.color,
+//                    icon = R.drawable.lights
+//                )
+//            }
+//        }
+
 
 //        Column(
 //            modifier = Modifier.fillMaxSize()
