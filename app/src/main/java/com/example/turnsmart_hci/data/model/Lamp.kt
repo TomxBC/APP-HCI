@@ -28,5 +28,7 @@ class Lamp(
     companion object {
         const val TURN_ON_ACTION = "turnOn"
         const val TURN_OFF_ACTION = "turnOff"
+        const val SET_COLOR = "setColor"
+        const val SET_BRIGHTNESS = "setBrightness"
     }
 }

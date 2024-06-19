@@ -22,8 +22,34 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import com.example.turnsmart_hci.R
+import com.example.turnsmart_hci.data.ui.devices.ACViewModel
+import com.example.turnsmart_hci.data.ui.devices.LampViewModel
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
+import com.example.turnsmart_hci.ui.theme.pale_blue
+import com.example.turnsmart_hci.ui.theme.pale_yellow
+
+@Composable
+fun ACButton(acViewModel: ACViewModel) {
+    var showDialog by remember { mutableStateOf(false) }
+
+    DeviceButton(
+        label = R.string.ac,
+        onClick = {showDialog = true},
+        backgroundColor = pale_blue,
+        icon = R.drawable.ac
+    )
+
+//    if (showDialog) {
+//        Dialog(onDismissRequest = { showDialog = false }) {
+//            AirConditionerScreen(
+//                onDismiss = { showDialog = false },
+//                acViewModel = acViewModel
+//            )
+//        }
+//    }
+}
 
 @Composable
 fun AirConditionerScreen(

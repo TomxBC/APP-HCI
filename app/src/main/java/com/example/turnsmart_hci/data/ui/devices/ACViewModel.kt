@@ -3,8 +3,8 @@ package com.example.turnsmart_hci.data.ui.devices
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.turnsmart_hci.DataSourceException
+import com.example.turnsmart_hci.data.model.AC
 import com.example.turnsmart_hci.data.model.Error
-import com.example.turnsmart_hci.data.model.Lamp
 import com.example.turnsmart_hci.data.repositry.DeviceRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -15,42 +15,58 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class LampViewModel(
+class ACViewModel (
     private val repository: DeviceRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(LampUiState())
+    private val _uiState = MutableStateFlow(ACUiState())
     val uiState = _uiState.asStateFlow()
 
     init {
         collectOnViewModelScope(
             repository.currentDevice
-        ) { state, response -> state.copy(currentDevice = response as Lamp?) }
+        ) { state, response -> state.copy(currentDevice = response as AC?) }
     }
 
     fun turnOn() = runOnViewModelScope(
-        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.TURN_ON_ACTION) },
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, AC.TURN_ON_ACTION) },
         { state, _ -> state }
     )
 
     fun turnOff() = runOnViewModelScope(
-        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.TURN_OFF_ACTION) },
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, AC.TURN_OFF_ACTION) },
         { state, _ -> state }
     )
 
-    fun setColor(color: String) = runOnViewModelScope(
-        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.SET_COLOR, arrayOf(color)) },
-        { state, _ -> state}
+    fun setTemperature(temp: Int) = runOnViewModelScope(
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, AC.SET_TEMPERATURE_ACTION, arrayOf(temp)) },
+        { state, _ -> state }
     )
 
-    fun setBrightness(bright: Int) = runOnViewModelScope(
-        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.SET_BRIGHTNESS, arrayOf(bright)) },
-        { state, _ -> state}
+    fun setMode(mode: String) = runOnViewModelScope(
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, AC.SET_MODE_ACTION, arrayOf(mode)) },
+        { state, _ -> state }
     )
 
-     private fun <T> collectOnViewModelScope(
+    fun setVerticalSwing(position: String) = runOnViewModelScope(
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, AC.SET_VERTICAL_SWING_ACTION, arrayOf(position)) },
+        { state, _ -> state }
+    )
+
+    fun setHorizontalSwing(position: String) = runOnViewModelScope(
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, AC.SET_HORIZONTAL_SWING_ACTION, arrayOf(position)) },
+        { state, _ -> state }
+    )
+
+    fun setFanSpeed(speed: String) = runOnViewModelScope(
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, AC.SET_FAN_SPEED_ACTION, arrayOf(speed)) },
+        { state, _ -> state }
+    )
+
+
+    private fun <T> collectOnViewModelScope(
         flow: Flow<T>,
-        updateState: (LampUiState, T) -> LampUiState
+        updateState: (ACUiState, T) -> ACUiState
     ) = viewModelScope.launch {
         flow
             .distinctUntilChanged()
@@ -60,7 +76,7 @@ class LampViewModel(
 
     private fun <R> runOnViewModelScope(
         block: suspend () -> R,
-        updateState: (LampUiState, R) -> LampUiState
+        updateState: (ACUiState, R) -> ACUiState
     ): Job = viewModelScope.launch {
         _uiState.update { it.copy(loading = true, error = null) }
         runCatching {
