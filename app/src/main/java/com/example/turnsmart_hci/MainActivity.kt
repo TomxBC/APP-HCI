@@ -15,6 +15,13 @@ import androidx.core.content.ContextCompat
 import com.example.turnsmart_hci.notifications.NotificationViewModel
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import android.Manifest
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.window.core.layout.WindowWidthSizeClass
 
 class MainActivity : ComponentActivity() {
     private val requestPermissionLauncher = registerForActivityResult(
@@ -28,6 +35,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private val viewModel: NotificationViewModel by viewModels()
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -36,7 +44,15 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ){
                     val viewModel by viewModels<NotificationViewModel>()
-                    MainScreen(viewModel) { checkAndRequestPermission() }
+                    val adaptiveInfo = currentWindowAdaptiveInfo()
+                    val layoutType = with(adaptiveInfo) {
+                            if(windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.EXPANDED){
+                                NavigationSuiteType.NavigationDrawer
+                            }else{
+                                NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(adaptiveInfo)
+                            }
+                    }
+                    MainScreen(viewModel, layoutType) { checkAndRequestPermission() }
                 }
             }
         }
