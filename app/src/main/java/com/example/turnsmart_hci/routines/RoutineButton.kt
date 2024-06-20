@@ -30,28 +30,32 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.turnsmart_hci.R
+import com.example.turnsmart_hci.data.model.Routine
+import com.example.turnsmart_hci.data.ui.routines.RoutineViewModel
 import com.example.turnsmart_hci.ui.theme.darkText
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_blue
 
 @Composable
 fun RoutineButton(
-    onFavoriteClick: () -> Unit,
-    onPlayToggle: (Boolean) -> Unit,
-    subtitleText: String,
-    modifier: Modifier = Modifier,
-    backgroundColor: Color = Color.Gray,
-    textColor: Color = Color.Black,
-    label: String
+    routine: Routine,
+    routineViewModel: RoutineViewModel
+//    onFavoriteClick: () -> Unit,
+//    onPlayToggle: (Boolean) -> Unit,
+//    subtitleText: String,
+//    modifier: Modifier = Modifier,
+//    backgroundColor: Color = Color.Gray,
+//    textColor: Color = Color.Black,
+//    label: String
 ) {
     var isPlayOn by remember { mutableStateOf(false) }
 
     Button(
         onClick = { /* Handle button click if needed */ },
         colors = ButtonDefaults.buttonColors(
-            containerColor = backgroundColor
+            containerColor = pale_blue
         ),
-        modifier = modifier
+        modifier = Modifier
             .padding(8.dp)
             .size(width = 300.dp, height = 70.dp)
     ) {
@@ -61,7 +65,7 @@ fun RoutineButton(
             modifier = Modifier.fillMaxSize()
         ) {
             IconButton(
-                onClick = onFavoriteClick,
+                onClick = { /*Creo que aca va la logica de cuando tocas para ejecutar la rutina*/ },
                 modifier = Modifier.size(24.dp)
             ) {
                 Icon(
@@ -72,15 +76,15 @@ fun RoutineButton(
             }
             Spacer(modifier = Modifier.width(10.dp))
             Text(
-                text = label,
-                color = textColor,
+                text = routine.name.toString(),
+                color = Color.Black,
                 fontSize = 18.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium
             )
             Spacer(modifier = Modifier.width(10.dp))
             IconButton(
-                onClick = onFavoriteClick,
+                onClick = {},
                 modifier = Modifier.size(24.dp)
             ) {
                 Icon(
@@ -93,8 +97,8 @@ fun RoutineButton(
     }
 }
 
-@Preview
-@Composable
-fun RoutineButtonPreview() {
-    RoutineButton(label = "RoutineName", onFavoriteClick = {}, subtitleText = "running", onPlayToggle = {}, backgroundColor = pale_blue)
-}
+//@Preview
+//@Composable
+//fun RoutineButtonPreview() {
+//    RoutineButton()
+//}

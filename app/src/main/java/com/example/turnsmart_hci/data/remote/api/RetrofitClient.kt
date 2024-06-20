@@ -1,6 +1,7 @@
 package com.example.turnsmart_hci.data.remote.api
 
 import com.example.turnsmart_hci.BuildConfig
+import com.example.turnsmart_hci.data.model.Routine
 import com.example.turnsmart_hci.data.remote.model.RemoteDevice
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -30,5 +31,8 @@ private val retrofit = Retrofit.Builder()
 object RetrofitClient {
     val deviceService : DeviceService by lazy {
         retrofit.create(DeviceService::class.java)
+    }
+    val routineService : RoutineService by lazy {
+        retrofit.create(RoutineService::class.java)
     }
 }
