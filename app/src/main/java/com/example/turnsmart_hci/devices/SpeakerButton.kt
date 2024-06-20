@@ -125,20 +125,19 @@ fun SpeakerScreen(
                         fontFamily = montserratFontFamily,
                         fontWeight = FontWeight.Medium,
                     )
-                    Spacer(modifier = Modifier.height(25.dp))
+                    Spacer(modifier = Modifier.height(25.dp).padding(10.dp))
 
                     Slider(
                         value = 0f,
-                        onValueChange = { /* Do nothing */ },
+                        onValueChange = {  },
                         valueRange = 0f..10f,
-                        steps = 0, // Ensures the slider snaps to integer values
                         modifier = Modifier.fillMaxWidth()
                     )
 
                     // Music Control Icons
                     Row(
                         horizontalArrangement = Arrangement.SpaceEvenly,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth().padding(10.dp)
                     ) {
                         IconButton(onClick = onPrevious) {
                             Icon(

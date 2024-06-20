@@ -89,11 +89,11 @@ fun LightsScreen(
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Bold,
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp).padding(10.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(10.dp)
             ) {
                 Text(
                     text = "Off/On",
@@ -110,13 +110,14 @@ fun LightsScreen(
                     }
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp).padding(10.dp))
             Text(
                 text = "Light Intensity: $lightIntensity",
                 color = textColor,
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
+                modifier = Modifier.padding(10.dp)
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -132,14 +133,13 @@ fun LightsScreen(
                         tint = Color.Black
                     )
                 }
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(8.dp).padding(10.dp))
                 Slider(
                     value = lightIntensity.toFloat(),
                     onValueChange = { newValue ->
                         onIntensityChange(newValue.toInt())
                     },
                     valueRange = 0f..100f,
-                    steps = 99, // Ensures the slider snaps to integer values
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
@@ -154,15 +154,16 @@ fun LightsScreen(
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp).padding(10.dp))
             Text(
                 text = "Light Color",
                 color = textColor,
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
+                modifier = Modifier.padding(10.dp)
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(8.dp).padding(10.dp))
             ColorSlider(
                 selectedColor = lightColor,
                 onColorSelected = onColorChange
