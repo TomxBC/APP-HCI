@@ -86,11 +86,33 @@ fun MainScreen(
             containerColor = TurnSmartTheme.colors.primary,
             contentColor = TurnSmartTheme.colors.onPrimary,
         ) {
-            when (currentDestination) {
-                AppDestinations.FAVORITES -> FavoriteScreen()
-                AppDestinations.DEVICES -> DevicesScreen()
-                AppDestinations.AUTOMATION -> AutomationScreen()
-            }
+            Scaffold(
+                topBar ={
+                        //TurnSmartToolbar(currentDestination.name)
+                },
+                floatingActionButton = {
+                    // UI elements and logic to trigger notification
+                    Button(onClick = {
+                        requestPermission()
+                    }) {
+                        Text("Send Notification")
+                    }
+                },
+                content = { innerPadding ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                            .background(TurnSmartTheme.colors.primary)
+                    ) {
+                        when (currentDestination) {
+                            AppDestinations.FAVORITES -> FavoriteScreen()
+                            AppDestinations.DEVICES -> DevicesScreen()
+                            AppDestinations.AUTOMATION -> AutomationScreen()
+                        }
+                    }
+                }
+            )
         }
     }
 
