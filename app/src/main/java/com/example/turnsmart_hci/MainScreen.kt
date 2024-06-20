@@ -1,5 +1,7 @@
 package com.example.turnsmart_hci
 
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -27,13 +29,16 @@ import androidx.compose.ui.unit.dp
 import com.example.turnsmart_hci.notifications.NotificationViewModel
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 
+
 @Composable
 fun MainScreen(
-    viewModel: NotificationViewModel
+    viewModel: NotificationViewModel,
+    requestPermission: () -> Unit
 ) {
     val navController = rememberNavController()
     val currentScreenTitle = remember { mutableStateOf(Screens.Favorite.route) }
     val context = LocalContext.current
+
 
     TurnSmartTheme {
         Scaffold(
@@ -46,13 +51,11 @@ fun MainScreen(
                 }
             },
             floatingActionButton = {
-                FloatingActionButton(
-                    onClick = {
-                        viewModel.sendNotification(context)
-                    },
-                    modifier = Modifier.padding(16.dp) // Add padding to FAB
-                ) {
-                    Text("+")
+                // UI elements and logic to trigger notification
+                Button(onClick = {
+                    requestPermission()
+                }) {
+                    Text("Send Notification")
                 }
             },
             content = { innerPadding ->
@@ -63,6 +66,7 @@ fun MainScreen(
                 ) {
                     MainNavHost(navController = navController)
                 }
+
             }
         )
     }
@@ -95,5 +99,5 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier = Modifier)
 @Composable
 fun MainScreenPreview() {
     val viewModel = NotificationViewModel()
-    MainScreen(viewModel)
+    MainScreen(viewModel){}
 }
