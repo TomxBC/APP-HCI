@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.turnsmart_hci.DataSourceException
 import com.example.turnsmart_hci.data.model.AC
 import com.example.turnsmart_hci.data.model.Error
+import com.example.turnsmart_hci.data.model.Status
 import com.example.turnsmart_hci.data.repositry.DeviceRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -26,6 +27,35 @@ class ACViewModel (
         collectOnViewModelScope(
             repository.currentDevice
         ) { state, response -> state.copy(currentDevice = response as AC?) }
+    }
+
+    fun getCurrentName(): String? {
+        return uiState.value.currentDevice?.name
+    }
+
+    fun getCurrentStatus(): Status? {
+        return uiState.value.currentDevice?.status
+    }
+
+    fun getCurrentTemperature(): Int? {
+        return uiState.value.currentDevice?.temperature
+    }
+
+    fun getCurrentVerticalSwing(): String? {
+        return uiState.value.currentDevice?.verticalSwing
+    }
+
+
+    fun getCurrentHorizontalSwing(): String? {
+        return uiState.value.currentDevice?.horizontalSwing
+    }
+
+    fun getCurrentMode() : String? {
+        return uiState.value.currentDevice?.mode
+    }
+
+    fun getCurrentFanSpeed(): String? {
+        return uiState.value.currentDevice?.fanFast
     }
 
     fun turnOn() = runOnViewModelScope(

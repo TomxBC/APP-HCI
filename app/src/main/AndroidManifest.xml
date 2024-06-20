@@ -13,11 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TurnSmartHCI"
         tools:targetApi="31"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:name=".TurnSmart">
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.TurnSmartHCI">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

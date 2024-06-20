@@ -11,7 +11,7 @@ import com.example.turnsmart_hci.data.repositry.DeviceRepository
 //import ar.edu.itba.example.api.repository.DeviceRepository
 //import ar.edu.itba.example.api.repository.RoomRepository
 
-class ApiApplication  : Application() {
+class TurnSmart  : Application() {
 
     private val deviceRemoteDataSource: DeviceRemoteDataSource
         get() = DeviceRemoteDataSource(RetrofitClient.deviceService)

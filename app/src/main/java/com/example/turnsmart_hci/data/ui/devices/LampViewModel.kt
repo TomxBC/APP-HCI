@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.turnsmart_hci.DataSourceException
 import com.example.turnsmart_hci.data.model.Error
 import com.example.turnsmart_hci.data.model.Lamp
+import com.example.turnsmart_hci.data.model.Status
 import com.example.turnsmart_hci.data.repositry.DeviceRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -28,6 +29,21 @@ class LampViewModel(
         ) { state, response -> state.copy(currentDevice = response as Lamp?) }
     }
 
+    fun getCurrentName(): String? {
+        return uiState.value.currentDevice?.name
+    }
+
+    fun getCurrentStatus(): Status? {
+        return uiState.value.currentDevice?.status
+    }
+
+    fun getCurrentColor(): String? {
+        return uiState.value.currentDevice?.color
+    }
+
+    fun getCurrentBrightness(): Int? {
+        return uiState.value.currentDevice?.brightness
+    }
     fun turnOn() = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.TURN_ON_ACTION) },
         { state, _ -> state }

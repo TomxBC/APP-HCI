@@ -42,7 +42,7 @@ import com.example.turnsmart_hci.ui.theme.pale_yellow
 @Composable
 fun BlindsButton() {
     DeviceButton(
-        label = R.string.blinds,
+        label = "blinds",
         onClick = {},
         backgroundColor = pale_blue,
         icon = R.drawable.blinds
@@ -82,6 +82,7 @@ fun BlindsScreen(
                 fontSize = 22.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Bold,
+                onTextLayout = {}
             )
             Spacer(modifier = Modifier.height(30.dp))
             Row(
@@ -95,6 +96,7 @@ fun BlindsScreen(
                     fontSize = 16.sp,
                     fontFamily = montserratFontFamily,
                     fontWeight = FontWeight.Medium,
+                    onTextLayout = {}
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Switch(
@@ -111,6 +113,7 @@ fun BlindsScreen(
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
+                onTextLayout = {}
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,

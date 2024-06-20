@@ -8,7 +8,7 @@ import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
-import com.example.turnsmart_hci.ApiApplication
+import com.example.turnsmart_hci.TurnSmart
 import com.example.turnsmart_hci.data.repositry.DeviceRepository
 import com.example.turnsmart_hci.data.ui.devices.DevicesViewModel
 import com.example.turnsmart_hci.data.ui.devices.LampViewModel
@@ -22,7 +22,7 @@ import com.example.turnsmart_hci.data.ui.devices.LampViewModel
 
 @Composable
 fun getViewModelFactory(defaultArgs: Bundle? = null): ViewModelFactory {
-    val application = (LocalContext.current.applicationContext as ApiApplication)
+    val application = (LocalContext.current.applicationContext as TurnSmart)
     val deviceRepository = application.deviceRepository
     return ViewModelFactory(
         deviceRepository,

@@ -39,7 +39,7 @@ fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Mod
                 )
             },
             label = {
-                Text(stringResource(R.string.home_label), fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium)
+                Text(stringResource(R.string.home_label), fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium,  onTextLayout = {})
             },
             selected = selected.value == Screens.Home.route,
             colors = NavigationBarItemDefaults.colors(
@@ -67,7 +67,7 @@ fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Mod
                 )
             },
             label = {
-                Text(stringResource(R.string.devices_label), fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium)
+                Text(stringResource(R.string.devices_label), fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium,  onTextLayout = {})
             },
             selected = selected.value == Screens.Devices.route,
             colors = NavigationBarItemDefaults.colors(
@@ -95,7 +95,7 @@ fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Mod
                 )
             },
             label = {
-                Text(stringResource(R.string.automation_label), fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium)
+                Text(stringResource(R.string.automation_label), fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium,  onTextLayout = {})
             },
             selected = selected.value == Screens.Automation.route,
             colors = NavigationBarItemDefaults.colors(

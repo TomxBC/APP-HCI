@@ -35,7 +35,7 @@ fun ACButton(acViewModel: ACViewModel) {
     var showDialog by remember { mutableStateOf(false) }
 
     DeviceButton(
-        label = R.string.ac,
+        label = acViewModel.getCurrentName(),
         onClick = {showDialog = true},
         backgroundColor = pale_blue,
         icon = R.drawable.ac
@@ -43,7 +43,7 @@ fun ACButton(acViewModel: ACViewModel) {
 
 //    if (showDialog) {
 //        Dialog(onDismissRequest = { showDialog = false }) {
-//            AirConditionerScreen(
+//            ACControler(
 //                onDismiss = { showDialog = false },
 //                acViewModel = acViewModel
 //            )
@@ -99,7 +99,8 @@ fun AirConditionerScreen(
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                onTextLayout = {}
             )
             Spacer(modifier = Modifier.height(30.dp))
 
@@ -115,6 +116,7 @@ fun AirConditionerScreen(
                     fontSize = 16.sp,
                     fontFamily = montserratFontFamily,
                     fontWeight = FontWeight.Medium,
+                    onTextLayout = {}
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Switch(
@@ -138,6 +140,7 @@ fun AirConditionerScreen(
                     fontSize = 16.sp,
                     fontFamily = montserratFontFamily,
                     fontWeight = FontWeight.Medium,
+                    onTextLayout = {}
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Box {
@@ -151,7 +154,8 @@ fun AirConditionerScreen(
                             .background(Color.LightGray)
                             .padding(8.dp)
                             .fillMaxWidth()
-                            .clickable { expanded = !expanded }
+                            .clickable { expanded = !expanded },
+                        onTextLayout = {}
                     )
                     DropdownMenu(
                         expanded = expanded,
@@ -159,7 +163,7 @@ fun AirConditionerScreen(
                     ) {
                         modes.forEach { selectedMode ->
                             DropdownMenuItem(
-                                text = { Text(selectedMode) },
+                                text = { Text(selectedMode, onTextLayout = {}) },
                                 onClick = {
                                     onSetMode(selectedMode)
                                     expanded = false
@@ -179,7 +183,8 @@ fun AirConditionerScreen(
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.align(Alignment.Start)
+                modifier = Modifier.align(Alignment.Start),
+                onTextLayout = {}
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
@@ -188,6 +193,7 @@ fun AirConditionerScreen(
                 fontSize = 25.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
+                onTextLayout = {}
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -235,7 +241,8 @@ fun AirConditionerScreen(
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.align(Alignment.Start)
+                modifier = Modifier.align(Alignment.Start),
+                onTextLayout = {}
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
@@ -244,6 +251,7 @@ fun AirConditionerScreen(
                 fontSize = 25.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
+                onTextLayout = {}
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -266,7 +274,7 @@ fun AirConditionerScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 verticalSwingPositions.forEach { label ->
-                    Text(text = label)
+                    Text(text = label, onTextLayout = {})
                 }
             }
 
@@ -279,7 +287,8 @@ fun AirConditionerScreen(
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.align(Alignment.Start)
+                modifier = Modifier.align(Alignment.Start),
+                onTextLayout = {}
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
@@ -288,6 +297,7 @@ fun AirConditionerScreen(
                 fontSize = 25.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
+                onTextLayout = {}
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -310,7 +320,7 @@ fun AirConditionerScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 horizontalSwingPositions.forEach { label ->
-                    Text(text = label)
+                    Text(text = label, onTextLayout = {})
                 }
             }
             Spacer(modifier = Modifier.height(25.dp))
@@ -322,7 +332,8 @@ fun AirConditionerScreen(
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.align(Alignment.Start)
+                modifier = Modifier.align(Alignment.Start),
+                onTextLayout = {}
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
@@ -331,6 +342,7 @@ fun AirConditionerScreen(
                 fontSize = 25.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
+                onTextLayout = {}
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -352,14 +364,13 @@ fun AirConditionerScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 fanSpeedPositions.forEach { label ->
-                    Text(text = label)
+                    Text(text = label, onTextLayout = {})
                 }
             }
 
         }
     }
 }
-
 @Composable
 fun AirConditionerScreenPreview() {
     var isOn by remember { mutableStateOf(true) }
@@ -395,8 +406,8 @@ fun AirConditionerScreenPreview() {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ACPreview() {
-    AirConditionerScreenPreview()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun ACPreview() {
+//    AirConditionerScreenPreview()
+//}
