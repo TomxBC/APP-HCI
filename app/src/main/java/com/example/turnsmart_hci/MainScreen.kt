@@ -31,6 +31,7 @@ import com.example.turnsmart_hci.navBars.TurnSmartToolbar
 import com.example.turnsmart_hci.screens.Screens
 import androidx.compose.material3.*
 import androidx.compose.material3.adaptive.WindowAdaptiveInfo
+import androidx.compose.material3.adaptive.currentWindowSize
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -84,7 +85,6 @@ fun MainScreen(
             },
             containerColor = TurnSmartTheme.colors.primary,
             contentColor = TurnSmartTheme.colors.onPrimary,
-            modifier = Modifier.padding(15.dp)
         ) {
             when (currentDestination) {
                 AppDestinations.FAVORITES -> FavoriteScreen()
