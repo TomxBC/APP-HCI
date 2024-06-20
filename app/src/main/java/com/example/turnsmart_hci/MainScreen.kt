@@ -85,6 +85,7 @@ fun MainScreen(
             },
             containerColor = TurnSmartTheme.colors.primary,
             contentColor = TurnSmartTheme.colors.onPrimary,
+            modifier = Modifier.then(if (layoutType == NavigationSuiteType.NavigationDrawer) Modifier.padding(15.dp) else Modifier)
         ) {
             Scaffold(
                 topBar ={
