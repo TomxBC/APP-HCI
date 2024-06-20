@@ -10,14 +10,17 @@
       </SelectionState>
       <SelectionState runConfigName="ACPreview">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-06-19T15:31:10.918259Z">
+        <DropdownSelection timestamp="2024-06-19T20:01:20.065447700Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Tomi\.android\avd\Pixel_3a_API_34.avd" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Tomi\.android\avd\Copy_of_Pixel_3a_API_34.avd" />
             </handle>
           </Target>
         </DropdownSelection>
         <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="app">
+        <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
   </component>

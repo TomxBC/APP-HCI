@@ -36,12 +36,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.navigation.NavHostController
 import com.example.turnsmart_hci.ui.theme.pale_yellow
 import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.data.model.Status
@@ -49,24 +51,19 @@ import com.example.turnsmart_hci.data.ui.devices.LampViewModel
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 
 @Composable
-fun LightButton(lampViewModel: LampViewModel) {
-    var showDialog by remember { mutableStateOf(false) }
+fun LightButton(lampViewModel: LampViewModel, navController: NavHostController) {
 
     DeviceButton(
-        label = R.string.lights,
-        onClick = {showDialog = true},
+        label = lampViewModel.getCurrentName(),
+        onClick = {
+            navController.navigate(
+                "lights_screen/${lampViewModel.getCurrentName()}/${lampViewModel.getCurrentStatus() == Status.ON}/${lampViewModel.getCurrentBrightness()}/${lampViewModel.getCurrentColor()}"
+            )},
         backgroundColor = pale_yellow,
         icon = R.drawable.lights
     )
 
-    if (showDialog) {
-        Dialog(onDismissRequest = { showDialog = false }) {
-            LightsControlScreen(
-                onDismiss = { showDialog = false },
-                lampViewModel = lampViewModel
-            )
-        }
-    }
+
 }
 
 @Composable
@@ -79,6 +76,7 @@ fun LightsScreen(
     lightColor: Color,
     onColorChange: (Color) -> Unit,
     textColor: Color = Color.Black,
+    lampViewModel: LampViewModel
 ) {
     Box(
         modifier = Modifier
@@ -104,6 +102,7 @@ fun LightsScreen(
                 fontSize = 22.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Bold,
+                onTextLayout = {}
             )
             Spacer(modifier = Modifier.height(16.dp))
             Row(
@@ -112,17 +111,23 @@ fun LightsScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Off/On",
+                    text = if (lampViewModel.getCurrentStatus() == Status.ON) { "ON" } else { "OFF" },
                     color = textColor,
                     fontSize = 16.sp,
                     fontFamily = montserratFontFamily,
                     fontWeight = FontWeight.Medium,
+                    onTextLayout = {}
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Switch(
                     checked = isOn,
                     onCheckedChange = { isChecked ->
                         onToggle(isChecked)
+                        if (isChecked) {
+                            lampViewModel.turnOn()
+                        } else {
+                            lampViewModel.turnOff()
+                        }
                     }
                 )
             }
@@ -133,6 +138,7 @@ fun LightsScreen(
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
+                onTextLayout = {}
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -153,6 +159,7 @@ fun LightsScreen(
                     value = lightIntensity.toFloat(),
                     onValueChange = { newValue ->
                         onIntensityChange(newValue.toInt())
+                        lampViewModel.setBrightness(newValue.toInt())
                     },
                     valueRange = 0f..100f,
                     steps = 99, // Ensures the slider snaps to integer values
@@ -177,11 +184,17 @@ fun LightsScreen(
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
+                onTextLayout = {}
             )
             Spacer(modifier = Modifier.height(8.dp))
             ColorSlider(
                 selectedColor = lightColor,
-                onColorSelected = onColorChange
+
+                onColorSelected = {
+                    newColor -> onColorChange(newColor)
+                    val colorHex = String.format("#%06X", (0xFFFFFF and newColor.toArgb()))
+                    lampViewModel.setColor(colorHex)
+                }
             )
         }
     }
@@ -261,7 +274,7 @@ fun LightsControlScreen(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.padding(16.dp)
     ) {
-        Text("Modify Light Settings", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+        Text("Modify Light Settings", fontWeight = FontWeight.Bold, fontSize = 18.sp,  onTextLayout = {})
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -297,7 +310,7 @@ fun LightsControlScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(onClick = onDismiss) {
-            Text("Close")
+            Text("Close",  onTextLayout = {})
         }
     }
 }

@@ -24,6 +24,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -44,7 +45,7 @@ import com.example.turnsmart_hci.ui.theme.pale_red
 @Composable
 fun SpeakerButton() {
     DeviceButton(
-        label = R.string.speakers,
+        label = "R.string.speakers",
         onClick = {},
         backgroundColor = pale_blue,
         icon = R.drawable.speaker
@@ -105,6 +106,7 @@ fun SpeakerScreen(
                 fontSize = 22.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Bold,
+                onTextLayout = {}
             )
             Spacer(modifier = Modifier.height(30.dp))
 
@@ -124,6 +126,7 @@ fun SpeakerScreen(
                         fontSize = 16.sp,
                         fontFamily = montserratFontFamily,
                         fontWeight = FontWeight.Medium,
+                        onTextLayout = {}
                     )
                     Spacer(modifier = Modifier.height(25.dp))
 
@@ -202,6 +205,7 @@ fun SpeakerScreen(
                             fontSize = 16.sp,
                             fontFamily = montserratFontFamily,
                             fontWeight = FontWeight.Medium,
+                            onTextLayout = {}
                         )
                         Spacer(modifier = Modifier.width(16.dp))
                         Box {
@@ -215,7 +219,8 @@ fun SpeakerScreen(
                                     .background(Color.LightGray)
                                     .padding(8.dp)
                                     .fillMaxWidth()
-                                    .clickable { expanded = !expanded }
+                                    .clickable { expanded = !expanded },
+                                onTextLayout = {}
                             )
                             DropdownMenu(
                                 expanded = expanded,
@@ -223,7 +228,7 @@ fun SpeakerScreen(
                             ) {
                                 genres.forEach { selectedGenre ->
                                     DropdownMenuItem(
-                                        text = { Text(selectedGenre) },
+                                        text = { Text(selectedGenre, onTextLayout = {}) },
                                         onClick = {
                                             onGenreSelect(selectedGenre)
                                             expanded = false
@@ -237,17 +242,17 @@ fun SpeakerScreen(
                     if (showDialog) {
                         AlertDialog(
                             onDismissRequest = { showDialog = false },
-                            title = { Text(text = "Playlist: $genre") },
+                            title = { Text(text = "Playlist: $genre", onTextLayout = {}) },
                             text = {
                                 Column {
                                     songs.forEach { song ->
-                                        Text(text = song)
+                                        Text(text = song, onTextLayout = {})
                                     }
                                 }
                             },
                             confirmButton = {
                                 Button(onClick = { showDialog = false }) {
-                                    Text("Close")
+                                    Text("Close", onTextLayout = {})
                                 }
                             }
                         )
@@ -262,7 +267,8 @@ fun SpeakerScreen(
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.align(Alignment.Start)
+                modifier = Modifier.align(Alignment.Start),
+                onTextLayout = {}
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
@@ -271,6 +277,7 @@ fun SpeakerScreen(
                 fontSize = 25.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
+                onTextLayout = {}
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -315,7 +322,7 @@ fun SpeakerScreen(
 
 @Composable
 fun SpeakerControlScreen() {
-    var volume by remember { mutableStateOf(5) }
+    var volume by remember { mutableIntStateOf(5) }
     var genre by remember { mutableStateOf("Pop") }
 
     SpeakerScreen(

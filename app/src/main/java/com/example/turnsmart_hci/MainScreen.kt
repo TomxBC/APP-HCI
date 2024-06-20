@@ -22,8 +22,14 @@ import com.example.turnsmart.screens.SettingsScreen
 import com.example.turnsmart_hci.navBars.TurnSmartToolbar
 import com.example.turnsmart_hci.screens.Screens
 import androidx.compose.material3.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.turnsmart_hci.data.ui.devices.LampViewModel
+import com.example.turnsmart_hci.data.ui.getViewModelFactory
+import com.example.turnsmart_hci.devices.LightsScreen
 import com.example.turnsmart_hci.notifications.NotificationViewModel
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 
@@ -52,7 +58,7 @@ fun MainScreen(
                     },
                     modifier = Modifier.padding(16.dp) // Add padding to FAB
                 ) {
-                    Text("+")
+                    Text("+",  onTextLayout = {})
                 }
             },
             content = { innerPadding ->
@@ -80,7 +86,7 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier = Modifier)
             HomeScreen()
         }
         composable(Screens.Devices.route) {
-            DevicesScreen()
+            DevicesScreen(navController = navController)
         }
         composable(Screens.Automation.route) {
             AutomationScreen()
@@ -88,6 +94,30 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier = Modifier)
         composable(Screens.Settings.route) {
             SettingsScreen()
         }
+        composable("lights_screen/{deviceName}/{isOn}/{lightIntensity}/{lightColor}") { backStackEntry ->
+            val deviceName = backStackEntry.arguments?.getString("deviceName") ?: ""
+            val isOn = backStackEntry.arguments?.getString("isOn")?.toBoolean() ?: false
+            val lightIntensity = backStackEntry.arguments?.getString("lightIntensity")?.toInt() ?: 0
+            val lightColor = backStackEntry.arguments?.getString("lightColor") ?: "#FFFFFF"
+            val lampViewModel: LampViewModel = viewModel(factory = getViewModelFactory())
+
+            LightsScreen(
+                deviceName = deviceName,
+                isOn = isOn,
+                onToggle = { isChecked ->
+                    if (isChecked) lampViewModel.turnOn() else lampViewModel.turnOff()
+                },
+                lightIntensity = lightIntensity,
+                onIntensityChange = { intensity -> lampViewModel.setBrightness(intensity) },
+                lightColor = Color(android.graphics.Color.parseColor(lightColor)),
+                onColorChange = { color ->
+                    val colorHex = String.format("#%06X", 0xFFFFFF and color.toArgb())
+                    lampViewModel.setColor(colorHex)
+                },
+                lampViewModel = lampViewModel
+            )
+        }
+
     }
 }
 

@@ -1,5 +1,6 @@
 package com.example.turnsmart_hci.devices
 
+import android.annotation.SuppressLint
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -25,13 +26,13 @@ import com.example.turnsmart_hci.ui.theme.ThemeColors
 
 @Composable
 fun DeviceButton(
-    @StringRes label: Int,
+    label : String?,
     enabled: Boolean = true,
     onClick: () -> Unit,
     backgroundColor: Color,
     textColor: Color = ThemeColors.DARK_TEXT.color,
     icon: Int,
-    modifier: Modifier = Modifier
+    @SuppressLint("ModifierParameter") modifier: Modifier = Modifier
 ) {
     Button(
         onClick = onClick,
@@ -53,11 +54,13 @@ fun DeviceButton(
         )
         Spacer(modifier = Modifier.width(10.dp))
         Text(
-            text = stringResource(id = label),
+            text = label ?: "No se pudo obtener el nombre",
             color = textColor,
             fontSize = 18.sp,
             fontFamily = montserratFontFamily,
-            fontWeight = FontWeight.Medium
+            fontWeight = FontWeight.Medium,
+            onTextLayout = {}
+
         )
         Spacer(modifier = Modifier.width(100.dp))
         IconButton(
@@ -73,10 +76,10 @@ fun DeviceButton(
     }
 }
 
-@Preview
-@Composable
-fun DeviceButtonPreview() {
-    DeviceButton(
-        label = R.string.lights, onClick = {},
-        icon = R.drawable.lights, backgroundColor = ThemeColors.PALE_BLUE.color)
-}
+//@Preview
+//@Composable
+//fun DeviceButtonPreview() {
+//    DeviceButton(
+//        label = R.string.lights, onClick = {},
+//        icon = R.drawable.lights, backgroundColor = ThemeColors.PALE_BLUE.color)
+//}
