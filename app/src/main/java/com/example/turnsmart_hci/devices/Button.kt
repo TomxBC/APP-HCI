@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -13,6 +14,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -41,7 +43,12 @@ fun DeviceButton(
         ),
         modifier = modifier
             .padding(8.dp)
-            .size(width = 300.dp, height = 50.dp),
+            .size(width = 300.dp, height = 50.dp)
+            .shadow(
+                elevation = 5.dp,
+                shape = RoundedCornerShape(8.dp),
+                clip = true
+            ),
         enabled = enabled
     ) {
         Icon(

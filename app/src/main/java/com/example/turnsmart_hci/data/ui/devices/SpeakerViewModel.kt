@@ -3,6 +3,7 @@ package com.example.turnsmart_hci.data.ui.devices
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.turnsmart_hci.DataSourceException
+import com.example.turnsmart_hci.data.model.Blind
 import com.example.turnsmart_hci.data.model.Error
 import com.example.turnsmart_hci.data.model.Speaker
 import com.example.turnsmart_hci.data.repositry.DeviceRepository
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -24,52 +26,52 @@ class SpeakerViewModel(
 
     init {
         collectOnViewModelScope(
-            repository.currentDevice
+            repository.currentDevice.filterIsInstance<Speaker>()
         ) { state, response -> state.copy(currentDevice = response as Speaker?) }
     }
 
     fun setVolume(volume: Int) = runOnViewModelScope(
-        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Speaker.SET_VOLUME_ACTION, arrayOf(volume)) },
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Speaker.SET_VOLUME_ACTION, arrayOf(volume)) },
         { state, _ -> state }
     )
 
     fun play() = runOnViewModelScope(
-        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Speaker.PLAY_ACTION) },
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Speaker.PLAY_ACTION) },
         { state, _ -> state }
     )
 
     fun stop() = runOnViewModelScope(
-        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Speaker.STOP_ACTION) },
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Speaker.STOP_ACTION) },
         { state, _ -> state }
     )
 
     fun pause() = runOnViewModelScope(
-        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Speaker.PAUSE_ACTION) },
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Speaker.PAUSE_ACTION) },
         { state, _ -> state }
     )
 
     fun resume() = runOnViewModelScope(
-        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Speaker.RESUME_ACTION) },
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Speaker.RESUME_ACTION) },
         { state, _ -> state }
     )
 
     fun nextSong() = runOnViewModelScope(
-        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Speaker.NEXT_SONG_ACTION) },
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Speaker.NEXT_SONG_ACTION) },
         { state, _ -> state }
     )
 
     fun previousSong() = runOnViewModelScope(
-        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Speaker.PREVIOUS_SONG_ACTION) },
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Speaker.PREVIOUS_SONG_ACTION) },
         { state, _ -> state}
     )
 
     fun setGenre(genre: String) = runOnViewModelScope(
-        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Speaker.SET_GENRE_ACTION, arrayOf(genre)) },
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Speaker.SET_GENRE_ACTION, arrayOf(genre)) },
         { state, _ -> state }
     )
 
     fun getPlaylist() = runOnViewModelScope(
-        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Speaker.GET_PLAYLIST_ACTION) },
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Speaker.GET_PLAYLIST_ACTION) },
         { state, _ -> state }
     )
 

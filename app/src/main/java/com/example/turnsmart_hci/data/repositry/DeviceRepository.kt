@@ -18,6 +18,10 @@ class DeviceRepository(
     suspend fun getDevice(deviceId: String): Device {
         return remoteDataSource.getDevice(deviceId).asModel()
     }
+    suspend fun getDeviceType(deviceTypeId: String): List<Device> {
+        return remoteDataSource.getDeviceType(deviceTypeId)
+            .map { remoteDevice -> remoteDevice.asModel() }
+    }
 
     suspend fun addDevice(device: Device): Device {
         return remoteDataSource.addDevice(device.asRemoteModel()).asModel()

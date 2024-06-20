@@ -11,4 +11,7 @@ class RemoteSpeakerState {
 
     @SerializedName("song")
     var song: String? = null
+
+    @SerializedName("genre")
+    var genre: String? = null
 }

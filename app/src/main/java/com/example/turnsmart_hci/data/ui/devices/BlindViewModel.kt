@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -24,8 +25,8 @@ class BlindViewModel(
 
     init {
         collectOnViewModelScope(
-            repository.currentDevice
-        ) { state, response -> state.copy(currentDevice = response as Blind?) }
+            repository.currentDevice.filterIsInstance<Blind>() // Asegurar que solo se recojan instancias de Blind
+        ) { state, response -> state.copy(currentDevice = response) }
     }
 
     fun open() = runOnViewModelScope(

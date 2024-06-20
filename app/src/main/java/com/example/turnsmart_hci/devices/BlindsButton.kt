@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Slider
@@ -29,24 +31,62 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.turnsmart_hci.R
+import com.example.turnsmart_hci.data.model.Blind
+import com.example.turnsmart_hci.data.model.Status
+import com.example.turnsmart_hci.data.ui.devices.BlindViewModel
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_blue
+import com.example.turnsmart_hci.ui.theme.pale_red
 import com.example.turnsmart_hci.ui.theme.pale_yellow
 
 @Composable
-fun BlindsButton() {
+fun BlindsButton(blind: Blind, blindViewModel: BlindViewModel) {
+    val showDialog = remember { mutableStateOf(false) }
+
     DeviceButton(
-        label = "blinds",
-        onClick = {},
-        backgroundColor = pale_blue,
+        label = blind.name,
+        onClick = {showDialog.value = true},
+        backgroundColor = pale_red,
         icon = R.drawable.blinds
     )
+    if (showDialog.value) {
+        AlertDialog(
+            onDismissRequest = {
+                showDialog.value = false
+            },
+            title = { Text(text = "Blinds Control") },
+            confirmButton = {
+                Button(onClick = { showDialog.value = false }) {
+                    Text(text = "Close")
+                }
+            },
+            text = {
+                BlindsScreen(
+                    deviceName = blind.name,
+                    isOpen = blind.status == Status.OPENED,
+                    onToggle = { isOpen ->
+                        if (isOpen) {
+                            blindViewModel.open()
+                        } else {
+                            blindViewModel.close()
+                        }
+                    },
+                    blindPosition = blind.level,
+                    onPositionChange = { level ->
+                        blindViewModel.setLevel(level)
+                    },
+                    textColor = Color.Black,
+                )
+            }
+        )
+    }
 }
 
 @Composable
@@ -56,7 +96,7 @@ fun BlindsScreen(
     onToggle: (Boolean) -> Unit,
     blindPosition: Int,
     onPositionChange: (Int) -> Unit,
-    textColor: Color = Color.Black
+    textColor: Color = Color.Black,
 ) {
     Box(
         modifier = Modifier
@@ -156,23 +196,23 @@ fun BlindsScreen(
     }
 }
 
-@Composable
-fun BlindsControlScreen() {
-    var isOpen by remember { mutableStateOf(false) }
-    var blindPosition by remember { mutableStateOf(50) }
-
-    BlindsScreen(
-        deviceName = "Messi's Room Blind",
-        isOpen = isOpen,
-        onToggle = { isOpen = it },
-        blindPosition = blindPosition,
-        onPositionChange = { blindPosition = it }
-    )
-}
-
-@Preview
-@Composable
-fun BlindsButtonPreview() {
-    BlindsButton()
-    BlindsControlScreen()
-}
+//@Composable
+//fun BlindsControlScreen() {
+//    var isOpen by remember { mutableStateOf(false) }
+//    var blindPosition by remember { mutableStateOf(50) }
+//
+//    BlindsScreen(
+//        deviceName = "Messi's Room Blind",
+//        isOpen = isOpen,
+//        onToggle = { isOpen = it },
+//        blindPosition = blindPosition,
+//        onPositionChange = { blindPosition = it }
+//    )
+//}
+//
+//@Preview
+//@Composable
+//fun BlindsButtonPreview() {
+//    BlindsButton()
+//    BlindsControlScreen()
+//}

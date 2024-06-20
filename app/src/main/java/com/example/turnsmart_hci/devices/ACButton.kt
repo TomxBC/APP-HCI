@@ -16,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -24,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.turnsmart_hci.R
+import com.example.turnsmart_hci.data.model.AC
+import com.example.turnsmart_hci.data.model.Status
 import com.example.turnsmart_hci.data.ui.devices.ACViewModel
 import com.example.turnsmart_hci.data.ui.devices.LampViewModel
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
@@ -31,24 +34,62 @@ import com.example.turnsmart_hci.ui.theme.pale_blue
 import com.example.turnsmart_hci.ui.theme.pale_yellow
 
 @Composable
-fun ACButton(acViewModel: ACViewModel) {
-    var showDialog by remember { mutableStateOf(false) }
+fun ACButton(ac:AC, acViewModel: ACViewModel) {
+    val showDialog = remember { mutableStateOf(false) }
 
     DeviceButton(
-        label = acViewModel.getCurrentName(),
-        onClick = {showDialog = true},
+        label = ac.name,
+        onClick = {showDialog.value = true},
         backgroundColor = pale_blue,
         icon = R.drawable.ac
     )
 
-//    if (showDialog) {
-//        Dialog(onDismissRequest = { showDialog = false }) {
-//            ACControler(
-//                onDismiss = { showDialog = false },
-//                acViewModel = acViewModel
-//            )
-//        }
-//    }
+    if (showDialog.value) {
+        AlertDialog(
+            onDismissRequest = {
+                showDialog.value= false
+            },
+            title = { Text(text = "AC Control") },
+            confirmButton = {
+                Button( onClick = { showDialog.value = false } ) {
+                    Text(text = "Close")
+                }
+            },
+            text = {
+                AirConditionerScreen(
+                    deviceName = ac.name,
+                    isOn = ac.status == Status.ON,
+                    onToggle = { isOn ->
+                        if (isOn) {
+                            acViewModel.turnOn()
+                        } else {
+                            acViewModel.turnOff()
+                        }
+                    },
+                    temperature = ac.temperature,
+                    onSetTemperature = { temp ->
+                        acViewModel.setTemperature(temp)
+                    },
+                    mode = ac.mode,
+                    onSetMode = { mod ->
+                        acViewModel.setMode(mod)
+                    },
+                    verticalSwing = ac.verticalSwing,
+                    onSetVerticalSwing = { vSwing ->
+                        acViewModel.setVerticalSwing(vSwing)
+                    },
+                    horizontalSwing = ac.horizontalSwing,
+                    onSetHorizontalSwing = { hSwing ->
+                        acViewModel.setHorizontalSwing(hSwing)
+                    },
+                    fanSpeed = ac.fanFast,
+                    onSetFanSpeed = { speed ->
+                        acViewModel.setFanSpeed(speed)
+                    },
+                )
+            }
+        )
+    }
 }
 
 @Composable
@@ -60,11 +101,11 @@ fun AirConditionerScreen(
     onSetTemperature: (Int) -> Unit,
     mode: String,
     onSetMode: (String) -> Unit,
-    verticalSwing: Int,
+    verticalSwing: String,
     onSetVerticalSwing: (String) -> Unit,
-    horizontalSwing: Int,
+    horizontalSwing: String,
     onSetHorizontalSwing: (String) -> Unit,
-    fanSpeed: Int,
+    fanSpeed: String,
     onSetFanSpeed: (String) -> Unit,
     textColor: Color = Color.Black
 ) {
@@ -75,6 +116,7 @@ fun AirConditionerScreen(
     val fanSpeedPositions = listOf("Auto", "25%", "50%", "75%", "100%")
 
     Box(modifier = Modifier.verticalScroll(rememberScrollState())
+        .verticalScroll(rememberScrollState())
         .fillMaxWidth()
         .background(Color.White, shape = RoundedCornerShape(8.dp))
         .padding(16.dp)
@@ -100,18 +142,16 @@ fun AirConditionerScreen(
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth(),
-                onTextLayout = {}
             )
             Spacer(modifier = Modifier.height(30.dp))
 
-            //on/ off
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Off/On",
+                    text = if(isOn){"ON"}else{"OFF"},
                     color = textColor,
                     fontSize = 16.sp,
                     fontFamily = montserratFontFamily,
@@ -246,7 +286,7 @@ fun AirConditionerScreen(
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
-                text = verticalSwingPositions[verticalSwing],
+                text = verticalSwing,
                 color = textColor,
                 fontSize = 25.sp,
                 fontFamily = montserratFontFamily,
@@ -292,7 +332,7 @@ fun AirConditionerScreen(
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
-                text = horizontalSwingPositions[horizontalSwing],
+                text = verticalSwing,
                 color = textColor,
                 fontSize = 25.sp,
                 fontFamily = montserratFontFamily,
@@ -371,40 +411,40 @@ fun AirConditionerScreen(
         }
     }
 }
-@Composable
-fun AirConditionerScreenPreview() {
-    var isOn by remember { mutableStateOf(true) }
-    var temperature by remember { mutableIntStateOf(24) }
-    var mode by remember { mutableStateOf("Cooling") }
-    var verticalSwing by remember { mutableIntStateOf(2) }
-    var horizontalSwing by remember { mutableIntStateOf(0) }
-    var fanSpeed by remember { mutableIntStateOf(25) }
-
-    Surface {
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            AirConditionerScreen(
-                deviceName = "Living Room Air Conditioner",
-                isOn = isOn,
-                onToggle = { isOn = it },
-                temperature = temperature,
-                onSetTemperature = { temperature = it },
-                mode = mode,
-                onSetMode = { mode = it },
-                verticalSwing = verticalSwing,
-                onSetVerticalSwing = { },
-                horizontalSwing = horizontalSwing,
-                onSetHorizontalSwing = { },
-                fanSpeed = fanSpeed,
-                onSetFanSpeed = { }
-            )
-        }
-    }
-}
+//@Composable
+//fun AirConditionerScreenPreview() {
+//    var isOn by remember { mutableStateOf(true) }
+//    var temperature by remember { mutableIntStateOf(24) }
+//    var mode by remember { mutableStateOf("Cooling") }
+//    var verticalSwing by remember { mutableIntStateOf(2) }
+//    var horizontalSwing by remember { mutableIntStateOf(0) }
+//    var fanSpeed by remember { mutableIntStateOf(25) }
+//
+//    Surface {
+//        Column(
+//            modifier = Modifier
+//                .padding(16.dp)
+//                .fillMaxSize(),
+//            verticalArrangement = Arrangement.spacedBy(16.dp)
+//        ) {
+//            AirConditionerScreen(
+//                deviceName = "Living Room Air Conditioner",
+//                isOn = isOn,
+//                onToggle = { isOn = it },
+//                temperature = temperature,
+//                onSetTemperature = { temperature = it },
+//                mode = mode,
+//                onSetMode = { mode = it },
+//                verticalSwing = verticalSwing,
+//                onSetVerticalSwing = { },
+//                horizontalSwing = horizontalSwing,
+//                onSetHorizontalSwing = { },
+//                fanSpeed = fanSpeed,
+//                onSetFanSpeed = { }
+//            )
+//        }
+//    }
+//}
 
 //@Preview(showBackground = true)
 //@Composable

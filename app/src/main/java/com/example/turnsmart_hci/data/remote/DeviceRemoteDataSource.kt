@@ -20,6 +20,11 @@ class DeviceRemoteDataSource(
         }
     }
 
+    suspend fun getDeviceType(deviceTypeId: String): List<RemoteDevice<*>> {
+        return handleApiResponse {
+            deviceService.getDeviceType(deviceTypeId)
+        }
+    }
     suspend fun getDevice(deviceId: String): RemoteDevice<*> {
         return handleApiResponse {
             deviceService.getDevice(deviceId)

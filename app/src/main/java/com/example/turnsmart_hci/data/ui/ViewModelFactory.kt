@@ -10,8 +10,11 @@ import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.turnsmart_hci.TurnSmart
 import com.example.turnsmart_hci.data.repositry.DeviceRepository
+import com.example.turnsmart_hci.data.ui.devices.ACViewModel
+import com.example.turnsmart_hci.data.ui.devices.BlindViewModel
 import com.example.turnsmart_hci.data.ui.devices.DevicesViewModel
 import com.example.turnsmart_hci.data.ui.devices.LampViewModel
+import com.example.turnsmart_hci.data.ui.devices.SpeakerViewModel
 
 //import com.example.turnsmart_hci.ApiApplication
 //import ar.edu.itba.example.api.repository.DeviceRepository
@@ -46,9 +49,17 @@ class ViewModelFactory (
             isAssignableFrom(DevicesViewModel::class.java) ->
                 DevicesViewModel(deviceRepository)
 
+            isAssignableFrom(ACViewModel::class.java) ->
+                ACViewModel(deviceRepository)
+
+            isAssignableFrom(BlindViewModel::class.java) ->
+                BlindViewModel(deviceRepository)
+
+            isAssignableFrom(SpeakerViewModel::class.java) ->
+                SpeakerViewModel(deviceRepository)
+
             isAssignableFrom(LampViewModel::class.java) ->
                 LampViewModel(deviceRepository)
-
             else ->
                 throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

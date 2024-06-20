@@ -31,25 +31,60 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.turnsmart_hci.R
+import com.example.turnsmart_hci.data.model.Speaker
+import com.example.turnsmart_hci.data.model.Status
+import com.example.turnsmart_hci.data.ui.devices.SpeakerViewModel
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_blue
 import com.example.turnsmart_hci.ui.theme.pale_green
 import com.example.turnsmart_hci.ui.theme.pale_red
 
 @Composable
-fun SpeakerButton() {
+fun SpeakerButton(speaker: Speaker, speakerViewModel: SpeakerViewModel) {
+    val showDialog = remember { mutableStateOf(false) }
     DeviceButton(
-        label = "R.string.speakers",
-        onClick = {},
-        backgroundColor = pale_blue,
+        label = speaker.name,
+        onClick = {showDialog.value = true},
+        backgroundColor = pale_green,
         icon = R.drawable.speaker
     )
+    if (showDialog.value) {
+        AlertDialog(
+            onDismissRequest = {
+                showDialog.value = false
+            },
+            title = { Text(text = "Speaker Control") },
+            confirmButton = {
+                Button(onClick = { showDialog.value = false }) {
+                    Text(text = "Close")
+                }
+            },
+            text = {
+                SpeakerScreen(
+                    deviceName = speaker.name,
+                    volume = speaker.volume,
+                    onVolumeChange = { vol ->
+                        speakerViewModel.setVolume(vol)
+                    },
+                    onPlay = {speakerViewModel.play()},
+                    onStop = {speakerViewModel.stop()},
+                    onPrevious = {speakerViewModel.previousSong()},
+                    onResume = {speakerViewModel.resume()},
+                    onNext = {speakerViewModel.nextSong()},
+                    onPause = {speakerViewModel.pause()},
+                    genre = speaker.genre ?: "Music",
+                    onGenreSelect = {gen -> speakerViewModel.setGenre(gen)},
+                )
+            }
+        )
+    }
 }
 
 @Composable
@@ -111,15 +146,20 @@ fun SpeakerScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
             // Now Playing Text
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .border(width = 2.dp, color = Color.LightGray, shape = RoundedCornerShape(10.dp))
-            ){
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(
+                        width = 2.dp,
+                        color = Color.LightGray,
+                        shape = RoundedCornerShape(10.dp)
+                    )
+            ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
                     modifier = Modifier.padding(25.dp)
-                ){
+                ) {
                     Text(
                         text = "Now Playing: $currentSong",
                         color = textColor,
@@ -168,7 +208,9 @@ fun SpeakerScreen(
                             isPlaying = !isPlaying
                         }) {
                             Icon(
-                                painter = if (isPlaying) painterResource(R.drawable.pause_circle) else painterResource(R.drawable.play_circle),
+                                painter = if (isPlaying) painterResource(R.drawable.pause_circle) else painterResource(
+                                    R.drawable.play_circle
+                                ),
                                 contentDescription = if (isPlaying) "Pause" else "Play",
                                 tint = textColor,
                                 modifier = Modifier.size(40.dp)
@@ -320,29 +362,29 @@ fun SpeakerScreen(
     }
 }
 
-@Composable
-fun SpeakerControlScreen() {
-    var volume by remember { mutableIntStateOf(5) }
-    var genre by remember { mutableStateOf("Pop") }
-
-    SpeakerScreen(
-        deviceName = "Living Room Speaker",
-        volume = volume,
-        onVolumeChange = { volume = it },
-        onPlay = { /* TODO: Play music */ },
-        onStop = { /* TODO: Stop music */ },
-        onPause = { /* TODO: Pause music */ },
-        onResume = { /* TODO: Resume music */ },
-        onNext = { /* TODO: Next song */ },
-        onPrevious = { /* TODO: Previous song */ },
-        genre = genre,
-        onGenreSelect = { genre = it }
-    )
-}
-
-@Preview
-@Composable
-fun SpeakerButtonPreview() {
-    SpeakerButton()
-    SpeakerControlScreen()
-}
+//@Composable
+//fun SpeakerControlScreen() {
+//    var volume by remember { mutableIntStateOf(5) }
+//    var genre by remember { mutableStateOf("Pop") }
+//
+//    SpeakerScreen(
+//        deviceName = "Living Room Speaker",
+//        volume = volume,
+//        onVolumeChange = { volume = it },
+//        onPlay = { /* TODO: Play music */ },
+//        onStop = { /* TODO: Stop music */ },
+//        onPause = { /* TODO: Pause music */ },
+//        onResume = { /* TODO: Resume music */ },
+//        onNext = { /* TODO: Next song */ },
+//        onPrevious = { /* TODO: Previous song */ },
+//        genre = genre,
+//        onGenreSelect = { genre = it }
+//    )
+//}
+//
+//@Preview
+//@Composable
+//fun SpeakerButtonPreview() {
+//    SpeakerButton()
+//    SpeakerControlScreen()
+//}

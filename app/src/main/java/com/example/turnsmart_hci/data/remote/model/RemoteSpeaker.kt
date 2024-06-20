@@ -9,7 +9,8 @@ class RemoteSpeaker : RemoteDevice<RemoteSpeakerState>(){
             name = name,
             status = RemoteStatus.asModel(state.status),
             volume = state.volume,
-            song = state.song
+            song = state.song,
+            genre = state.genre,
         )
     }
 }

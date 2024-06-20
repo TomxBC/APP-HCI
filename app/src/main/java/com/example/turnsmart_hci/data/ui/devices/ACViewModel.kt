@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.turnsmart_hci.DataSourceException
 import com.example.turnsmart_hci.data.model.AC
+import com.example.turnsmart_hci.data.model.Blind
 import com.example.turnsmart_hci.data.model.Error
 import com.example.turnsmart_hci.data.model.Status
 import com.example.turnsmart_hci.data.repositry.DeviceRepository
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -25,7 +27,7 @@ class ACViewModel (
 
     init {
         collectOnViewModelScope(
-            repository.currentDevice
+            repository.currentDevice.filterIsInstance<AC>()
         ) { state, response -> state.copy(currentDevice = response as AC?) }
     }
 
