@@ -10,3 +10,13 @@ sealed class Screens(val route: String, @StringRes val title: Int, @DrawableRes 
     object Automation : Screens("automations", R.string.automation_label, R.drawable.calendar, R.drawable.calendar_fill)
     object Settings : Screens("settings", R.string.settings_label, R.drawable.settings, R.drawable.settings)
 }
+
+fun getScreen(route: String?){
+    when(route){
+        Screens.Favorite.route -> Screens.Favorite.title
+        Screens.Devices.route -> Screens.Devices.title
+        Screens.Automation.route -> Screens.Automation.title
+        Screens.Settings.route -> Screens.Settings.title
+        else -> Screens.Favorite.title
+    }
+}

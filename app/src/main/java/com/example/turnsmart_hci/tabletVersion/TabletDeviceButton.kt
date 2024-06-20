@@ -39,14 +39,13 @@ fun TabletDeviceButton(
         ),
         modifier = modifier
             .padding(8.dp)
-            .size(300.dp),
+            .size(250.dp),
         enabled = enabled,
         shape = MaterialTheme.shapes.extraLarge
     ) {
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
-
             IconButton(
                 onClick = { /* Handle favorite icon click */ },
                 modifier = Modifier
