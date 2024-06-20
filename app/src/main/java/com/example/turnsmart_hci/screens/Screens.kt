@@ -1,9 +1,12 @@
 package com.example.turnsmart_hci.screens
 
-// Is the nav_graph
-sealed class Screens(val route: String, val title: String) {
-    object Favorite : Screens("favorite", "Favorite")
-    object Devices : Screens("devices", "Devices")
-    object Automation : Screens("automations", "Automation")
-    object Settings : Screens("settings", "Settings")
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import com.example.turnsmart_hci.R
+
+sealed class Screens(val route: String, @StringRes val title: Int, @DrawableRes val icon: Int, @DrawableRes val iconSelected: Int ) {
+    object Favorite : Screens("favorite", R.string.favorite_label, R.drawable.favorite, R.drawable.favorite_fill)
+    object Devices : Screens("devices", R.string.devices_label, R.drawable.devices, R.drawable.devices_fill)
+    object Automation : Screens("automations", R.string.automation_label, R.drawable.calendar, R.drawable.calendar_fill)
+    object Settings : Screens("settings", R.string.settings_label, R.drawable.settings, R.drawable.settings)
 }

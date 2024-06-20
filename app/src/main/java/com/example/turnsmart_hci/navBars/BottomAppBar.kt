@@ -1,6 +1,10 @@
 package com.example.turnsmart_hci.navBars
 
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -18,7 +22,9 @@ import androidx.navigation.NavHostController
 import com.example.turnsmart_hci.screens.Screens
 import androidx.compose.material3.Text
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
+
 
 @Composable
 fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Modifier = Modifier, onTitleChange: (String) -> Unit) {
@@ -29,95 +35,50 @@ fun TurnSmartBottomNavigationBar(navController: NavHostController, modifier: Mod
         containerColor = TurnSmartTheme.colors.primary,
         contentColor = TurnSmartTheme.colors.onPrimary,
     ) {
-        NavigationBarItem(
-            icon = {
-                Icon(
-                    painterResource(
-                        if (selected.value == Screens.Favorite.route) R.drawable.favorite_fill else R.drawable.favorite
-                    ),
-                    contentDescription = stringResource(id = R.string.favorite_label)
-                )
-            },
-            label = {
-                Text(stringResource(R.string.favorite_label), fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium)
-            },
-            selected = selected.value == Screens.Favorite.route,
-            colors = NavigationBarItemDefaults.colors(
-                indicatorColor = TurnSmartTheme.colors.onTertiary
-            ),
-            onClick = {
-                selected.value = Screens.Favorite.route
-                navController.navigate(Screens.Favorite.route) {
-                    popUpTo(navController.graph.startDestinationId) {
-                        saveState = true
+        items.forEach { screen ->
+            val title = stringResource(id = screen.title)
+            NavigationBarItem(
+                icon = {
+                    Icon(
+                        painterResource(
+                            if (selected.value == screen.route) screen.iconSelected else screen.icon
+                        ),
+                        contentDescription = null
+                    )
+                },
+                label = {
+                    Text(
+                        title,
+                        fontFamily = montserratFontFamily,
+                        fontWeight = FontWeight.Medium
+                    )
+                },
+                selected = selected.value == screen.route,
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor = TurnSmartTheme.colors.onTertiary
+                ),
+                onClick = {
+                    selected.value = Screens.Favorite.route
+                    navController.navigate(Screens.Favorite.route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
                     }
-                    launchSingleTop = true
-                    restoreState = true
+                    onTitleChange(title)
                 }
-                onTitleChange(Screens.Favorite.title)
-            }
-        )
-        NavigationBarItem(
-            icon = {
-                Icon(
-                    painterResource(
-                        if (selected.value == Screens.Devices.route) R.drawable.devices_fill else R.drawable.devices
-                    ),
-                    contentDescription = stringResource(id = R.string.devices_label)
-                )
-            },
-            label = {
-                Text(stringResource(R.string.devices_label), fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium)
-            },
-            selected = selected.value == Screens.Devices.route,
-            colors = NavigationBarItemDefaults.colors(
-                indicatorColor = TurnSmartTheme.colors.onTertiary
-            ),
-            onClick = {
-                selected.value = Screens.Devices.route
-                navController.navigate(Screens.Devices.route) {
-                    popUpTo(navController.graph.startDestinationId) {
-                        saveState = true
-                    }
-                    launchSingleTop = true
-                    restoreState = true
-                }
-                onTitleChange(Screens.Devices.title)
-            }
-        )
-        NavigationBarItem(
-            icon = {
-                Icon(
-                    painterResource(
-                        if (selected.value == Screens.Automation.route) R.drawable.calendar_fill else R.drawable.calendar
-                    ),
-                    contentDescription = stringResource(id = R.string.automation_label)
-                )
-            },
-            label = {
-                Text(stringResource(R.string.automation_label), fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium)
-            },
-            selected = selected.value == Screens.Automation.route,
-            colors = NavigationBarItemDefaults.colors(
-                indicatorColor = TurnSmartTheme.colors.onTertiary
-            ),
-            onClick = {
-                selected.value = Screens.Automation.route
-                navController.navigate(Screens.Automation.route) {
-                    popUpTo(navController.graph.startDestinationId) {
-                        saveState = true
-                    }
-                    launchSingleTop = true
-                    restoreState = true
-                }
-                onTitleChange(Screens.Automation.title)
-            }
-        )
+            )
+        }
     }
 }
 
 
-
+val items = listOf(
+    Screens.Favorite,
+    Screens.Devices,
+    Screens.Automation
+)
 
 
 @Preview(showBackground = true)
@@ -128,6 +89,8 @@ fun BottomNavigationPreview() {
 
     TurnSmartTheme {
         TurnSmartBottomNavigationBar(navController = navController, modifier = Modifier.padding(top = largePadding), onTitleChange = {title -> title})
+        //TurnSmartNavigationRail(navController = navController, modifier = Modifier.padding(top = largePadding), onTitleChange = {title -> title})
+        //TurnSmartNavigationDrawer(navController = navController, modifier = Modifier.padding(top = largePadding), onTitleChange = {title -> title})
     }
 }
 
