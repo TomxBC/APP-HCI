@@ -18,7 +18,7 @@ class RemoteACState {
     @SerializedName("horizontalSwing")
     lateinit var horizontalSwing: String
 
-    @SerializedName("fanFast")
-    lateinit var fanFast: String
+    @SerializedName("fanSpeed")
+    lateinit var fanSpeed: String
 
 }

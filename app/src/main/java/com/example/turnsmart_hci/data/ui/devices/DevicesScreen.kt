@@ -25,10 +25,9 @@ import com.example.turnsmart_hci.devices.LightButton
 import com.example.turnsmart_hci.devices.SpeakerButton
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 
-
 @Composable
 fun DevicesScreen(
-   viewModel: DevicesViewModel = viewModel(factory = getViewModelFactory()),
+    viewModel: DevicesViewModel = viewModel(factory = getViewModelFactory()),
     lampViewModel: LampViewModel = viewModel(factory = getViewModelFactory()),
     acViewModel: ACViewModel = viewModel(factory = getViewModelFactory()),
     blindViewModel: BlindViewModel = viewModel(factory = getViewModelFactory()),
@@ -43,7 +42,6 @@ fun DevicesScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .align(Alignment.Center),
-                 //verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 val devices = uiState.devices
@@ -57,7 +55,7 @@ fun DevicesScreen(
                     )
                 } else {
                     Text(
-                        text = "You have  devices",
+                        text = "You have devices",
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(bottom = 16.dp),
@@ -70,28 +68,25 @@ fun DevicesScreen(
                                     lampViewModel = lampViewModel
                                 )
                             }
-
                             is AC -> {
                                 ACButton(
                                     ac = device,
                                     acViewModel = acViewModel
                                 )
                             }
-
                             is Blind -> {
                                 BlindsButton(
                                     blind = device,
                                     blindViewModel = blindViewModel
                                 )
                             }
-
                             is Speaker -> {
                                 SpeakerButton(
                                     speaker = device,
                                     speakerViewModel = speakerViewModel
                                 )
-                            }
-                            else -> {
+
+                            } else -> {
                                 Text("Unknown device type")
                             }
                         }
@@ -101,7 +96,6 @@ fun DevicesScreen(
         }
     }
 }
-
 
 
 

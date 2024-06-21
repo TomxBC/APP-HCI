@@ -1,7 +1,6 @@
 package com.example.turnsmart_hci.data.repositry
 
 import com.example.turnsmart_hci.data.model.Device
-import com.example.turnsmart_hci.data.model.Lamp
 import com.example.turnsmart_hci.data.remote.DeviceRemoteDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -13,15 +12,7 @@ class DeviceRepository(
         remoteDataSource.devices
             .map { it.map { jt -> jt.asModel() } }
 
-    val currentDevice = devices.map { it.firstOrNull { jt -> jt is Lamp } }
-
-    suspend fun getDevice(deviceId: String): Device {
-        return remoteDataSource.getDevice(deviceId).asModel()
-    }
-    suspend fun getDeviceType(deviceTypeId: String): List<Device> {
-        return remoteDataSource.getDeviceType(deviceTypeId)
-            .map { remoteDevice -> remoteDevice.asModel() }
-    }
+    val currentDevice = devices.map { it.firstOrNull { jt -> jt is Device } }
 
     suspend fun addDevice(device: Device): Device {
         return remoteDataSource.addDevice(device.asRemoteModel()).asModel()

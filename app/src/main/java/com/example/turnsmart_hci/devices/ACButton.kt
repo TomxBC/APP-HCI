@@ -1,5 +1,5 @@
 package com.example.turnsmart_hci.devices
-
+//
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -61,30 +61,30 @@ fun ACButton(ac:AC, acViewModel: ACViewModel) {
                     isOn = ac.status == Status.ON,
                     onToggle = { isOn ->
                         if (isOn) {
-                            acViewModel.turnOn()
+                            acViewModel.turnOn(ac)
                         } else {
-                            acViewModel.turnOff()
+                            acViewModel.turnOff(ac)
                         }
                     },
                     temperature = ac.temperature,
                     onSetTemperature = { temp ->
-                        acViewModel.setTemperature(temp)
+                        acViewModel.setTemperature(ac, temp)
                     },
                     mode = ac.mode,
                     onSetMode = { mod ->
-                        acViewModel.setMode(mod)
+                        acViewModel.setMode(ac, mod)
                     },
                     verticalSwing = ac.verticalSwing,
                     onSetVerticalSwing = { vSwing ->
-                        acViewModel.setVerticalSwing(vSwing)
+                        acViewModel.setVerticalSwing(ac, vSwing)
                     },
                     horizontalSwing = ac.horizontalSwing,
                     onSetHorizontalSwing = { hSwing ->
-                        acViewModel.setHorizontalSwing(hSwing)
+                        acViewModel.setHorizontalSwing(ac, hSwing)
                     },
-                    fanSpeed = ac.fanFast,
+                    fanSpeed = ac.fanSpeed,
                     onSetFanSpeed = { speed ->
-                        acViewModel.setFanSpeed(speed)
+                        acViewModel.setFanSpeed(ac, speed)
                     },
                 )
             }
@@ -445,7 +445,7 @@ fun AirConditionerScreen(
 //        }
 //    }
 //}
-
+//
 //@Preview(showBackground = true)
 //@Composable
 //fun ACPreview() {

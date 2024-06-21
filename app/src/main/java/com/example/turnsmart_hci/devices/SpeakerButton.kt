@@ -24,25 +24,20 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.data.model.Speaker
-import com.example.turnsmart_hci.data.model.Status
 import com.example.turnsmart_hci.data.ui.devices.SpeakerViewModel
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
-import com.example.turnsmart_hci.ui.theme.pale_blue
 import com.example.turnsmart_hci.ui.theme.pale_green
 import com.example.turnsmart_hci.ui.theme.pale_red
 
@@ -51,7 +46,7 @@ fun SpeakerButton(speaker: Speaker, speakerViewModel: SpeakerViewModel) {
     val showDialog = remember { mutableStateOf(false) }
     DeviceButton(
         label = speaker.name,
-        onClick = {showDialog.value = true},
+        onClick = { showDialog.value = true },
         backgroundColor = pale_green,
         icon = R.drawable.speaker
     )
@@ -71,16 +66,16 @@ fun SpeakerButton(speaker: Speaker, speakerViewModel: SpeakerViewModel) {
                     deviceName = speaker.name,
                     volume = speaker.volume,
                     onVolumeChange = { vol ->
-                        speakerViewModel.setVolume(vol)
+                        speakerViewModel.setVolume(speaker, vol)
                     },
-                    onPlay = {speakerViewModel.play()},
-                    onStop = {speakerViewModel.stop()},
-                    onPrevious = {speakerViewModel.previousSong()},
-                    onResume = {speakerViewModel.resume()},
-                    onNext = {speakerViewModel.nextSong()},
-                    onPause = {speakerViewModel.pause()},
+                    onPlay = { speakerViewModel.play(speaker) },
+                    onStop = { speakerViewModel.stop(speaker) },
+                    onPrevious = { speakerViewModel.previousSong(speaker) },
+                    onResume = { speakerViewModel.resume(speaker) },
+                    onNext = { speakerViewModel.nextSong(speaker) },
+                    onPause = { speakerViewModel.pause(speaker) },
                     genre = speaker.genre ?: "Music",
-                    onGenreSelect = {gen -> speakerViewModel.setGenre(gen)},
+                    onGenreSelect = { gen -> speakerViewModel.setGenre(speaker,gen) },
                 )
             }
         )
@@ -106,7 +101,7 @@ fun SpeakerScreen(
     var expanded by remember { mutableStateOf(false) }
     var isPlaying by remember { mutableStateOf(false) } // Track if music is playing
     var showDialog by remember { mutableStateOf(false) } // Track if dialog is showing
-    var currentSong by remember { mutableStateOf("Song 1") } // Track the current song
+    val currentSong by remember { mutableStateOf("Song 1") } // Track the current song
 
     val songs = when (genre) {
         "Pop" -> listOf("Song 1", "Song 2", "Song 3")
@@ -121,7 +116,7 @@ fun SpeakerScreen(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .background(Color.White, shape = RoundedCornerShape(8.dp))
+            .background(pale_green, shape = RoundedCornerShape(8.dp))
             .padding(16.dp)
     ) {
         Column(
@@ -361,6 +356,7 @@ fun SpeakerScreen(
         }
     }
 }
+
 
 //@Composable
 //fun SpeakerControlScreen() {

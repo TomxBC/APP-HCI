@@ -5,15 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.turnsmart_hci.DataSourceException
 import com.example.turnsmart_hci.data.model.Error
 import com.example.turnsmart_hci.data.model.Lamp
-import com.example.turnsmart_hci.data.model.Status
 import com.example.turnsmart_hci.data.repositry.DeviceRepository
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class LampViewModel(
@@ -21,47 +15,35 @@ class LampViewModel(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LampUiState())
-    val uiState = _uiState.asStateFlow()
+    val uiState: StateFlow<LampUiState> = _uiState.asStateFlow()
 
     init {
         collectOnViewModelScope(
-            repository.currentDevice
-        ) { state, response -> state.copy(currentDevice = response as Lamp?) }
+            repository.devices.map { devices ->
+                devices.filterIsInstance<Lamp>()
+            }
+        ) { state, response ->
+            state.copy(lamps = response)
+        }
     }
 
-
-//    fun getCurrentName(): String? {
-//        return uiState.value.currentDevice?.name
-//    }
-
-    fun getCurrentStatus(): Status? {
-        return uiState.value.currentDevice?.status
-    }
-
-//    fun getCurrentColor(): String? {
-//        return uiState.value.currentDevice?.color
-//    }
-//
-//    fun getCurrentBrightness(): Int? {
-//        return uiState.value.currentDevice?.brightness
-//    }
-    fun turnOn() = runOnViewModelScope(
-        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.TURN_ON_ACTION) },
+    fun turnOn(lamp: Lamp) = runOnViewModelScope(
+        { repository.executeDeviceAction(lamp.id, Lamp.TURN_ON_ACTION) },
         { state, _ -> state }
     )
 
-    fun turnOff() = runOnViewModelScope(
-        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.TURN_OFF_ACTION) },
+    fun turnOff(lamp: Lamp) = runOnViewModelScope(
+        { repository.executeDeviceAction(lamp.id, Lamp.TURN_OFF_ACTION) },
         { state, _ -> state }
     )
 
-    fun setColor(color: String) = runOnViewModelScope(
-        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.SET_COLOR, arrayOf(color)) },
+    fun setColor(lamp: Lamp, color: String) = runOnViewModelScope(
+        { repository.executeDeviceAction(lamp.id, Lamp.SET_COLOR, arrayOf(color)) },
         { state, _ -> state}
     )
 
-    fun setBrightness(bright: Int) = runOnViewModelScope(
-        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.SET_BRIGHTNESS, arrayOf(bright)) },
+    fun setBrightness(lamp: Lamp, brightness: Int) = runOnViewModelScope(
+        { repository.executeDeviceAction(lamp.id, Lamp.SET_BRIGHTNESS, arrayOf(brightness)) },
         { state, _ -> state}
     )
 
@@ -97,3 +79,4 @@ class LampViewModel(
         }
     }
 }
+

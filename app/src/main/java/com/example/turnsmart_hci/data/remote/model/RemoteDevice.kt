@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 
 abstract class RemoteDevice<T> where T : Any {
     @SerializedName("id")
-    var id: String? = null
+    lateinit var id: String
 
     @SerializedName("name")
     lateinit var name: String

@@ -3,18 +3,16 @@ package com.example.turnsmart_hci.data.ui.devices
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.turnsmart_hci.DataSourceException
-import com.example.turnsmart_hci.data.model.AC
-import com.example.turnsmart_hci.data.model.Blind
 import com.example.turnsmart_hci.data.model.Error
-import com.example.turnsmart_hci.data.model.Status
+import com.example.turnsmart_hci.data.model.AC
 import com.example.turnsmart_hci.data.repositry.DeviceRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+//import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -23,75 +21,53 @@ class ACViewModel (
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ACUiState())
-    val uiState = _uiState.asStateFlow()
+    //val uiState = _uiState.asStateFlow()
 
     init {
         collectOnViewModelScope(
-            repository.currentDevice.filterIsInstance<AC>()
-        ) { state, response -> state.copy(currentDevice = response as AC?) }
-    }
-
-    fun getCurrentName(): String? {
-        return uiState.value.currentDevice?.name
-    }
-
-    fun getCurrentStatus(): Status? {
-        return uiState.value.currentDevice?.status
-    }
-
-    fun getCurrentTemperature(): Int? {
-        return uiState.value.currentDevice?.temperature
-    }
-
-    fun getCurrentVerticalSwing(): String? {
-        return uiState.value.currentDevice?.verticalSwing
+            repository.devices.map { devices ->
+                val acDevices = devices.filterIsInstance<AC>()
+                println("AC Devices: $acDevices")
+                acDevices
+            }
+        ) { state, response ->
+            state.copy(ac = response)
+        }
     }
 
 
-    fun getCurrentHorizontalSwing(): String? {
-        return uiState.value.currentDevice?.horizontalSwing
-    }
-
-    fun getCurrentMode() : String? {
-        return uiState.value.currentDevice?.mode
-    }
-
-    fun getCurrentFanSpeed(): String? {
-        return uiState.value.currentDevice?.fanFast
-    }
-
-    fun turnOn() = runOnViewModelScope(
-        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, AC.TURN_ON_ACTION) },
+    fun turnOn(ac: AC) = runOnViewModelScope(
+        { repository.executeDeviceAction(ac.id, AC.TURN_ON_ACTION) },
         { state, _ -> state }
     )
 
-    fun turnOff() = runOnViewModelScope(
-        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, AC.TURN_OFF_ACTION) },
+    fun turnOff(ac: AC) = runOnViewModelScope(
+        { repository.executeDeviceAction(ac.id, AC.TURN_OFF_ACTION) },
         { state, _ -> state }
     )
 
-    fun setTemperature(temp: Int) = runOnViewModelScope(
-        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, AC.SET_TEMPERATURE_ACTION, arrayOf(temp)) },
+    fun setTemperature(ac: AC, temp: Int) = runOnViewModelScope(
+        { repository.executeDeviceAction(ac.id, AC.SET_TEMPERATURE_ACTION, arrayOf(temp)) },
         { state, _ -> state }
     )
 
-    fun setMode(mode: String) = runOnViewModelScope(
-        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, AC.SET_MODE_ACTION, arrayOf(mode)) },
+    fun setMode(ac: AC, mode: String) = runOnViewModelScope(
+        { repository.executeDeviceAction(ac.id, AC.SET_MODE_ACTION, arrayOf(mode)) },
         { state, _ -> state }
     )
 
-    fun setVerticalSwing(position: String) = runOnViewModelScope(
-        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, AC.SET_VERTICAL_SWING_ACTION, arrayOf(position)) },
+    fun setVerticalSwing(ac: AC, position: String) = runOnViewModelScope(
+        { repository.executeDeviceAction(ac.id, AC.SET_VERTICAL_SWING_ACTION, arrayOf(position)) },
         { state, _ -> state }
     )
 
-    fun setHorizontalSwing(position: String) = runOnViewModelScope(
-        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, AC.SET_HORIZONTAL_SWING_ACTION, arrayOf(position)) },
+    fun setHorizontalSwing(ac: AC, position: String) = runOnViewModelScope(
+        { repository.executeDeviceAction(ac.id, AC.SET_HORIZONTAL_SWING_ACTION, arrayOf(position)) },
         { state, _ -> state }
     )
 
-    fun setFanSpeed(speed: String) = runOnViewModelScope(
-        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, AC.SET_FAN_SPEED_ACTION, arrayOf(speed)) },
+    fun setFanSpeed(ac: AC, speed: String) = runOnViewModelScope(
+        { repository.executeDeviceAction(ac.id, AC.SET_FAN_SPEED_ACTION, arrayOf(speed)) },
         { state, _ -> state }
     )
 
@@ -120,7 +96,7 @@ class ACViewModel (
         }
     }
 
-    private fun handleError(e: Throwable): Error? {
+    private fun handleError(e: Throwable): Error {
         return if (e is DataSourceException) {
             Error(e.code, e.message ?: "", e.details)
         } else {

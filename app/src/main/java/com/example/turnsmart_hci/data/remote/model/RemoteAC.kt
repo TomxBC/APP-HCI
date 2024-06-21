@@ -1,8 +1,11 @@
 package com.example.turnsmart_hci.data.remote.model
 
 import com.example.turnsmart_hci.data.model.AC
+import android.util.Log
+
 class RemoteAC : RemoteDevice<RemoteACState>() {
     override fun asModel(): AC {
+        Log.d("RemoteAC", "Deserialized state: $state")
         return AC(
             id = id,
             name = name,
@@ -11,7 +14,7 @@ class RemoteAC : RemoteDevice<RemoteACState>() {
             temperature = state.temperature,
             verticalSwing = state.verticalSwing,
             horizontalSwing = state.horizontalSwing,
-            fanFast = state.fanFast
+            fanSpeed = state.fanSpeed
         )
     }
 }

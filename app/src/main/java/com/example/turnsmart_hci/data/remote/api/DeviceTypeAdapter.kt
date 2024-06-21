@@ -25,15 +25,21 @@ class DeviceTypeAdapter : JsonDeserializer<RemoteDevice<*>?> {
         val jsonDeviceObject = json.asJsonObject
         val jsonDeviceTypeObject = jsonDeviceObject["type"].asJsonObject
         val deviceTypeId = jsonDeviceTypeObject["id"].asString
-        return if (deviceTypeId == RemoteDeviceType.LAMP_DEVICE_TYPE_ID) {
-            gson.fromJson(jsonDeviceObject, object : TypeToken<RemoteLamp?>() {}.type)
-        } else if(deviceTypeId == RemoteDeviceType.AC_DEVICE_TYPE_ID) {
-            gson.fromJson(jsonDeviceObject, object : TypeToken<RemoteAC?>() {}.type)
-        } else if(deviceTypeId == RemoteDeviceType.SPEAKER_DEVICE_TYPE_ID) {
-            gson.fromJson(jsonDeviceObject, object : TypeToken<RemoteSpeaker?>() {}.type)
-        } else if(deviceTypeId == RemoteDeviceType.BLINDS_DEVICE_TYPE_ID) {
-            gson.fromJson(jsonDeviceObject, object : TypeToken<RemoteBlind?>() {}.type)
-        } else null
+        return when (deviceTypeId) {
+            RemoteDeviceType.LAMP_DEVICE_TYPE_ID -> {
+                gson.fromJson(jsonDeviceObject, object : TypeToken<RemoteLamp?>() {}.type)
+            }
+            RemoteDeviceType.AC_DEVICE_TYPE_ID -> {
+                gson.fromJson(jsonDeviceObject, object : TypeToken<RemoteAC?>() {}.type)
+            }
+            RemoteDeviceType.SPEAKER_DEVICE_TYPE_ID -> {
+                gson.fromJson(jsonDeviceObject, object : TypeToken<RemoteSpeaker?>() {}.type)
+            }
+            RemoteDeviceType.BLINDS_DEVICE_TYPE_ID -> {
+                gson.fromJson(jsonDeviceObject, object : TypeToken<RemoteBlind?>() {}.type)
+            }
+            else -> null
+        }
     }
 }
 

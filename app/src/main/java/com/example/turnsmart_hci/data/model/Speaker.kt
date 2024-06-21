@@ -5,7 +5,7 @@ import com.example.turnsmart_hci.data.remote.model.RemoteSpeakerState
 import com.example.turnsmart_hci.data.remote.model.RemoteSpeaker
 
 class Speaker (
-    id: String?,
+    id: String,
     name: String,
     val status: Status,
     val song: String?,

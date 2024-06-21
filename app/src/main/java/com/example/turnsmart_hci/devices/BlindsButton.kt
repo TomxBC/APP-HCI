@@ -73,14 +73,14 @@ fun BlindsButton(blind: Blind, blindViewModel: BlindViewModel) {
                     isOpen = blind.status == Status.OPENED,
                     onToggle = { isOpen ->
                         if (isOpen) {
-                            blindViewModel.open()
+                            blindViewModel.open(blind)
                         } else {
-                            blindViewModel.close()
+                            blindViewModel.close(blind)
                         }
                     },
                     blindPosition = blind.level,
                     onPositionChange = { level ->
-                        blindViewModel.setLevel(level)
+                        blindViewModel.setLevel(blind, level)
                     },
                     textColor = Color.Black,
                 )
@@ -131,7 +131,7 @@ fun BlindsScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Close/Open",
+                    text = if(isOpen) "OPEN" else "CLOSE",
                     color = textColor,
                     fontSize = 16.sp,
                     fontFamily = montserratFontFamily,

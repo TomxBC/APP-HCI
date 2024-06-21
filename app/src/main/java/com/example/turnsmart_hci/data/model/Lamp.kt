@@ -5,7 +5,7 @@ import com.example.turnsmart_hci.data.remote.model.RemoteLamp
 import com.example.turnsmart_hci.data.remote.model.RemoteLampState
 
 class Lamp(
-    id: String?,
+    id: String,
     name: String,
     val status: Status,
     val color: String,

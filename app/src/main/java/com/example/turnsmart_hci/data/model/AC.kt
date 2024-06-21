@@ -5,14 +5,14 @@ import com.example.turnsmart_hci.data.remote.model.RemoteACState
 import com.example.turnsmart_hci.data.remote.model.RemoteDevice
 
 class AC (
-    id: String?,
+    id: String,
     name: String,
     val status: Status,
     val mode: String,
     val temperature: Int,
     val horizontalSwing: String,
     val verticalSwing: String,
-    val fanFast: String
+    val fanSpeed: String
     ) : Device(id, name, DeviceType.AC) {
 
     override fun asRemoteModel(): RemoteDevice<RemoteACState> {
@@ -22,7 +22,7 @@ class AC (
         state.verticalSwing = verticalSwing
         state.mode = mode
         state.horizontalSwing = horizontalSwing
-        state.fanFast = fanFast
+        state.fanSpeed = fanSpeed
 
         val model = RemoteAC()
         model.id = id

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.turnsmart_hci.DataSourceException
 import com.example.turnsmart_hci.data.model.Blind
 import com.example.turnsmart_hci.data.model.Error
+import com.example.turnsmart_hci.data.model.Lamp
 import com.example.turnsmart_hci.data.repositry.DeviceRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -25,22 +27,26 @@ class BlindViewModel(
 
     init {
         collectOnViewModelScope(
-            repository.currentDevice.filterIsInstance<Blind>() // Asegurar que solo se recojan instancias de Blind
-        ) { state, response -> state.copy(currentDevice = response) }
+            repository.devices.map { devices ->
+                devices.filterIsInstance<Blind>()
+            }
+        ) { state, response ->
+            state.copy(blinds = response)
+        }
     }
 
-    fun open() = runOnViewModelScope(
-        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Blind.OPEN_ACTION) },
+    fun open(blind : Blind) = runOnViewModelScope(
+        { repository.executeDeviceAction(blind.id, Blind.OPEN_ACTION) },
         { state, _ -> state }
     )
 
-    fun close() = runOnViewModelScope(
-        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Blind.CLOSE_ACTION) },
+    fun close(blind : Blind) = runOnViewModelScope(
+        { repository.executeDeviceAction(blind.id, Blind.CLOSE_ACTION) },
         { state, _ -> state }
     )
 
-    fun setLevel(level: Int) = runOnViewModelScope(
-        { repository.executeDeviceAction(_uiState.value.currentDevice?.id!!, Blind.SET_LEVEL_ACTION, arrayOf(level))},
+    fun setLevel(blind : Blind, level: Int) = runOnViewModelScope(
+        { repository.executeDeviceAction(blind.id, Blind.SET_LEVEL_ACTION, arrayOf(level))},
         { state, _ -> state}
     )
 
