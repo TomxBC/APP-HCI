@@ -11,6 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.turnsmart_hci.tabletVersion.TabletRoutineButton
+import com.example.turnsmart_hci.ui.theme.ThemeColors
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.dark_purple
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
@@ -28,6 +30,12 @@ fun AutomationScreen() {
             ) {
                 Text(text = "Automation Screen", fontFamily = montserratFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 30.sp, color = dark_purple)
             }
+            TabletRoutineButton(
+                label = "Routine 1",
+                onFavoriteClick = { /* Handle favorite click */ },
+                onPlayClick = { /* Handle play toggle */ },
+                backgroundColor = ThemeColors.PALE_BLUE.color
+            )
         }
     }
 
