@@ -3,6 +3,7 @@ package com.example.turnsmart_hci.data.remote.api
 import com.example.turnsmart_hci.BuildConfig
 import com.example.turnsmart_hci.data.model.Routine
 import com.example.turnsmart_hci.data.remote.model.RemoteDevice
+import com.example.turnsmart_hci.data.remote.model.RemoteRoutine
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -20,6 +21,7 @@ private val okHttpClient = OkHttpClient.Builder()
 private val gson = GsonBuilder()
     .registerTypeAdapter(Date::class.java, DateTypeAdapter())
     .registerTypeAdapter(RemoteDevice::class.java, DeviceTypeAdapter())
+    .registerTypeAdapter(RemoteRoutine::class.java, RoutineTypeAdapter())
     .create()
 
 private val retrofit = Retrofit.Builder()
