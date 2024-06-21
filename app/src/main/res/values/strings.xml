@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">TurnSmart</string>
-    <string name="action_settings" translatable="false">Settings</string>
+    <string name="action_settings">Settings</string>
     <string name="favorite_label">Favorite</string>
     <string name="automation_label">Automation</string>
     <string name="devices_label">Devices</string>
@@ -13,9 +13,36 @@
     <string name="speakers">Speakers</string>
     <string name="ac">Air Conditioner</string>
     <string name="blinds">Blinds</string>
+
     <string name="turn_on">On</string>
     <string name="turn_off">Off</string>
-    <string name="unknown">Error when …</string>
+    <string name="brightness">Light intensity</string>
+    <string name="light_color">Light color</string>
 
+    <string name="open_blind">Open</string>
+    <string name="close_blind">Close</string>
+    <string name="blind_position">Blind position</string>
+
+    <string name="playing">Now playing:</string>
+    <string name="no_song">No song</string>
+    <string name="volume">Volume</string>
+    <string name="queue">Queue</string>
+    <string name="playlist">Playlist</string>
+    <string name="genre">Genre</string>
+    <string name="pop">Pop</string>
+    <string name="rock">Rock</string>
+    <string name="jazz">Jazz</string>
+    <string name="classical">Classical</string>
+    <string name="hip_hop">Hip-Hop</string>
+
+    <string name="off_on">Off/On</string>
+    <string name="mode">Mode</string>
+    <string name="temperature">Temperature</string>
+    <string name="v_swing">Vertical Swing</string>
+    <string name="h_swing">Horizontal Swing</string>
+    <string name="fan_speed">Fan Speed</string>
+
+
+    <string name="unknown">Error when …</string>
 
 </resources>
