@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">TurnSmart</string>
-    <string name="action_settings" translatable="false">Configuración</string>
     <string name="favorite_label">Favorito</string>
     <string name="automation_label">Automatización</string>
     <string name="devices_label">Dispositivos</string>

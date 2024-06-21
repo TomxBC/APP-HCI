@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">TurnSmart</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings" translatable="false">Settings</string>
     <string name="favorite_label">Favorite</string>
     <string name="automation_label">Automation</string>
     <string name="devices_label">Devices</string>
