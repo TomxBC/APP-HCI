@@ -41,7 +41,7 @@ fun TurnSmartToolbar(navController: NavController) {
         title = {
             if (currentDestination != null) {
                 val currentScreen = getScreen(currentDestination)
-                Text(text = currentDestination, color = Color.White, fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium)
+                Text(text = currentDestination, color = TurnSmartTheme.colors.onSecondary, fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium)
             }
         },
         navigationIcon = {
@@ -54,7 +54,7 @@ fun TurnSmartToolbar(navController: NavController) {
                     Icon(
                         painter = painterResource(id = R.drawable.back_arrow),
                         contentDescription = null,
-                        tint = Color.White
+                        tint = TurnSmartTheme.colors.onSecondary
                     )
 
                 }

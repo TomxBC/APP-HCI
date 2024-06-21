@@ -5,7 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.sp
 import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.ThemeColors
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun TabletRoutineButton(
@@ -31,6 +33,9 @@ fun TabletRoutineButton(
     onButton: (Boolean) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+    var isPlaying by remember { mutableStateOf(isOn) }
+    val scope = rememberCoroutineScope()
+
     Button(
         onClick = { /* Handle button click if needed */ },
         colors = ButtonDefaults.buttonColors(
@@ -49,7 +54,7 @@ fun TabletRoutineButton(
                 modifier = Modifier.fillMaxSize()
             ) {
                 IconButton(
-                    onClick = { /* Handle favorite icon click */ },
+                    onClick = { onFavoriteClick() },
                     modifier = Modifier
                         .align(Alignment.TopStart)
                         .padding(top = 16.dp)
@@ -63,17 +68,25 @@ fun TabletRoutineButton(
                 }
                 IconButton(
                     onClick = {
-                        onButton(isOn)
+                        isPlaying = !isPlaying
+                        onPlayClick()
+                        if (isPlaying) {
+                            scope.launch {
+                                delay(5000)
+                                isPlaying = false
+                            }
+                        }
                     },
                     modifier = Modifier
                         .align(Alignment.TopEnd)
-                        .padding(top = 10.dp)
-                        .size(60.dp)
+                        .padding(top= 16.dp)
+                        .border(2.dp, Color.Black, CircleShape)
+                        .background(Color.White, CircleShape),
                 ) {
                     Icon(
-                        painter = painterResource(if (isOn) R.drawable.pause_circle else R.drawable.play_circle),
+                        painter = painterResource(if (isPlaying) R.drawable.pause else R.drawable.play_arrow),
                         contentDescription = null,
-                        modifier = Modifier.size(60.dp),
+                        modifier = Modifier.size(35.dp),
                         tint = Color.Black
                     )
                 }

@@ -6,7 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,6 +32,8 @@ fun TabletDeviceButton(
     status: String,
     modifier: Modifier = Modifier
 ) {
+    var powerOn by remember { mutableStateOf(isOn) }
+
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
@@ -50,7 +52,7 @@ fun TabletDeviceButton(
                 onClick = { /* Handle favorite icon click */ },
                 modifier = Modifier
                     .align(Alignment.TopStart)
-                    .padding(top= 16.dp)
+                    .padding(top = 16.dp)
             ) {
                 Icon(
                     painter = painterResource(R.drawable.favorite),
@@ -61,19 +63,19 @@ fun TabletDeviceButton(
             }
             IconButton(
                 onClick = {
-                    onButton(isOn)
+                    powerOn = !powerOn
                 },
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .padding(top= 16.dp)
-                    .border(2.dp, Color.Black, CircleShape)
-                    .background(Color.White, CircleShape),
+                    .padding(top = 16.dp)
+                    .border(2.dp, if (powerOn) Color.White else Color.Black, CircleShape)
+                    .background(if (powerOn) Color.Black else Color.White, CircleShape),
             ) {
                 Icon(
                     painter = painterResource(R.drawable.power),
                     contentDescription = null,
                     modifier = Modifier.size(35.dp),
-                    tint = Color.Black
+                    tint = if (powerOn) Color.White else Color.Black
                 )
             }
 
@@ -113,14 +115,15 @@ fun TabletDeviceButton(
     }
 }
 
-
 @Preview
 @Composable
 fun TabletDeviceButtonPreview() {
     // Sample preview function
     TabletDeviceButton(
-            label = R.string.lights, onClick = {},
-            icon = R.drawable.lights, backgroundColor = ThemeColors.PALE_YELLOW.color,
-            status = "Off"
+        label = R.string.lights,
+        onClick = {},
+        icon = R.drawable.lights,
+        backgroundColor = ThemeColors.PALE_YELLOW.color,
+        status = "Off"
     )
 }
