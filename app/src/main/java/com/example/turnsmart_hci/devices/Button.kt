@@ -45,7 +45,7 @@ fun DeviceButton(
             .padding(8.dp)
             .size(width = 300.dp, height = 50.dp)
             .shadow(
-                elevation = 5.dp,
+                elevation = 20.dp,
                 shape = RoundedCornerShape(8.dp),
                 clip = true
             ),

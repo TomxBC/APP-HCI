@@ -2,12 +2,6 @@
 <project version="4">
   <component name="deploymentTargetSelector">
     <selectionStates>
-      <SelectionState runConfigName="ButtonPreview">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="DevicesScreenPreview">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="ACPreview">
         <option name="selectionMode" value="DROPDOWN" />
         <DropdownSelection timestamp="2024-06-19T20:01:20.065447700Z">
@@ -20,6 +14,9 @@
         <DialogSelection />
       </SelectionState>
       <SelectionState runConfigName="app">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="SpeakerButtonPreview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
