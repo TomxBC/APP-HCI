@@ -10,15 +10,15 @@ class RemoteACState {
     lateinit var mode: String
 
     @SerializedName("temperature")
-    var temperature: Int = 0
+    var temperature: Int = 24
 
     @SerializedName("verticalSwing")
-    var verticalSwing: Int = 0
+    lateinit var verticalSwing: String
 
     @SerializedName("horizontalSwing")
-    var horizontalSwing: Int = 0
+    lateinit var horizontalSwing: String
 
-    @SerializedName("fanFast")
-    var fanFast: Int = 0
+    @SerializedName("fanSpeed")
+    lateinit var fanSpeed: String
 
 }

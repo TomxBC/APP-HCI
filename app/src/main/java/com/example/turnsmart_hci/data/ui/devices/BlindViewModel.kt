@@ -3,53 +3,57 @@ package com.example.turnsmart_hci.data.ui.devices
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.turnsmart_hci.DataSourceException
+import com.example.turnsmart_hci.data.model.Blind
 import com.example.turnsmart_hci.data.model.Error
 import com.example.turnsmart_hci.data.model.Lamp
 import com.example.turnsmart_hci.data.repositry.DeviceRepository
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class LampViewModel(
+class BlindViewModel(
     private val repository: DeviceRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(LampUiState())
-    val uiState: StateFlow<LampUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(BlindUiState())
+    val uiState = _uiState.asStateFlow()
 
     init {
         collectOnViewModelScope(
             repository.devices.map { devices ->
-                devices.filterIsInstance<Lamp>()
+                devices.filterIsInstance<Blind>()
             }
         ) { state, response ->
-            state.copy(lamps = response)
+            state.copy(blinds = response)
         }
     }
 
-    fun turnOn(lamp: Lamp) = runOnViewModelScope(
-        { repository.executeDeviceAction(lamp.id, Lamp.TURN_ON_ACTION) },
+    fun open(blind : Blind) = runOnViewModelScope(
+        { repository.executeDeviceAction(blind.id, Blind.OPEN_ACTION) },
         { state, _ -> state }
     )
 
-    fun turnOff(lamp: Lamp) = runOnViewModelScope(
-        { repository.executeDeviceAction(lamp.id, Lamp.TURN_OFF_ACTION) },
+    fun close(blind : Blind) = runOnViewModelScope(
+        { repository.executeDeviceAction(blind.id, Blind.CLOSE_ACTION) },
         { state, _ -> state }
     )
 
-    fun setColor(lamp: Lamp, color: String) = runOnViewModelScope(
-        { repository.executeDeviceAction(lamp.id, Lamp.SET_COLOR, arrayOf(color)) },
+    fun setLevel(blind : Blind, level: Int) = runOnViewModelScope(
+        { repository.executeDeviceAction(blind.id, Blind.SET_LEVEL_ACTION, arrayOf(level))},
         { state, _ -> state}
     )
 
-    fun setBrightness(lamp: Lamp, brightness: Int) = runOnViewModelScope(
-        { repository.executeDeviceAction(lamp.id, Lamp.SET_BRIGHTNESS, arrayOf(brightness)) },
-        { state, _ -> state}
-    )
 
     private fun <T> collectOnViewModelScope(
         flow: Flow<T>,
-        updateState: (LampUiState, T) -> LampUiState
+        updateState: (BlindUiState, T) -> BlindUiState
     ) = viewModelScope.launch {
         flow
             .distinctUntilChanged()
@@ -59,7 +63,7 @@ class LampViewModel(
 
     private fun <R> runOnViewModelScope(
         block: suspend () -> R,
-        updateState: (LampUiState, R) -> LampUiState
+        updateState: (BlindUiState, R) -> BlindUiState
     ): Job = viewModelScope.launch {
         _uiState.update { it.copy(loading = true, error = null) }
         runCatching {
@@ -71,7 +75,7 @@ class LampViewModel(
         }
     }
 
-    private fun handleError(e: Throwable): Error {
+    private fun handleError(e: Throwable): Error? {
         return if (e is DataSourceException) {
             Error(e.code, e.message ?: "", e.details)
         } else {
@@ -79,4 +83,3 @@ class LampViewModel(
         }
     }
 }
-

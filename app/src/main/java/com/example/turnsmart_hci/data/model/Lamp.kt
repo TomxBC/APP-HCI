@@ -5,12 +5,13 @@ import com.example.turnsmart_hci.data.remote.model.RemoteLamp
 import com.example.turnsmart_hci.data.remote.model.RemoteLampState
 
 class Lamp(
-    id: String?,
+    id: String,
     name: String,
     val status: Status,
     val color: String,
     val brightness: Int
 ) : Device(id, name, DeviceType.LAMP) {
+
 
     override fun asRemoteModel(): RemoteDevice<RemoteLampState> {
         val state = RemoteLampState()
@@ -28,5 +29,7 @@ class Lamp(
     companion object {
         const val TURN_ON_ACTION = "turnOn"
         const val TURN_OFF_ACTION = "turnOff"
+        const val SET_COLOR = "setColor"
+        const val SET_BRIGHTNESS = "setBrightness"
     }
 }

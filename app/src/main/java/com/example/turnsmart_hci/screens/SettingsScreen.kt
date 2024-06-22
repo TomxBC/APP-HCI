@@ -64,6 +64,8 @@ fun LanguageSelector(
             fontFamily = montserratFontFamily,
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp,
+            onTextLayout = {}
+
         )
         languages.forEach { language ->
             Row(
@@ -80,6 +82,8 @@ fun LanguageSelector(
                     fontFamily = montserratFontFamily,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 18.sp,
+                    onTextLayout = {}
+
                 )
             }
         }
@@ -101,6 +105,8 @@ fun NotificationsSwitch(
             fontFamily = montserratFontFamily,
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp,
+            onTextLayout = {}
+
         )
         Switch(
             checked = notificationsEnabled,

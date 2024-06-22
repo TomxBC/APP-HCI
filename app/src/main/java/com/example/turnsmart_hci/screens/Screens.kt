@@ -1,5 +1,6 @@
 package com.example.turnsmart_hci.screens
 
+<<<<<<< HEAD
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.example.turnsmart_hci.R
@@ -19,4 +20,14 @@ fun getScreen(route: String?){
         Screens.Settings.route -> Screens.Settings.title
         else -> Screens.Favorite.title
     }
+=======
+// Is the nav_graph
+sealed class Screens(val route: String, val title: String) {
+    object Home : Screens("home", "Home")
+    object Devices : Screens("devices", "Devices")
+    object Automation : Screens("automations", "Automation")
+    object Settings : Screens("settings", "Settings")
+
+    object Lights : Screens("lights", "Lights")
+>>>>>>> api-integration
 }

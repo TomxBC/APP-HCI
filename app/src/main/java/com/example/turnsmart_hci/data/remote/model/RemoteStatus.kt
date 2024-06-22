@@ -9,7 +9,7 @@ object RemoteStatus {
     const val CLOSED = "closed"
     const val PLAYING = "playing"
     const val PAUSED = "paused"
-    const val STOPED = "stoped"
+    const val STOPPED = "stopped"
 
     fun asModel(status: String): Status {
         return when (status) {
@@ -19,7 +19,7 @@ object RemoteStatus {
             OPENED -> Status.OPENED
             PLAYING -> Status.PLAYING
             PAUSED -> Status.PAUSED
-            else -> Status.STOPED
+            else -> Status.STOPPED
         }
     }
 }

@@ -3,7 +3,7 @@ package com.example.turnsmart_hci.data.model
 import com.example.turnsmart_hci.data.remote.model.RemoteStatus
 
 enum class Status {
-    ON, OFF, CLOSED, OPENED, PLAYING, PAUSED, STOPED;
+    ON, OFF, CLOSED, OPENED, PLAYING, PAUSED, STOPPED;
 
     companion object {
         fun asRemoteModel(value: Status): String {
@@ -14,7 +14,7 @@ enum class Status {
                 OPENED -> RemoteStatus.OPENED
                 PLAYING -> RemoteStatus.PLAYING
                 PAUSED -> RemoteStatus.PAUSED
-                STOPED -> RemoteStatus.STOPED
+                STOPPED -> RemoteStatus.STOPPED
             }
         }
     }

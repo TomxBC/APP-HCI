@@ -1,5 +1,6 @@
 package com.example.turnsmart_hci.data.remote
 
+import android.util.Log
 import com.example.turnsmart_hci.data.remote.api.DeviceService
 import com.example.turnsmart_hci.data.remote.model.RemoteDevice
 import kotlinx.coroutines.delay
@@ -20,6 +21,11 @@ class DeviceRemoteDataSource(
         }
     }
 
+    suspend fun getDeviceType(deviceTypeId: String): List<RemoteDevice<*>> {
+        return handleApiResponse {
+            deviceService.getDeviceType(deviceTypeId)
+        }
+    }
     suspend fun getDevice(deviceId: String): RemoteDevice<*> {
         return handleApiResponse {
             deviceService.getDevice(deviceId)
@@ -34,7 +40,7 @@ class DeviceRemoteDataSource(
 
     suspend fun modifyDevice(device: RemoteDevice<*>): Boolean {
         return handleApiResponse {
-            deviceService.modifyDevice(device.id!!, device)
+            deviceService.modifyDevice(device.id, device)
         }
     }
 

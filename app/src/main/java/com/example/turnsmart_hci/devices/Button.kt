@@ -1,10 +1,12 @@
 package com.example.turnsmart_hci.devices
 
+import android.annotation.SuppressLint
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -12,6 +14,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -25,13 +28,13 @@ import com.example.turnsmart_hci.ui.theme.ThemeColors
 
 @Composable
 fun DeviceButton(
-    @StringRes label: Int,
+    label : String?,
     enabled: Boolean = true,
     onClick: () -> Unit,
     backgroundColor: Color,
     textColor: Color = ThemeColors.DARK_TEXT.color,
     icon: Int,
-    modifier: Modifier = Modifier
+    @SuppressLint("ModifierParameter") modifier: Modifier = Modifier
 ) {
     Button(
         onClick = onClick,
@@ -40,7 +43,12 @@ fun DeviceButton(
         ),
         modifier = modifier
             .padding(8.dp)
-            .size(width = 300.dp, height = 50.dp),
+            .size(width = 300.dp, height = 50.dp)
+            .shadow(
+                elevation = 20.dp,
+                shape = RoundedCornerShape(8.dp),
+                clip = true
+            ),
         enabled = enabled
     ) {
         Icon(
@@ -53,11 +61,13 @@ fun DeviceButton(
         )
         Spacer(modifier = Modifier.width(10.dp))
         Text(
-            text = stringResource(id = label),
+            text = label ?: "No se pudo obtener el nombre",
             color = textColor,
             fontSize = 18.sp,
             fontFamily = montserratFontFamily,
-            fontWeight = FontWeight.Medium
+            fontWeight = FontWeight.Medium,
+            onTextLayout = {}
+
         )
         Spacer(modifier = Modifier.width(100.dp))
         IconButton(
@@ -73,10 +83,10 @@ fun DeviceButton(
     }
 }
 
-@Preview
-@Composable
-fun DeviceButtonPreview() {
-    DeviceButton(
-        label = R.string.lights, onClick = {},
-        icon = R.drawable.lights, backgroundColor = ThemeColors.PALE_BLUE.color)
-}
+//@Preview
+//@Composable
+//fun DeviceButtonPreview() {
+//    DeviceButton(
+//        label = R.string.lights, onClick = {},
+//        icon = R.drawable.lights, backgroundColor = ThemeColors.PALE_BLUE.color)
+//}
