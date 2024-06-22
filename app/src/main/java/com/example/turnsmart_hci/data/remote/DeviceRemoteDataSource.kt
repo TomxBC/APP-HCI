@@ -12,12 +12,10 @@ class DeviceRemoteDataSource(
 ) : RemoteDataSource() {
 
     val devices: Flow<List<RemoteDevice<*>>> = flow {
-        Log.d("LLegue al devices", "hola")
         while (true) {
             val devices = handleApiResponse {
                 deviceService.getDevices()
             }
-            Log.d("LLegue al devices", "$devices")
             emit(devices)
             delay(DELAY)
         }

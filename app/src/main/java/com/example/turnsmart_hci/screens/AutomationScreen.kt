@@ -29,7 +29,6 @@ fun AutomationScreen(
     routineViewModel: RoutineViewModel = viewModel(factory = getViewModelFactory())
 ) {
     val uiManyRoutinesState by manyRoutinesViewModel.uiState.collectAsState()
-    val uiRoutineState by routineViewModel.uiState.collectAsState()
 
     TurnSmartTheme {
         Box(modifier = Modifier.fillMaxSize()) {

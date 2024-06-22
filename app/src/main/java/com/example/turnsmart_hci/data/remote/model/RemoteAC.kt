@@ -5,7 +5,6 @@ import android.util.Log
 
 class RemoteAC : RemoteDevice<RemoteACState>() {
     override fun asModel(): AC {
-        Log.d("RemoteAC", "Deserialized state: $state")
         return AC(
             id = id,
             name = name,
