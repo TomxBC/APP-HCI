@@ -1,5 +1,5 @@
 package com.example.turnsmart_hci.devices
-//
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -8,87 +8,85 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.Popup
 import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.data.model.AC
 import com.example.turnsmart_hci.data.model.Status
 import com.example.turnsmart_hci.data.ui.devices.ACViewModel
-import com.example.turnsmart_hci.data.ui.devices.LampViewModel
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_blue
-import com.example.turnsmart_hci.ui.theme.pale_yellow
 
 @Composable
-fun ACButton(ac:AC, acViewModel: ACViewModel) {
-    val showDialog = remember { mutableStateOf(false) }
+fun ACButton(ac: AC, acViewModel: ACViewModel) {
+    var showPopup by remember { mutableStateOf(false) }
 
     DeviceButton(
         label = ac.name,
-        onClick = {showDialog.value = true},
+        onClick = { showPopup = true },
         backgroundColor = pale_blue,
         icon = R.drawable.ac
     )
 
-    if (showDialog.value) {
-        AlertDialog(
-            onDismissRequest = {
-                showDialog.value= false
-            },
-            title = { Text(text = "AC Control") },
-            confirmButton = {
-                Button( onClick = { showDialog.value = false } ) {
-                    Text(text = "Close")
+    if (showPopup) {
+        Popup(onDismissRequest = { showPopup = false }) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.5f))
+                    .clickable { showPopup = false }
+            ) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .background(pale_blue, shape = RoundedCornerShape(8.dp))
+                        .padding(16.dp)
+                ) {
+                    AirConditionerScreen(
+                        deviceName = ac.name,
+                        isOn = ac.status == Status.ON,
+                        onToggle = { isOn ->
+                            if (isOn) {
+                                acViewModel.turnOn(ac)
+                            } else {
+                                acViewModel.turnOff(ac)
+                            }
+                        },
+                        temperature = ac.temperature,
+                        onSetTemperature = { temp ->
+                            acViewModel.setTemperature(ac, temp)
+                        },
+                        mode = ac.mode,
+                        onSetMode = { mod ->
+                            acViewModel.setMode(ac, mod)
+                        },
+                        verticalSwing = ac.verticalSwing,
+                        onSetVerticalSwing = { vSwing ->
+                            acViewModel.setVerticalSwing(ac, vSwing)
+                        },
+                        horizontalSwing = ac.horizontalSwing,
+                        onSetHorizontalSwing = { hSwing ->
+                            acViewModel.setHorizontalSwing(ac, hSwing)
+                        },
+                        fanSpeed = ac.fanSpeed,
+                        onSetFanSpeed = { speed ->
+                            acViewModel.setFanSpeed(ac, speed)
+                        },
+                        backgroundColor = pale_blue,
+                        onBackClick = { showPopup = false } // Pass the back click handler
+                    )
                 }
-            },
-            text = {
-                AirConditionerScreen(
-                    deviceName = ac.name,
-                    isOn = ac.status == Status.ON,
-                    onToggle = { isOn ->
-                        if (isOn) {
-                            acViewModel.turnOn(ac)
-                        } else {
-                            acViewModel.turnOff(ac)
-                        }
-                    },
-                    temperature = ac.temperature,
-                    onSetTemperature = { temp ->
-                        acViewModel.setTemperature(ac, temp)
-                    },
-                    mode = ac.mode,
-                    onSetMode = { mod ->
-                        acViewModel.setMode(ac, mod)
-                    },
-                    verticalSwing = ac.verticalSwing,
-                    onSetVerticalSwing = { vSwing ->
-                        acViewModel.setVerticalSwing(ac, vSwing)
-                    },
-                    horizontalSwing = ac.horizontalSwing,
-                    onSetHorizontalSwing = { hSwing ->
-                        acViewModel.setHorizontalSwing(ac, hSwing)
-                    },
-                    fanSpeed = ac.fanSpeed,
-                    onSetFanSpeed = { speed ->
-                        acViewModel.setFanSpeed(ac, speed)
-                    },
-                )
             }
-        )
+        }
     }
 }
 
@@ -107,7 +105,9 @@ fun AirConditionerScreen(
     onSetHorizontalSwing: (String) -> Unit,
     fanSpeed: String,
     onSetFanSpeed: (String) -> Unit,
-    textColor: Color = Color.Black
+    textColor: Color = Color.Black,
+    backgroundColor: Color = Color.White, // Add a parameter for background color
+    onBackClick: () -> Unit // Add a parameter for back click handler
 ) {
     val modes = listOf("Fan", "Cooling", "Heating")
     var expanded by remember { mutableStateOf(false) }
@@ -118,7 +118,7 @@ fun AirConditionerScreen(
     Box(
         modifier = Modifier.verticalScroll(rememberScrollState())
             .fillMaxWidth()
-            .background(Color.White, shape = RoundedCornerShape(8.dp))
+            .background(backgroundColor, shape = RoundedCornerShape(8.dp)) // Use the background color parameter
             .padding(16.dp)
     ) {
         Column(
@@ -126,6 +126,22 @@ fun AirConditionerScreen(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.padding(16.dp)
         ) {
+            // Back Arrow
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                IconButton(onClick = { onBackClick() }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.back_arrow),
+                        contentDescription = "Back",
+                        tint = textColor,
+                        modifier = Modifier.size(35.dp)
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+
             Icon(
                 painter = painterResource(id = R.drawable.ac),
                 contentDescription = null,
