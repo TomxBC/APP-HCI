@@ -111,21 +111,20 @@ fun AirConditionerScreen(
 ) {
     val modes = listOf("Fan", "Cooling", "Heating")
     var expanded by remember { mutableStateOf(false) }
-    val horizontalSwingPositions = listOf("-90°", "-45°", "0°", "45°", "90°")
-    val verticalSwingPositions = listOf("Auto", "0°", "22°","45°","67°","90°")
+    val horizontalSwingPositions = listOf("Auto", "-90°", "-45°", "0°", "45°", "90°")
+    val verticalSwingPositions = listOf("Auto", "0°", "22°", "45°", "67°", "90°")
     val fanSpeedPositions = listOf("Auto", "25%", "50%", "75%", "100%")
 
-    Box(modifier = Modifier.verticalScroll(rememberScrollState())
-        .verticalScroll(rememberScrollState())
-        .fillMaxWidth()
-        .background(Color.White, shape = RoundedCornerShape(8.dp))
-        .padding(16.dp)
+    Box(
+        modifier = Modifier.verticalScroll(rememberScrollState())
+            .fillMaxWidth()
+            .background(Color.White, shape = RoundedCornerShape(8.dp))
+            .padding(16.dp)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .padding(16.dp)
+            modifier = Modifier.padding(16.dp)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ac),
@@ -151,12 +150,11 @@ fun AirConditionerScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = if(isOn){"ON"}else{"OFF"},
+                    text = if (isOn) "ON" else "OFF",
                     color = textColor,
                     fontSize = 16.sp,
                     fontFamily = montserratFontFamily,
                     fontWeight = FontWeight.Medium,
-                    onTextLayout = {}
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Switch(
@@ -168,7 +166,7 @@ fun AirConditionerScreen(
             }
             Spacer(modifier = Modifier.height(16.dp))
 
-            //Modes
+            // Modes
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -180,7 +178,6 @@ fun AirConditionerScreen(
                     fontSize = 16.sp,
                     fontFamily = montserratFontFamily,
                     fontWeight = FontWeight.Medium,
-                    onTextLayout = {}
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Box {
@@ -195,7 +192,6 @@ fun AirConditionerScreen(
                             .padding(8.dp)
                             .fillMaxWidth()
                             .clickable { expanded = !expanded },
-                        onTextLayout = {}
                     )
                     DropdownMenu(
                         expanded = expanded,
@@ -203,7 +199,7 @@ fun AirConditionerScreen(
                     ) {
                         modes.forEach { selectedMode ->
                             DropdownMenuItem(
-                                text = { Text(selectedMode, onTextLayout = {}) },
+                                text = { Text(selectedMode) },
                                 onClick = {
                                     onSetMode(selectedMode)
                                     expanded = false
@@ -216,15 +212,14 @@ fun AirConditionerScreen(
 
             Spacer(modifier = Modifier.height(25.dp))
 
-            //Temperature
+            // Temperature
             Text(
                 text = "Temperature:",
                 color = textColor,
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.align(Alignment.Start),
-                onTextLayout = {}
+                modifier = Modifier.align(Alignment.Start)
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
@@ -233,7 +228,6 @@ fun AirConditionerScreen(
                 fontSize = 25.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                onTextLayout = {}
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -274,15 +268,14 @@ fun AirConditionerScreen(
 
             Spacer(modifier = Modifier.height(25.dp))
 
-            //Vertical Swings
+            // Vertical Swing
             Text(
                 text = "Vertical Swing:",
                 color = textColor,
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.align(Alignment.Start),
-                onTextLayout = {}
+                modifier = Modifier.align(Alignment.Start)
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
@@ -291,21 +284,19 @@ fun AirConditionerScreen(
                 fontSize = 25.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                onTextLayout = {}
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
+                val verticalSwingIndex = verticalSwingPositions.indexOf(verticalSwing)
                 Slider(
-                    value = verticalSwing.toFloat(),
+                    value = if (verticalSwingIndex >= 0) verticalSwingIndex.toFloat() else 0f,
                     onValueChange = { newValue ->
-                        //index is 0 for auto
-                        //set vertical swing gets index value therefore in set should modify accordingly
                         onSetVerticalSwing(verticalSwingPositions[newValue.toInt()])
                     },
-                    valueRange = 0f..5f,
-                    steps = 5, // Ensures the slider snaps to integer values
+                    valueRange = 0f..(verticalSwingPositions.size - 1).toFloat(),
+                    steps = verticalSwingPositions.size - 1,
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -314,44 +305,41 @@ fun AirConditionerScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 verticalSwingPositions.forEach { label ->
-                    Text(text = label, onTextLayout = {})
+                    Text(text = label)
                 }
             }
 
             Spacer(modifier = Modifier.height(25.dp))
 
-            //Horizontal Swings
+            // Horizontal Swing
             Text(
                 text = "Horizontal Swing:",
                 color = textColor,
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.align(Alignment.Start),
-                onTextLayout = {}
+                modifier = Modifier.align(Alignment.Start)
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
-                text = verticalSwing,
+                text = horizontalSwing,
                 color = textColor,
                 fontSize = 25.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                onTextLayout = {}
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
+                val horizontalSwingIndex = horizontalSwingPositions.indexOf(horizontalSwing)
                 Slider(
-                    value = horizontalSwing.toFloat(),
+                    value = if (horizontalSwingIndex >= 0) horizontalSwingIndex.toFloat() else 0f,
                     onValueChange = { newValue ->
-                        //index is 0 is for -90°
-                        //set horizontal swing gets index value therefore in set should modify accordingly
                         onSetHorizontalSwing(horizontalSwingPositions[newValue.toInt()])
                     },
-                    valueRange = 0f..4f,
-                    steps = 4,
+                    valueRange = 0f..(horizontalSwingPositions.size - 1).toFloat(),
+                    steps = horizontalSwingPositions.size - 1,
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -360,42 +348,41 @@ fun AirConditionerScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 horizontalSwingPositions.forEach { label ->
-                    Text(text = label, onTextLayout = {})
+                    Text(text = label)
                 }
             }
+
             Spacer(modifier = Modifier.height(25.dp))
 
-            //Fan Speed
+            // Fan Speed
             Text(
                 text = "Fan Speed:",
                 color = textColor,
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.align(Alignment.Start),
-                onTextLayout = {}
+                modifier = Modifier.align(Alignment.Start)
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
-                text = "$fanSpeed%",
+                text = fanSpeed,
                 color = textColor,
                 fontSize = 25.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                onTextLayout = {}
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
+                val fanSpeedIndex = fanSpeedPositions.indexOf(fanSpeed)
                 Slider(
-                    value = fanSpeed.toFloat(),
+                    value = if (fanSpeedIndex >= 0) fanSpeedIndex.toFloat() else 0f,
                     onValueChange = { newValue ->
-                        // -25 is auto and the rest are in percentage
-                        onSetFanSpeed(newValue.toString())
+                        onSetFanSpeed(fanSpeedPositions[newValue.toInt()])
                     },
-                    valueRange = 0f..100f,
-                    steps = 3,
+                    valueRange = 0f..(fanSpeedPositions.size - 1).toFloat(),
+                    steps = fanSpeedPositions.size - 1,
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -404,13 +391,13 @@ fun AirConditionerScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 fanSpeedPositions.forEach { label ->
-                    Text(text = label, onTextLayout = {})
+                    Text(text = label)
                 }
             }
-
         }
     }
 }
+
 //@Composable
 //fun AirConditionerScreenPreview() {
 //    var isOn by remember { mutableStateOf(true) }

@@ -10,6 +10,7 @@ import com.example.turnsmart_hci.data.repositry.DeviceRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -24,8 +25,7 @@ class SpeakerViewModel(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(SpeakerUiState())
-    val uiState = _uiState.asStateFlow()
-
+    val uiState: StateFlow<SpeakerUiState> = _uiState.asStateFlow()
     init {
         collectOnViewModelScope(
             repository.devices.map { devices ->

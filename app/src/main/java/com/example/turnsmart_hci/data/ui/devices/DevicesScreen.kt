@@ -24,6 +24,8 @@ import com.example.turnsmart_hci.devices.BlindsButton
 import com.example.turnsmart_hci.devices.LightButton
 import com.example.turnsmart_hci.devices.SpeakerButton
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
+import com.example.turnsmart_hci.ui.theme.dark_purple
+import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 
 @Composable
 fun DevicesScreen(
@@ -55,10 +57,10 @@ fun DevicesScreen(
                     )
                 } else {
                     Text(
-                        text = "You have devices",
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(bottom = 16.dp),
+                        text = "Your Devices",
+                        fontFamily = montserratFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 30.sp, color = dark_purple,
+                        modifier = Modifier.padding(20.dp),
+
                     )
                     devices.forEach { device ->
                         when (device) {
