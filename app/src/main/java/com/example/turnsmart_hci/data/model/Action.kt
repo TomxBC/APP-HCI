@@ -3,7 +3,7 @@ package com.example.turnsmart_hci.data.model
 import com.example.turnsmart_hci.data.remote.model.RemoteAction
 
 class Action(
-    val device: Device,
+    val device: RoutineDevice,
     val actionName: String,
     val params: Array<*>,
     val meta: Any?

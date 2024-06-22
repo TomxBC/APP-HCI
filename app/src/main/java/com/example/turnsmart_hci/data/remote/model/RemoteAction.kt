@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 class RemoteAction (
     @SerializedName("device")
     @Expose(serialize = false)
-    var device: RemoteDevice<*>,
+    var device: RemoteRoutineDevice,
 
     @SerializedName("actionName")
     var actionName: String,

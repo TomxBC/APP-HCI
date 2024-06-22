@@ -1,16 +1,21 @@
 package com.example.turnsmart_hci.data.remote.model
 
+import com.example.turnsmart_hci.data.model.ConcreteDeviceType
 import com.google.gson.annotations.SerializedName
 
-class RemoteDeviceType {
+class RemoteDeviceType (
     @SerializedName("id")
-    lateinit var id: String
+    var id: String,
 
     @SerializedName("name")
-    lateinit var name: String
+    var name: String,
 
     @SerializedName("powerUsage")
     var powerUsage: Int? = null
+) {
+    fun asModel(): ConcreteDeviceType {
+        return ConcreteDeviceType(id, name, powerUsage)
+    }
 
     companion object {
         const val LAMP_DEVICE_TYPE_ID = "go46xmbqeomjrsjr"
