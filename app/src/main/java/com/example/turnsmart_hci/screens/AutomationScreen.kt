@@ -16,16 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-<<<<<<< HEAD
 import com.example.turnsmart_hci.tabletVersion.TabletRoutineButton
 import com.example.turnsmart_hci.ui.theme.ThemeColors
-=======
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.turnsmart_hci.data.ui.getViewModelFactory
 import com.example.turnsmart_hci.data.ui.routines.RoutineViewModel
 import com.example.turnsmart_hci.data.ui.routines.RoutinesViewModel
 import com.example.turnsmart_hci.routines.RoutineButton
->>>>>>> api-integration
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 
 @Composable

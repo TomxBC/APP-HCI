@@ -115,18 +115,12 @@ fun AirConditionerScreen(
     val verticalSwingPositions = listOf("Auto", "0°", "22°", "45°", "67°", "90°")
     val fanSpeedPositions = listOf("Auto", "25%", "50%", "75%", "100%")
 
-<<<<<<< HEAD
-    Box(modifier = Modifier.verticalScroll(rememberScrollState())
-        .fillMaxWidth()
-        .background(Color.White, shape = RoundedCornerShape(8.dp))
-        .padding(10.dp)
-=======
     Box(
         modifier = Modifier.verticalScroll(rememberScrollState())
             .fillMaxSize()
             .background(backgroundColor, shape = RoundedCornerShape(8.dp))
             .padding(16.dp)
->>>>>>> api-integration
+
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -317,15 +311,9 @@ fun AirConditionerScreen(
                     onValueChange = { newValue ->
                         onSetVerticalSwing(verticalSwingPositions[newValue.toInt()])
                     },
-<<<<<<< HEAD
-                    valueRange = 0f..5f,
-                    //steps = 5, // Ensures the slider snaps to integer values
-                    modifier = Modifier.weight(1f),
-=======
                     valueRange = 0f..(verticalSwingPositions.size - 1).toFloat(),
                     steps = verticalSwingPositions.size - 1,
                     modifier = Modifier.weight(1f)
->>>>>>> api-integration
                 )
             }
             Row(
@@ -366,13 +354,8 @@ fun AirConditionerScreen(
                     onValueChange = { newValue ->
                         onSetHorizontalSwing(horizontalSwingPositions[newValue.toInt()])
                     },
-<<<<<<< HEAD
-                    valueRange = 0f..4f,
-                    //steps = 4,
-=======
                     valueRange = 0f..(horizontalSwingPositions.size - 1).toFloat(),
                     steps = horizontalSwingPositions.size - 1,
->>>>>>> api-integration
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -385,12 +368,7 @@ fun AirConditionerScreen(
 
                 }
             }
-<<<<<<< HEAD
             Spacer(modifier = Modifier.height(25.dp).padding(10.dp))
-=======
-
-            Spacer(modifier = Modifier.height(25.dp))
->>>>>>> api-integration
 
             // Fan Speed
             Text(
@@ -419,15 +397,9 @@ fun AirConditionerScreen(
                     onValueChange = { newValue ->
                         onSetFanSpeed(fanSpeedPositions[newValue.toInt()])
                     },
-<<<<<<< HEAD
-                    valueRange = 0f..100f,
-                    steps = 3,
-                    modifier = Modifier.weight(1f),
-=======
                     valueRange = 0f..(fanSpeedPositions.size - 1).toFloat(),
                     steps = fanSpeedPositions.size - 1,
                     modifier = Modifier.weight(1f)
->>>>>>> api-integration
                 )
             }
             Row(
@@ -472,7 +444,8 @@ fun AirConditionerScreen(
 //                horizontalSwing = horizontalSwing,
 //                onSetHorizontalSwing = { },
 //                fanSpeed = fanSpeed,
-//                onSetFanSpeed = { }
+//                onSetFanSpeed = { },
+//                onBackClick = {}
 //            )
 //        }
 //    }
