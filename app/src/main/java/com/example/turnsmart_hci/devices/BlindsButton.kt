@@ -75,7 +75,7 @@ fun BlindsScreen(
                 tint = textColor,
                 modifier = Modifier.size(48.dp)
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(8.dp).padding(10.dp))
             Text(
                 text = deviceName,
                 color = textColor,
@@ -87,7 +87,7 @@ fun BlindsScreen(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(10.dp)
             ) {
                 Text(
                     text = "Close/Open",
@@ -104,7 +104,7 @@ fun BlindsScreen(
                     }
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp).padding(10.dp))
             Text(
                 text = "Blind position: $blindPosition",
                 color = textColor,
@@ -114,7 +114,7 @@ fun BlindsScreen(
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(10.dp)
             ) {
                 IconButton(
                     onClick = { if (blindPosition > 0) onPositionChange(blindPosition - 1) },
@@ -126,14 +126,13 @@ fun BlindsScreen(
                         tint = Color.Black
                     )
                 }
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(8.dp).padding(10.dp))
                 Slider(
                     value = blindPosition.toFloat(),
                     onValueChange = { newValue ->
                         onPositionChange(newValue.toInt())
                     },
                     valueRange = 0f..100f,
-                    steps = 99, // Ensures the slider snaps to integer values
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
@@ -148,7 +147,6 @@ fun BlindsScreen(
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }

@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AirConditionerScreen(
     deviceName: String,
@@ -51,7 +52,7 @@ fun AirConditionerScreen(
     Box(modifier = Modifier.verticalScroll(rememberScrollState())
         .fillMaxWidth()
         .background(Color.White, shape = RoundedCornerShape(8.dp))
-        .padding(16.dp)
+        .padding(10.dp)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -81,7 +82,7 @@ fun AirConditionerScreen(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(10.dp)
             ) {
                 Text(
                     text = "Off/On",
@@ -104,7 +105,7 @@ fun AirConditionerScreen(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(10.dp)
             ) {
                 Text(
                     text = "Mode:",
@@ -144,7 +145,7 @@ fun AirConditionerScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(25.dp))
+            Spacer(modifier = Modifier.height(25.dp).padding(10.dp))
 
             //Temperature
             Text(
@@ -153,9 +154,9 @@ fun AirConditionerScreen(
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.align(Alignment.Start)
+                modifier = Modifier.align(Alignment.Start).padding(10.dp)
             )
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(10.dp).padding(10.dp))
             Text(
                 text = "$temperature°C",
                 color = textColor,
@@ -165,7 +166,7 @@ fun AirConditionerScreen(
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(10.dp)
             ) {
                 IconButton(
                     onClick = { if (temperature > 0) onSetTemperature(temperature - 1) },
@@ -177,17 +178,16 @@ fun AirConditionerScreen(
                         tint = Color.Black
                     )
                 }
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(8.dp).padding(10.dp))
                 Slider(
                     value = temperature.toFloat(),
                     onValueChange = { newValue ->
                         onSetTemperature(newValue.toInt())
                     },
                     valueRange = 18f..38f,
-                    steps = 19,
                     modifier = Modifier.weight(1f)
                 )
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(8.dp).padding(10.dp))
                 IconButton(
                     onClick = { if (temperature < 100) onSetTemperature(temperature + 1) },
                     modifier = Modifier.size(24.dp)
@@ -200,7 +200,7 @@ fun AirConditionerScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(25.dp))
+            Spacer(modifier = Modifier.height(25.dp).padding(10.dp))
 
             //Vertical Swings
             Text(
@@ -209,9 +209,9 @@ fun AirConditionerScreen(
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.align(Alignment.Start)
+                modifier = Modifier.align(Alignment.Start).padding(10.dp)
             )
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(10.dp).padding(10.dp))
             Text(
                 text = verticalSwingPositions[verticalSwing],
                 color = textColor,
@@ -221,7 +221,7 @@ fun AirConditionerScreen(
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(10.dp)
             ) {
                 Slider(
                     value = verticalSwing.toFloat(),
@@ -231,12 +231,12 @@ fun AirConditionerScreen(
                         onSetVerticalSwing(newValue.toInt())
                     },
                     valueRange = 0f..5f,
-                    steps = 5, // Ensures the slider snaps to integer values
-                    modifier = Modifier.weight(1f)
+                    //steps = 5, // Ensures the slider snaps to integer values
+                    modifier = Modifier.weight(1f),
                 )
             }
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 verticalSwingPositions.forEach { label ->
@@ -244,7 +244,7 @@ fun AirConditionerScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(25.dp))
+            Spacer(modifier = Modifier.height(25.dp).padding(10.dp))
 
             //Horizontal Swings
             Text(
@@ -253,9 +253,9 @@ fun AirConditionerScreen(
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.align(Alignment.Start)
+                modifier = Modifier.align(Alignment.Start).padding(10.dp)
             )
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(10.dp).padding(10.dp))
             Text(
                 text = horizontalSwingPositions[horizontalSwing],
                 color = textColor,
@@ -265,7 +265,7 @@ fun AirConditionerScreen(
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(10.dp)
             ) {
                 Slider(
                     value = horizontalSwing.toFloat(),
@@ -275,19 +275,20 @@ fun AirConditionerScreen(
                         onSetHorizontalSwing(newValue.toInt())
                     },
                     valueRange = 0f..4f,
-                    steps = 4,
+                    //steps = 4,
                     modifier = Modifier.weight(1f)
                 )
             }
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 horizontalSwingPositions.forEach { label ->
-                    Text(text = label)
+                        Text(text = label)
+
                 }
             }
-            Spacer(modifier = Modifier.height(25.dp))
+            Spacer(modifier = Modifier.height(25.dp).padding(10.dp))
 
             //Fan Speed
             Text(
@@ -296,9 +297,9 @@ fun AirConditionerScreen(
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.align(Alignment.Start)
+                modifier = Modifier.align(Alignment.Start).padding(10.dp)
             )
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(10.dp).padding(10.dp))
             Text(
                 text = "$fanSpeed%",
                 color = textColor,
@@ -308,7 +309,7 @@ fun AirConditionerScreen(
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(10.dp)
             ) {
                 Slider(
                     value = fanSpeed.toFloat(),
@@ -318,11 +319,11 @@ fun AirConditionerScreen(
                     },
                     valueRange = 0f..100f,
                     steps = 3,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
                 )
             }
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 fanSpeedPositions.forEach { label ->

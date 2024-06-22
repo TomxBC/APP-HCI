@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="favorite_label">Favorito</string>
+    <string name="automation_label">Automatización</string>
+    <string name="devices_label">Dispositivos</string>
+    <string name="settings_label">Configuración</string>
+    <string name="language">Idioma</string>
+    <string name="english">Inglés</string>
+    <string name="spanish">Español</string>
+    <string name="notifications">Notificaciones</string>
+    <string name="lights">Luces</string>
+    <string name="speakers">Altavoces</string>
+    <string name="ac">Aire Acondicionado</string>
+    <string name="blinds">Persianas</string>
+
+    <string name="turn_on">Prender</string>
+    <string name="turn_off">Apagar</string>
+    <string name="brightness">Intensidad de la luz</string>
+    <string name="light_color">Color de la luz</string>
+
+    <string name="open_blind">Abrir</string>
+    <string name="close_blind">Cerrar</string>
+    <string name="blind_position">Posición de la persiana</string>
+
+    <string name="playing">Reproduciendo ahora:</string>
+    <string name="no_song">Sin canción</string>
+    <string name="volume">Volumen</string>
+    <string name="queue">Cola</string>
+    <string name="playlist">Lista de reproducción</string>
+    <string name="genre">Género</string>
+    <string name="pop">Pop</string>
+    <string name="rock">Rock</string>
+    <string name="jazz">Jazz</string>
+    <string name="classical">Clásica</string>
+    <string name="hip_hop">Hip-Hop</string>
+
+    <string name="off_on">Apagar/Prender</string>
+    <string name="mode">Modo</string>
+    <string name="temperature">Temperatura</string>
+    <string name="v_swing">Oscilación Vertical</string>
+    <string name="h_swing">Oscilación Horizontal</string>
+    <string name="fan_speed">Velocidad</string>
+
+    <string name="unknown">Error cuando …</string>
+
+</resources>

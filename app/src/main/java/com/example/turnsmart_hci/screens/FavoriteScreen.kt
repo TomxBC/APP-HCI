@@ -17,7 +17,7 @@ import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 
 
 @Composable
-fun HomeScreen() {
+fun FavoriteScreen() {
     TurnSmartTheme {
         Box(modifier = Modifier.fillMaxSize()) {
             Column(
@@ -27,7 +27,7 @@ fun HomeScreen() {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = "Home Screen", fontFamily = montserratFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 30.sp, color = dark_purple)
+                Text(text = "Favorite Screen", fontFamily = montserratFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 30.sp, color = dark_purple)
             }
         }
     }

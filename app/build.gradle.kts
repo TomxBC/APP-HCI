@@ -70,6 +70,10 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.gson)
+    implementation(libs.androidx.compose.material3.adaptive )
+    implementation(libs.androidx.material3.window.size)
+    implementation(libs.androidx.material3.adaptive.navigation.suite.android)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

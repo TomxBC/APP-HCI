@@ -25,31 +25,36 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.screens.Screens
+import com.example.turnsmart_hci.screens.getScreen
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.lightText
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TurnSmartToolbar(navController: NavController, currentScreenTitle: MutableState<String>) {
+fun TurnSmartToolbar(navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination?.route
     val previousScreenTitle = remember { mutableStateOf("") }
 
     TopAppBar(
-        title = { Text(text = currentScreenTitle.value, fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium) },
+        title = {
+            if (currentDestination != null) {
+                val currentScreen = getScreen(currentDestination)
+                Text(text = currentDestination, color = TurnSmartTheme.colors.onSecondary, fontFamily = montserratFontFamily, fontWeight = FontWeight.Medium)
+            }
+        },
         navigationIcon = {
             if (currentDestination == Screens.Settings.route) {
                 IconButton(
                     onClick = {
                         navController.popBackStack()
-                        currentScreenTitle.value = previousScreenTitle.value
                     }
                 ){
                     Icon(
                         painter = painterResource(id = R.drawable.back_arrow),
                         contentDescription = null,
-                        tint = Color.White
+                        tint = TurnSmartTheme.colors.onSecondary
                     )
 
                 }
@@ -62,17 +67,7 @@ fun TurnSmartToolbar(navController: NavController, currentScreenTitle: MutableSt
         actions = {
             if (navController.currentDestination?.route != Screens.Settings.route) {
                 IconButton(onClick = {
-                    navController.navigate(Screens.Settings.route) {
-                        navController.previousBackStackEntry?.destination?.id?.let {
-                            popUpTo(it) {
-                                saveState = true
-                            }
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                    previousScreenTitle.value = currentScreenTitle.value
-                    currentScreenTitle.value = "Settings"
+                    navController.navigate(Screens.Settings.route)
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.settings),
@@ -93,6 +88,6 @@ fun PreviewTurnSmartToolbar() {
     val navController = rememberNavController()
     val currentScreenTitle = mutableStateOf("Settings")
 
-    TurnSmartToolbar(navController, currentScreenTitle)
+    //TurnSmartToolbar(navController, currentScreenTitle)
 
 }

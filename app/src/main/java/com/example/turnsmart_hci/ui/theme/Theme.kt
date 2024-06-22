@@ -19,7 +19,7 @@ private val DarkColorScheme = darkColorScheme(
 
     //bars
     primary = darkBottomAppBar,
-    secondary = darkBottomAppBar,
+    secondary = darkToolbar,
 
     //text and icons
     onPrimary = lightText,
@@ -40,7 +40,7 @@ private val LightColorScheme = lightColorScheme(
 
     //text and icons
     onPrimary = darkText,
-    onSecondary = lightText,
+    onSecondary = darkText,
 
     //selected item
     onTertiary = pale_purple
