@@ -23,6 +23,7 @@ import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.data.model.AC
 import com.example.turnsmart_hci.data.model.Status
 import com.example.turnsmart_hci.data.ui.devices.ACViewModel
+import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_blue
 
@@ -41,14 +42,13 @@ fun ACButton(ac: AC, acViewModel: ACViewModel) {
         Popup(onDismissRequest = { showPopup = false }) {
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .background(Color.Black.copy(alpha = 0.5f))
-                    .clickable { showPopup = false }
             ) {
                 Box(
                     modifier = Modifier
                         .align(Alignment.Center)
-                        .background(pale_blue, shape = RoundedCornerShape(8.dp))
+                        .background(TurnSmartTheme.colors.background, shape = RoundedCornerShape(8.dp))
                         .padding(16.dp)
                 ) {
                     AirConditionerScreen(
@@ -81,8 +81,7 @@ fun ACButton(ac: AC, acViewModel: ACViewModel) {
                         onSetFanSpeed = { speed ->
                             acViewModel.setFanSpeed(ac, speed)
                         },
-                        backgroundColor = pale_blue,
-                        onBackClick = { showPopup = false } // Pass the back click handler
+                        onBackClick = { showPopup = false }
                     )
                 }
             }
@@ -105,11 +104,11 @@ fun AirConditionerScreen(
     onSetHorizontalSwing: (String) -> Unit,
     fanSpeed: String,
     onSetFanSpeed: (String) -> Unit,
-    textColor: Color = Color.Black,
-    backgroundColor: Color = Color.White, // Add a parameter for background color
-    onBackClick: () -> Unit // Add a parameter for back click handler
+    textColor: Color = TurnSmartTheme.colors.onPrimary,
+    backgroundColor: Color = TurnSmartTheme.colors.background,
+    onBackClick: () -> Unit
 ) {
-    val modes = listOf("Fan", "Cooling", "Heating")
+    val modes = listOf("Fan", "Cooling", "Heating") //CAMBIARRR POR LO DE LENGUAJES
     var expanded by remember { mutableStateOf(false) }
     val horizontalSwingPositions = listOf("Auto", "-90°", "-45°", "0°", "45°", "90°")
     val verticalSwingPositions = listOf("Auto", "0°", "22°", "45°", "67°", "90°")
@@ -117,8 +116,8 @@ fun AirConditionerScreen(
 
     Box(
         modifier = Modifier.verticalScroll(rememberScrollState())
-            .fillMaxWidth()
-            .background(backgroundColor, shape = RoundedCornerShape(8.dp)) // Use the background color parameter
+            .fillMaxSize()
+            .background(backgroundColor, shape = RoundedCornerShape(8.dp))
             .padding(16.dp)
     ) {
         Column(
@@ -256,7 +255,7 @@ fun AirConditionerScreen(
                     Icon(
                         painter = painterResource(R.drawable.minus),
                         contentDescription = null,
-                        tint = Color.Black
+                        tint = textColor
                     )
                 }
                 Spacer(modifier = Modifier.width(8.dp))
@@ -277,7 +276,7 @@ fun AirConditionerScreen(
                     Icon(
                         painter = painterResource(R.drawable.add),
                         contentDescription = null,
-                        tint = Color.Black
+                        tint = textColor
                     )
                 }
             }
@@ -411,6 +410,7 @@ fun AirConditionerScreen(
                 }
             }
         }
+
     }
 }
 

@@ -8,12 +8,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -34,51 +37,58 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Popup
 import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.data.model.Speaker
 import com.example.turnsmart_hci.data.ui.devices.SpeakerViewModel
+import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_green
 import com.example.turnsmart_hci.ui.theme.pale_red
 
 @Composable
 fun SpeakerButton(speaker: Speaker, speakerViewModel: SpeakerViewModel) {
-    val showDialog = remember { mutableStateOf(false) }
+    var showPopup by remember { mutableStateOf(false) }
+
     DeviceButton(
         label = speaker.name,
-        onClick = { showDialog.value = true },
+        onClick = { showPopup = true },
         backgroundColor = pale_green,
         icon = R.drawable.speaker
     )
-    if (showDialog.value) {
-        AlertDialog(
-            onDismissRequest = {
-                showDialog.value = false
-            },
-            title = { Text(text = "Speaker Control") },
-            confirmButton = {
-                Button(onClick = { showDialog.value = false }) {
-                    Text(text = "Close")
+    if (showPopup) {
+        Popup(onDismissRequest = { showPopup = false }){
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.Black.copy(alpha = 0.5f))
+            ){
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .background(TurnSmartTheme.colors.background, shape = RoundedCornerShape(8.dp))
+                        .padding(16.dp)
+                ){
+                    SpeakerScreen(
+                        deviceName = speaker.name,
+                        volume = speaker.volume,
+                        onVolumeChange = { vol ->
+                            speakerViewModel.setVolume(speaker, vol)
+                        },
+                        onPlay = { speakerViewModel.play(speaker) },
+                        onStop = { speakerViewModel.stop(speaker) },
+                        onPrevious = { speakerViewModel.previousSong(speaker) },
+                        onResume = { speakerViewModel.resume(speaker) },
+                        onNext = { speakerViewModel.nextSong(speaker) },
+                        onPause = { speakerViewModel.pause(speaker) },
+                        genre = speaker.genre ?: "Music",
+                        onGenreSelect = { gen -> speakerViewModel.setGenre(speaker,gen) },
+                        onBackClick = { showPopup = false },
+                        speaker = speaker
+                    )
                 }
-            },
-            text = {
-                SpeakerScreen(
-                    deviceName = speaker.name,
-                    volume = speaker.volume,
-                    onVolumeChange = { vol ->
-                        speakerViewModel.setVolume(speaker, vol)
-                    },
-                    onPlay = { speakerViewModel.play(speaker) },
-                    onStop = { speakerViewModel.stop(speaker) },
-                    onPrevious = { speakerViewModel.previousSong(speaker) },
-                    onResume = { speakerViewModel.resume(speaker) },
-                    onNext = { speakerViewModel.nextSong(speaker) },
-                    onPause = { speakerViewModel.pause(speaker) },
-                    genre = speaker.genre ?: "Music",
-                    onGenreSelect = { gen -> speakerViewModel.setGenre(speaker,gen) },
-                )
             }
-        )
+        }
     }
 }
 
@@ -95,13 +105,16 @@ fun SpeakerScreen(
     onPrevious: () -> Unit,
     genre: String,
     onGenreSelect: (String) -> Unit,
-    textColor: Color = Color.Black
+    textColor: Color = TurnSmartTheme.colors.onPrimary,
+    backgroundColor: Color = TurnSmartTheme.colors.background,
+    onBackClick: () -> Unit,
+    speaker: Speaker
 ) {
     val genres = listOf("Pop", "Rock", "Jazz", "Classical", "Hip Hop")
     var expanded by remember { mutableStateOf(false) }
-    var isPlaying by remember { mutableStateOf(false) } // Track if music is playing
-    var showDialog by remember { mutableStateOf(false) } // Track if dialog is showing
-    val currentSong by remember { mutableStateOf("Song 1") } // Track the current song
+    var isPlaying by remember { mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf(false) }
+    val currentSong by remember { mutableStateOf(speaker.song) }
 
     val songs = when (genre) {
         "Pop" -> listOf("Song 1", "Song 2", "Song 3")
@@ -113,16 +126,29 @@ fun SpeakerScreen(
     }
 
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .background(pale_green, shape = RoundedCornerShape(8.dp))
+        modifier = Modifier.verticalScroll(rememberScrollState())
+            .fillMaxSize()
+            .background(backgroundColor, shape = RoundedCornerShape(8.dp))
             .padding(16.dp)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                IconButton(onClick = { onBackClick() }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.back_arrow),
+                        contentDescription = "Back",
+                        tint = textColor,
+                        modifier = Modifier.size(35.dp)
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
             Icon(
                 painter = painterResource(id = R.drawable.speaker),
                 contentDescription = null,
@@ -327,7 +353,7 @@ fun SpeakerScreen(
                     Icon(
                         painter = painterResource(R.drawable.minus),
                         contentDescription = null,
-                        tint = Color.Black
+                        tint = textColor
                     )
                 }
                 Spacer(modifier = Modifier.width(8.dp))
@@ -348,7 +374,7 @@ fun SpeakerScreen(
                     Icon(
                         painter = painterResource(R.drawable.add),
                         contentDescription = null,
-                        tint = Color.Black
+                        tint = textColor
                     )
                 }
             }

@@ -7,13 +7,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -37,10 +40,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Popup
 import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.data.model.Blind
 import com.example.turnsmart_hci.data.model.Status
 import com.example.turnsmart_hci.data.ui.devices.BlindViewModel
+import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_blue
 import com.example.turnsmart_hci.ui.theme.pale_red
@@ -48,44 +53,47 @@ import com.example.turnsmart_hci.ui.theme.pale_yellow
 
 @Composable
 fun BlindsButton(blind: Blind, blindViewModel: BlindViewModel) {
-    val showDialog = remember { mutableStateOf(false) }
+    var showPopup by remember { mutableStateOf(false) }
 
     DeviceButton(
         label = blind.name,
-        onClick = {showDialog.value = true},
+        onClick = {showPopup = true},
         backgroundColor = pale_red,
         icon = R.drawable.blinds
     )
-    if (showDialog.value) {
-        AlertDialog(
-            onDismissRequest = {
-                showDialog.value = false
-            },
-            title = { Text(text = "Blinds Control") },
-            confirmButton = {
-                Button(onClick = { showDialog.value = false }) {
-                    Text(text = "Close")
+    if (showPopup) {
+        Popup(onDismissRequest = { showPopup = false }){
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.Black.copy(alpha = 0.5f))
+            ){
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .background(TurnSmartTheme.colors.background, shape = RoundedCornerShape(8.dp))
+                        .padding(16.dp)
+                ){
+                    BlindsScreen(
+                        deviceName = blind.name,
+                        isOpen = blind.status == Status.OPENED,
+                        onToggle = { isOpen ->
+                            if (isOpen) {
+                                blindViewModel.open(blind)
+                            } else {
+                                blindViewModel.close(blind)
+                            }
+                        },
+                        blindPosition = blind.level,
+                        onPositionChange = { level ->
+                            blindViewModel.setLevel(blind, level)
+                        },
+                        onBackClick = { showPopup = false }
+                    )
                 }
-            },
-            text = {
-                BlindsScreen(
-                    deviceName = blind.name,
-                    isOpen = blind.status == Status.OPENED,
-                    onToggle = { isOpen ->
-                        if (isOpen) {
-                            blindViewModel.open(blind)
-                        } else {
-                            blindViewModel.close(blind)
-                        }
-                    },
-                    blindPosition = blind.level,
-                    onPositionChange = { level ->
-                        blindViewModel.setLevel(blind, level)
-                    },
-                    textColor = Color.Black,
-                )
             }
-        )
+        }
+
     }
 }
 
@@ -96,19 +104,36 @@ fun BlindsScreen(
     onToggle: (Boolean) -> Unit,
     blindPosition: Int,
     onPositionChange: (Int) -> Unit,
-    textColor: Color = Color.Black,
+    textColor: Color = TurnSmartTheme.colors.onPrimary,
+    backgroundColor: Color = TurnSmartTheme.colors.background,
+    onBackClick: () -> Unit
 ) {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .background(Color.White, shape = RoundedCornerShape(8.dp))
+        modifier = Modifier.verticalScroll(rememberScrollState())
+            .fillMaxSize()
+            .background(backgroundColor, shape = RoundedCornerShape(8.dp))
             .padding(16.dp)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.padding(16.dp)
         ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                IconButton(onClick = { onBackClick() }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.back_arrow),
+                        contentDescription = "Back",
+                        tint = textColor,
+                        modifier = Modifier.size(35.dp)
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+
             Icon(
                 painter = painterResource(id = R.drawable.blinds),
                 contentDescription = null,
@@ -166,7 +191,7 @@ fun BlindsScreen(
                     Icon(
                         painter = painterResource(R.drawable.minus),
                         contentDescription = null,
-                        tint = Color.Black
+                        tint = textColor
                     )
                 }
                 Spacer(modifier = Modifier.width(8.dp))
@@ -187,7 +212,7 @@ fun BlindsScreen(
                     Icon(
                         painter = painterResource(R.drawable.add),
                         contentDescription = null,
-                        tint = Color.Black
+                        tint = textColor
                     )
                 }
             }
