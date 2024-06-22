@@ -41,6 +41,8 @@ import androidx.compose.ui.window.Popup
 import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.data.model.Speaker
 import com.example.turnsmart_hci.data.ui.devices.SpeakerViewModel
+import com.example.turnsmart_hci.notifications.NotificationChannelApp
+import com.example.turnsmart_hci.notifications.NotificationViewModel
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_green
@@ -114,7 +116,7 @@ fun SpeakerScreen(
     var expanded by remember { mutableStateOf(false) }
     var isPlaying by remember { mutableStateOf(false) }
     var showDialog by remember { mutableStateOf(false) }
-    val currentSong by remember { mutableStateOf(speaker.song) }
+    var currentSong by remember { mutableStateOf(speaker.song) }
 
     val songs = when (genre) {
         "Pop" -> listOf("Song 1", "Song 2", "Song 3")
@@ -182,13 +184,39 @@ fun SpeakerScreen(
                     modifier = Modifier.padding(25.dp)
                 ) {
                     Text(
-                        text = "Now Playing: $currentSong",
+                        text = "Now Playing: ${currentSong?.title ?: "No Song"}",
                         color = textColor,
                         fontSize = 16.sp,
                         fontFamily = montserratFontFamily,
                         fontWeight = FontWeight.Medium,
                         onTextLayout = {}
                     )
+                    if(currentSong != null){
+                        Text(
+                            text = "Artist: ${currentSong?.artist}",
+                            color = textColor,
+                            fontSize = 16.sp,
+                            fontFamily = montserratFontFamily,
+                            fontWeight = FontWeight.Medium,
+                            onTextLayout = {}
+                        )
+                        Text(
+                            text = "Album: ${currentSong?.album}",
+                            color = textColor,
+                            fontSize = 16.sp,
+                            fontFamily = montserratFontFamily,
+                            fontWeight = FontWeight.Medium,
+                            onTextLayout = {}
+                        )
+                        Text(
+                            text = "Duration: ${currentSong?.duration}",
+                            color = textColor,
+                            fontSize = 16.sp,
+                            fontFamily = montserratFontFamily,
+                            fontWeight = FontWeight.Medium,
+                            onTextLayout = {}
+                        )
+                    }
                     Spacer(modifier = Modifier.height(25.dp).padding(10.dp))
 
                     Slider(
@@ -203,7 +231,10 @@ fun SpeakerScreen(
                         horizontalArrangement = Arrangement.SpaceEvenly,
                         modifier = Modifier.fillMaxWidth().padding(10.dp)
                     ) {
-                        IconButton(onClick = onPrevious) {
+                        IconButton(onClick = {
+                            onPrevious()
+                            currentSong = speaker.song
+                        }) {
                             Icon(
                                 painter = painterResource(R.drawable.skip_previous),
                                 contentDescription = "Previous",
@@ -211,7 +242,10 @@ fun SpeakerScreen(
                                 modifier = Modifier.size(32.dp)
                             )
                         }
-                        IconButton(onClick = onStop) {
+                        IconButton(onClick = {
+                            onStop()
+                            currentSong = speaker.song
+                        }) {
                             Icon(
                                 painter = painterResource(R.drawable.stop),
                                 contentDescription = "Stop",
@@ -224,6 +258,7 @@ fun SpeakerScreen(
                                 onPause()
                             } else {
                                 onPlay()
+                                currentSong = speaker.song
                             }
                             isPlaying = !isPlaying
                         }) {
@@ -236,7 +271,10 @@ fun SpeakerScreen(
                                 modifier = Modifier.size(40.dp)
                             )
                         }
-                        IconButton(onClick = onNext) {
+                        IconButton(onClick = {
+                            onNext()
+                            currentSong = speaker.song
+                        }) {
                             Icon(
                                 painter = painterResource(R.drawable.skip_next),
                                 contentDescription = "Next",
@@ -301,7 +339,7 @@ fun SpeakerScreen(
                         }
                     }
 
-                    if (showDialog) {
+                    if (showDialog) { //ACA VA LO DE PLAYLISTS
                         AlertDialog(
                             onDismissRequest = { showDialog = false },
                             title = { Text(text = "Playlist: $genre", onTextLayout = {}) },
@@ -381,31 +419,3 @@ fun SpeakerScreen(
         }
     }
 }
-
-
-//@Composable
-//fun SpeakerControlScreen() {
-//    var volume by remember { mutableIntStateOf(5) }
-//    var genre by remember { mutableStateOf("Pop") }
-//
-//    SpeakerScreen(
-//        deviceName = "Living Room Speaker",
-//        volume = volume,
-//        onVolumeChange = { volume = it },
-//        onPlay = { /* TODO: Play music */ },
-//        onStop = { /* TODO: Stop music */ },
-//        onPause = { /* TODO: Pause music */ },
-//        onResume = { /* TODO: Resume music */ },
-//        onNext = { /* TODO: Next song */ },
-//        onPrevious = { /* TODO: Previous song */ },
-//        genre = genre,
-//        onGenreSelect = { genre = it }
-//    )
-//}
-//
-//@Preview
-//@Composable
-//fun SpeakerButtonPreview() {
-//    SpeakerButton()
-//    SpeakerControlScreen()
-//}

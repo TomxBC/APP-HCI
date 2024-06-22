@@ -162,9 +162,6 @@ fun LightsScreen(
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-<<<<<<< HEAD
-                modifier = Modifier.padding(10.dp)
-=======
                 modifier = Modifier.align(Alignment.Start)
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -174,7 +171,6 @@ fun LightsScreen(
                 fontSize = 25.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium
->>>>>>> api-integration
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -197,10 +193,6 @@ fun LightsScreen(
                         onIntensityChange(newValue.toInt())
                     },
                     valueRange = 0f..100f,
-<<<<<<< HEAD
-=======
-                    steps = 99,
->>>>>>> api-integration
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
@@ -222,11 +214,7 @@ fun LightsScreen(
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-<<<<<<< HEAD
-                modifier = Modifier.padding(10.dp)
-=======
                 modifier = Modifier.align(Alignment.Start)
->>>>>>> api-integration
             )
             Spacer(modifier = Modifier.height(8.dp).padding(10.dp))
             ColorSlider(
@@ -293,13 +281,3 @@ fun ColorSlider(
         }
     }
 }
-
-
-
-
-
-//@Preview
-//@Composable
-//fun ButtonPreview() {
-//
-//}
