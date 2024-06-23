@@ -37,8 +37,8 @@ class RoutineViewModel(
         return uiState.value.currentRoutine?.actions
     }
 
-    fun executeRoutine() = runOnViewModelScope(
-        { repository.executeRoutine(uiState.value.currentRoutine?.id!!) },
+    fun executeRoutine(routine: Routine) = runOnViewModelScope(
+        { repository.executeRoutine(routine.id) },
         { state, _ -> state }
     )
 
