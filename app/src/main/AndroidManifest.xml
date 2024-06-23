@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/turn_smart_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TurnSmartHCI"
-        tools:targetApi="31"
+        tools:targetApi="tiramisu"
+        android:localeConfig="@xml/locale_config"
         android:usesCleartextTraffic="true"
         android:name=".TurnSmart">
         <activity
