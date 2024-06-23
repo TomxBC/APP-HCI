@@ -32,9 +32,10 @@ class MainActivity : ComponentActivity() {
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted) {
-            // Handle permission granted
+            // Send notifications
         } else {
             // Handle permission denial (optional)
+            //message activate in settings
         }
     }
 
@@ -58,7 +59,6 @@ class MainActivity : ComponentActivity() {
                     MainScreen(viewModel, layoutType) {
                         checkAndRequestPermission()
                     }
-                    // Call the permission check function directly in the onCreate
                     checkAndRequestPermission()
                 }
             }
@@ -74,52 +74,11 @@ class MainActivity : ComponentActivity() {
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 // Permission not granted, show AlertDialog
-                ShowPermissionAlertDialog()
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             } else {
                 // Permission already granted
+                NotificationViewModel().sendNotification(this, "Notifications activated","Notifications activated")
             }
-        }
-    }
-
-    @Composable
-    private fun ShowPermissionAlertDialog() {
-        val openDialog = remember { mutableStateOf(true) }
-
-        if (openDialog.value) {
-            AlertDialog(
-                onDismissRequest = {
-                    openDialog.value = false
-                },
-                title = {
-                    Text("Permission Required")
-                },
-                text = {
-                    Text("Please grant notification permissions to receive updates.")
-                },
-                confirmButton = {
-                    Button(
-                        onClick = {
-                            openDialog.value = false
-                            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                        }
-                    ) {
-                        Text("Grant")
-                    }
-                },
-                dismissButton = {
-                    Button(
-                        onClick = {
-                            openDialog.value = false
-                        }
-                    ) {
-                        Text("Dismiss")
-                    }
-                },
-                properties = DialogProperties(
-                    dismissOnBackPress = false,
-                    dismissOnClickOutside = false
-                )
-            )
         }
     }
 }
