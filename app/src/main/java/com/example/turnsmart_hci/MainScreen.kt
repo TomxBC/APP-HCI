@@ -122,7 +122,7 @@ fun MainScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(innerPadding)
-                            .background(TurnSmartTheme.colors.primary)
+                            .background(TurnSmartTheme.colors.background)
                     ) {
                         MainNavHost(
                             navController = navController,
