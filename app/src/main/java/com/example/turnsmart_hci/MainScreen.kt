@@ -109,7 +109,7 @@ fun MainScreen(
                     )
                 }
             },
-            containerColor = TurnSmartTheme.colors.background,
+            containerColor = TurnSmartTheme.colors.primary,
             contentColor = TurnSmartTheme.colors.onPrimary,
             modifier = Modifier.then(paddingModifier)
         ) {
