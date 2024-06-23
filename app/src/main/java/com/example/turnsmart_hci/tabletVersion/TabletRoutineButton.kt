@@ -25,6 +25,7 @@ import com.example.turnsmart_hci.ui.theme.ThemeColors
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import com.example.turnsmart_hci.ui.theme.pale_blue
+import com.example.turnsmart_hci.ui.theme.pale_purple
 
 @Composable
 fun TabletRoutineButton(
@@ -35,7 +36,7 @@ fun TabletRoutineButton(
     textColor: Color = ThemeColors.DARK_TEXT.color,
     isOn: Boolean = false,
     onButton: (Boolean) -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
 
@@ -45,7 +46,7 @@ fun TabletRoutineButton(
     Button(
         onClick = { /* Handle button click if needed */ },
         colors = ButtonDefaults.buttonColors(
-            containerColor = pale_blue,
+            containerColor = pale_purple,
         ),
         modifier = modifier
             .padding(8.dp)
@@ -103,13 +104,3 @@ fun TabletRoutineButton(
         }
     }
 }
-
-//@Preview
-//@Composable
-//fun TabletRoutineButtonPreview() {
-//    TabletRoutineButton(
-//        label = "Routine1",
-//        onPlayClick = {},
-//        onFavoriteClick = {},
-//    )
-//}
