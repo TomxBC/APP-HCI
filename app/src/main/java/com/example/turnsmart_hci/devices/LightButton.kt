@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -38,7 +39,8 @@ import com.example.turnsmart_hci.ui.theme.pale_yellow
 fun LightButton(
     lamp: Lamp,
     lampViewModel: LampViewModel,
-    notificationViewModel: NotificationViewModel
+    notificationViewModel: NotificationViewModel,
+    layoutType: NavigationSuiteType
     ) {
     var showPopup by remember { mutableStateOf(false) }
 

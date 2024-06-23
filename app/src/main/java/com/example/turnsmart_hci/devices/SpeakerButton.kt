@@ -56,7 +56,7 @@ fun SpeakerButton(
     speaker: Speaker,
     speakerViewModel: SpeakerViewModel,
     notificationViewModel: NotificationViewModel,
-    //
+    layoutType: NavigationSuiteType
 ) {
     var showPopup by remember { mutableStateOf(false) }
     val context = LocalContext.current

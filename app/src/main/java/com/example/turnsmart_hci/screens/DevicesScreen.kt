@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -39,7 +40,8 @@ fun DevicesScreen(
     acViewModel: ACViewModel = viewModel(factory = getViewModelFactory()),
     blindViewModel: BlindViewModel = viewModel(factory = getViewModelFactory()),
     speakerViewModel: SpeakerViewModel = viewModel(factory = getViewModelFactory()),
-    notificationViewModel: NotificationViewModel
+    notificationViewModel: NotificationViewModel,
+    layoutType: NavigationSuiteType
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -77,28 +79,32 @@ fun DevicesScreen(
                                 LightButton(
                                     lamp = device,
                                     lampViewModel = lampViewModel,
-                                    notificationViewModel = notificationViewModel
+                                    notificationViewModel = notificationViewModel,
+                                    layoutType = layoutType
                                 )
                             }
                             is AC -> {
                                 ACButton(
                                     ac = device,
                                     acViewModel = acViewModel,
-                                    notificationViewModel = notificationViewModel
+                                    notificationViewModel = notificationViewModel,
+                                    layoutType = layoutType
                                 )
                             }
                             is Blind -> {
                                 BlindsButton(
                                     blind = device,
                                     blindViewModel = blindViewModel,
-                                    notificationViewModel = notificationViewModel
+                                    notificationViewModel = notificationViewModel,
+                                    layoutType = layoutType
                                 )
                             }
                             is Speaker -> {
                                 SpeakerButton(
                                     speaker = device,
                                     speakerViewModel = speakerViewModel,
-                                    notificationViewModel = notificationViewModel
+                                    notificationViewModel = notificationViewModel,
+                                    layoutType = layoutType
                                 )
 
                             } else -> {

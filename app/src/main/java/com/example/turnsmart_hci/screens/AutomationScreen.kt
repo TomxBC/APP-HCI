@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -31,7 +32,8 @@ import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 fun AutomationScreen(
     manyRoutinesViewModel: RoutinesViewModel = viewModel(factory = getViewModelFactory()),
     routineViewModel: RoutineViewModel = viewModel(factory = getViewModelFactory()),
-    notificationViewModel: NotificationViewModel
+    notificationViewModel: NotificationViewModel,
+    layoutType: NavigationSuiteType
 ) {
     val uiManyRoutinesState by manyRoutinesViewModel.uiState.collectAsState()
 

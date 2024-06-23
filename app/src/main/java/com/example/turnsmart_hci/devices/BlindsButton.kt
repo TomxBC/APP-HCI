@@ -25,6 +25,7 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -57,7 +58,8 @@ import com.example.turnsmart_hci.ui.theme.pale_yellow
 fun BlindsButton(
     blind: Blind,
     blindViewModel: BlindViewModel,
-    notificationViewModel: NotificationViewModel
+    notificationViewModel: NotificationViewModel,
+    layoutType: NavigationSuiteType
 ) {
     var showPopup by remember { mutableStateOf(false) }
     val context = LocalContext.current

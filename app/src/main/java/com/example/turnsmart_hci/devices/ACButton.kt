@@ -7,6 +7,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -33,7 +34,8 @@ import com.example.turnsmart_hci.ui.theme.pale_blue
 fun ACButton(
     ac: AC,
     acViewModel: ACViewModel,
-    notificationViewModel: NotificationViewModel
+    notificationViewModel: NotificationViewModel,
+    layoutType: NavigationSuiteType
 ) {
     var showPopup by remember { mutableStateOf(false) }
     val context = LocalContext.current

@@ -41,7 +41,12 @@ val bottomBarItems = listOf(
 )
 
 @Composable
-fun MainNavHost(navController: NavHostController, modifier: Modifier = Modifier, notificationViewModel: NotificationViewModel) {
+fun MainNavHost(
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+    notificationViewModel: NotificationViewModel,
+    layoutType: NavigationSuiteType
+) {
     NavHost(
         navController = navController,
         startDestination = Screens.Favorite.route,
@@ -52,12 +57,14 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier = Modifier,
         }
         composable(Screens.Devices.route) {
             DevicesScreen(
-                notificationViewModel=notificationViewModel
+                notificationViewModel=notificationViewModel,
+                layoutType = layoutType
             )
         }
         composable(Screens.Automation.route) {
             AutomationScreen(
-                notificationViewModel=notificationViewModel
+                notificationViewModel=notificationViewModel,
+                layoutType = layoutType
             )
         }
         composable(Screens.Settings.route) {
@@ -118,7 +125,8 @@ fun MainScreen(
                     ) {
                         MainNavHost(
                             navController = navController,
-                            notificationViewModel= notificationViewModel
+                            notificationViewModel= notificationViewModel,
+                            layoutType = layoutType,
                         )
                     }
                 }
