@@ -81,6 +81,8 @@
     <string name="paused_playing">Paused %1$s</string>
     <string name="genre_changed">Now playing %1$s genre</string>
     <string name="routine_executing">Routine is being executed</string>
+    <string name="change_language">"To change the app language, please adjust the language settings on your device. We support English, French, Spanish and Portuguese."</string>
+    <string name="change_notifs">"To activate notifications please access your device's settings."</string>
 
 
 </resources>

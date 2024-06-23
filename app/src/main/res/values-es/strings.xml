@@ -75,6 +75,9 @@
     <string name="paused_playing">Pausado %1$s</string>
     <string name="genre_changed">Ahora reproduciendo género %1$s</string>
     <string name="routine_executing">Se está ejecutando la rutina</string>
+    <string name="change_language">"Para cambiar el idioma de la aplicación, ajuste la configuración de idioma en su dispositivo. Soportamos inglés, francés, español y portugués."</string>
+    <string name="change_notifs">"Para activar las notificaciones, acceda a la configuración de su dispositivo."</string>
+
 
 
 </resources>

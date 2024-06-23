@@ -127,7 +127,7 @@ fun ACButton(
                         fanSpeed = ac.fanSpeed,
                         onSetFanSpeed = { speed ->
                             acViewModel.setFanSpeed(ac, speed)
-                            notificationViewModel.sendNotification(context, R.string.fan_speed_changed,ac.name)
+                            notificationViewModel.sendNotification(context, R.string.fan_speed_changed,ac.name, speed)
                         },
                         onBackClick = { showPopup = false }
                     )
