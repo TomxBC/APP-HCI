@@ -54,6 +54,27 @@
     <string name="notification_title_allowed_devices">Notificaciones activadades para recibir actualizaciones de dispositivos</string>
     <string name="notification_title_allowed_routines">Notificaciones activadades para recibir actualizaciones de routinas</string>
     <string name="notification_title_allowed">Notificaciones Activadadas</string>
-    <string name="temperature_changed">Temperatura cambio a %1$d°C</string>
+    <string name="ac_turned_on">Aire acondicionado encendido</string>
+    <string name="ac_turned_off">Aire acondicionado apagado</string>
+    <string name="temperature_changed">Temperatura cambiada a %1$d°C</string>
+    <string name="mode_changed">Modo cambiado a %1$s</string>
+    <string name="vertical_swing_changed">Oscilación vertical cambiada a %1$s</string>
+    <string name="horizontal_swing_changed">Oscilación horizontal cambiada a %1$s</string>
+    <string name="fan_speed_changed">Velocidad del ventilador cambiada a %1$s</string>
+    <string name="blinds_opened">Persianas abiertas</string>
+    <string name="blinds_closed">Persianas cerradas</string>
+    <string name="blinds_position_changed">Posición de las persianas cambiada a %1$d</string>
+    <string name="light_turned_on">Luz encendida</string>
+    <string name="light_turned_off">Luz apagada</string>
+    <string name="light_intensity_changed">Brillo de la luz cambiado a %1$d</string>
+    <string name="light_color_changed">Color de la luz cambiado</string>
+    <string name="playing_now">Reproduciendo %1$s</string>
+    <string name="stopped">Detenido %1$s</string>
+    <string name="stopped_playing">Dejó de reproducir %1$s</string>
+    <string name="volume_changed">Volumen ajustado a %1$d</string>
+    <string name="paused_playing">Pausado %1$s</string>
+    <string name="genre_changed">Ahora reproduciendo género %1$s</string>
+    <string name="routine_executing">Se está ejecutando la rutina</string>
+
 
 </resources>

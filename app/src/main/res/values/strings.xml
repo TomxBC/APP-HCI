@@ -69,10 +69,10 @@
     <string name="fan_speed_changed">Fan Speed changed to %1$s</string>
     <string name="blinds_opened">Blinds opened</string>
     <string name="blinds_closed">Blinds closed</string>
-    <string name="blinds_position_changed">\"Blind position changed to %1$s%\"</string>
+    <string name="blinds_position_changed">Blind position changed to %1$d</string>
     <string name="light_turned_on">Light turned on</string>
     <string name="light_turned_off">Light turned off</string>
-    <string name="light_intensity_changed">Light brightness changed to %1$s%</string>
+    <string name="light_intensity_changed">Light brightness changed to %1$d</string>
     <string name="light_color_changed">Light color changed</string>
     <string name="playing_now">Playing %1$s</string>
     <string name="stopped">Stopped %1$s</string>
