@@ -23,13 +23,10 @@ import com.example.turnsmart_hci.notifications.NotificationViewModel
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 
-
 @Composable
 fun SettingsScreen(
     notificationViewModel: NotificationViewModel
 ) {
-    var selectedLanguage by remember { mutableStateOf("English") }
-
     TurnSmartTheme {
         Column(
             modifier = Modifier
@@ -37,64 +34,20 @@ fun SettingsScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            LanguageSelector(
-                selectedLanguage = selectedLanguage,
-                onLanguageSelected = { language ->
-                    selectedLanguage = language
-                    notificationViewModel.setLanguage(language)
-                }
+            Text(
+                text = "To change the app language, please adjust the language settings on your device.",
+                modifier = Modifier.padding(start = 8.dp),
+                fontFamily = montserratFontFamily,
+                fontSize = 16.sp
             )
 
+            // Existing notifications message
             Text(
                 text = "To activate notifications please access your device's settings",
                 modifier = Modifier.padding(start = 8.dp),
                 fontFamily = montserratFontFamily,
                 fontSize = 16.sp
             )
-        }
-    }
-}
-
-
-@Composable
-fun LanguageSelector(
-    selectedLanguage: String,
-    onLanguageSelected: (String) -> Unit
-) {
-    val languages = listOf("English", "Spanish")
-
-    Column(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Text(
-            text = "Select Language:",
-            modifier = Modifier.padding(bottom = 8.dp),
-            fontFamily = montserratFontFamily,
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
-
-        )
-        languages.forEach { language ->
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(bottom = 8.dp)
-            ) {
-                RadioButton(
-                    selected = selectedLanguage == language,
-                    onClick = {
-                        onLanguageSelected(language)
-                    }
-                )
-                Text(
-                    text = language,
-                    modifier = Modifier.padding(start = 8.dp),
-                    fontFamily = montserratFontFamily,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 18.sp,
-                    onTextLayout = {}
-
-                )
-            }
         }
     }
 }
