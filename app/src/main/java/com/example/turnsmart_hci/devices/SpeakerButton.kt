@@ -61,25 +61,8 @@ fun SpeakerButton(
     var showPopup by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
-//    if(layoutType == NavigationSuiteType.NavigationRail || layoutType == NavigationSuiteType.NavigationDrawer){
-//        TabletDeviceButton(
-//            label = speaker.name,
-//            onClick = { showPopup = true },
-//            backgroundColor = pale_green,
-//            icon = R.drawable.speaker,
-//            power = { on ->
-//                if (on) {
-//                    speakerViewModel.play(speaker)
-//                    notificationViewModel.sendNotification(context, "Playing ${speaker.song?.title}", speaker.name)
-//                } else {
-//                    speakerViewModel.stop(speaker)
-//                    notificationViewModel.sendNotification(context, "Stopped ${speaker.name}", speaker.name)
-//                }
-//            },
-//            status = speaker.status.name
-//        )
-//    }else{
-        DeviceButton(
+    if(layoutType == NavigationSuiteType.NavigationRail || layoutType == NavigationSuiteType.NavigationDrawer){
+        TabletDeviceButton(
             label = speaker.name,
             onClick = { showPopup = true },
             backgroundColor = pale_green,
@@ -92,9 +75,34 @@ fun SpeakerButton(
                     speakerViewModel.stop(speaker)
                     notificationViewModel.sendNotification(context, "Stopped ${speaker.name}", speaker.name)
                 }
+            },
+            status = speaker.status.name
+        )
+    }else {
+        DeviceButton(
+            label = speaker.name,
+            onClick = { showPopup = true },
+            backgroundColor = pale_green,
+            icon = R.drawable.speaker,
+            power = { on ->
+                if (on) {
+                    speakerViewModel.play(speaker)
+                    notificationViewModel.sendNotification(
+                        context,
+                        "Playing ${speaker.song?.title}",
+                        speaker.name
+                    )
+                } else {
+                    speakerViewModel.stop(speaker)
+                    notificationViewModel.sendNotification(
+                        context,
+                        "Stopped ${speaker.name}",
+                        speaker.name
+                    )
+                }
             }
         )
-
+    }
 
     if (showPopup) {
         Popup(onDismissRequest = { showPopup = false }){
