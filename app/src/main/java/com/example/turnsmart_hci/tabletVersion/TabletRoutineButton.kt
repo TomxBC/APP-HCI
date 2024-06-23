@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -16,30 +17,35 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.turnsmart_hci.R
+import com.example.turnsmart_hci.data.model.Routine
+import com.example.turnsmart_hci.data.ui.routines.RoutineViewModel
+import com.example.turnsmart_hci.notifications.NotificationViewModel
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.ThemeColors
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.example.turnsmart_hci.ui.theme.pale_blue
 
 @Composable
 fun TabletRoutineButton(
-    onFavoriteClick: () -> Unit,
-    label: String,
+    routine: Routine,
+    notificationViewModel: NotificationViewModel,
+    routineViewModel: RoutineViewModel,
     enabled: Boolean = true,
-    onPlayClick: () -> Unit,
-    backgroundColor: Color,
     textColor: Color = ThemeColors.DARK_TEXT.color,
     isOn: Boolean = false,
     onButton: (Boolean) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
+
     var isPlaying by remember { mutableStateOf(isOn) }
     val scope = rememberCoroutineScope()
 
     Button(
         onClick = { /* Handle button click if needed */ },
         colors = ButtonDefaults.buttonColors(
-            containerColor = backgroundColor,
+            containerColor = pale_blue,
         ),
         modifier = modifier
             .padding(8.dp)
@@ -54,27 +60,13 @@ fun TabletRoutineButton(
                 modifier = Modifier.fillMaxSize()
             ) {
                 IconButton(
-                    onClick = { onFavoriteClick() },
-                    modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .padding(top = 16.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.favorite),
-                        contentDescription = null,
-                        modifier = Modifier.size(35.dp),
-                        tint = Color.Black
-                    )
-                }
-                IconButton(
                     onClick = {
                         isPlaying = !isPlaying
-                        onPlayClick()
                         if (isPlaying) {
                             scope.launch {
+                                notificationViewModel.sendNotification(context,"Routine is being executed",routine.name)
                                 delay(5000)
-                                isPlaying = false
-                            }
+                                isPlaying = false }
                         }
                     },
                     modifier = Modifier
@@ -99,7 +91,7 @@ fun TabletRoutineButton(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = label,
+                        text = routine.name.toString(),
                         color = textColor,
                         fontSize = 25.sp,
                         fontFamily = montserratFontFamily,
@@ -111,13 +103,12 @@ fun TabletRoutineButton(
     }
 }
 
-@Preview
-@Composable
-fun TabletRoutineButtonPreview() {
-    TabletRoutineButton(
-        label = "Routine1",
-        onPlayClick = {},
-        onFavoriteClick = {},
-        backgroundColor = ThemeColors.PALE_BLUE.color,
-    )
-}
+//@Preview
+//@Composable
+//fun TabletRoutineButtonPreview() {
+//    TabletRoutineButton(
+//        label = "Routine1",
+//        onPlayClick = {},
+//        onFavoriteClick = {},
+//    )
+//}
