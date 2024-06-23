@@ -1,9 +1,10 @@
 package com.example.turnsmart_hci.screens
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
@@ -50,12 +51,14 @@ fun DevicesScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .align(Alignment.Center),
+                    .align(Alignment.Center)
+                    .padding(8.dp)
+                    .then(if(layoutType == NavigationSuiteType.NavigationBar) Modifier.verticalScroll(rememberScrollState()) else(Modifier) ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 val devices = uiState.devices
 
-                if(devices.isEmpty()){
+                if (devices.isEmpty()) {
                     Text(
                         text = "You don't have any devices",
                         fontSize = 24.sp,
@@ -72,8 +75,56 @@ fun DevicesScreen(
                         fontSize = 25.sp,
                         modifier = Modifier.padding(20.dp),
                         color = TurnSmartTheme.colors.onPrimary
-                        )
-                    if(layoutType == NavigationSuiteType.NavigationBar){
+                    )
+
+                    if (layoutType == NavigationSuiteType.NavigationRail || layoutType == NavigationSuiteType.NavigationDrawer) {
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(3),
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.spacedBy(16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(1.dp)
+                        ) {
+                            items(devices.size) { index ->
+                                when (val device = devices[index]) {
+                                    is Lamp -> {
+                                        LightButton(
+                                            lamp = device,
+                                            lampViewModel = lampViewModel,
+                                            notificationViewModel = notificationViewModel,
+                                            layoutType = layoutType
+                                        )
+                                    }
+                                    is AC -> {
+                                        ACButton(
+                                            ac = device,
+                                            acViewModel = acViewModel,
+                                            notificationViewModel = notificationViewModel,
+                                            layoutType = layoutType
+                                        )
+                                    }
+                                    is Blind -> {
+                                        BlindsButton(
+                                            blind = device,
+                                            blindViewModel = blindViewModel,
+                                            notificationViewModel = notificationViewModel,
+                                            layoutType = layoutType
+                                        )
+                                    }
+                                    is Speaker -> {
+                                        SpeakerButton(
+                                            speaker = device,
+                                            speakerViewModel = speakerViewModel,
+                                            notificationViewModel = notificationViewModel,
+                                            layoutType = layoutType
+                                        )
+                                    }
+                                    else -> {
+                                        Text("Unknown device type")
+                                    }
+                                }
+                            }
+                        }
+                    } else {
                         devices.forEach { device ->
                             when (device) {
                                 is Lamp -> {
@@ -107,14 +158,12 @@ fun DevicesScreen(
                                         notificationViewModel = notificationViewModel,
                                         layoutType = layoutType
                                     )
-
-                                } else -> {
-                                Text("Unknown device type")
-                            }
+                                }
+                                else -> {
+                                    Text("Unknown device type")
+                                }
                             }
                         }
-                    }else{
-                        // applicar grid
                     }
                 }
             }

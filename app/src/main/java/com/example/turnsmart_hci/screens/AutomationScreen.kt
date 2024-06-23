@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
@@ -39,7 +41,11 @@ fun AutomationScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .align(Alignment.Center),
+                    .align(Alignment.Center)
+                    .padding(8.dp)
+                    .then(if(layoutType == NavigationSuiteType.NavigationBar) Modifier.verticalScroll(
+                    rememberScrollState()
+                ) else(Modifier) ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 val routines = uiManyRoutinesState.routines
@@ -68,7 +74,7 @@ fun AutomationScreen(
                             columns = GridCells.Fixed(3),
                             modifier = Modifier.fillMaxSize(),
                             verticalArrangement = Arrangement.spacedBy(16.dp),
-                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                            horizontalArrangement = Arrangement.spacedBy(1.dp)
                         ) {
                             items(routines.size) { index ->
                                 TabletRoutineButton(
