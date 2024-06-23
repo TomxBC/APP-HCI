@@ -67,6 +67,7 @@ fun TabletRoutineButton(
                                 notificationViewModel.sendNotification(context,"Routine is being executed",routine.name)
                                 delay(5000)
                                 isPlaying = false }
+                            routineViewModel.executeRoutine(routine)
                         }
                     },
                     modifier = Modifier

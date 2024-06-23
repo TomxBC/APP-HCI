@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted) {
-            viewModel.sendNotification(this,"working!!!!!", "Notification2")
+            // Handle permission granted
         } else {
             // Handle permission denial (optional)
         }
@@ -64,8 +64,6 @@ class MainActivity : ComponentActivity() {
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-            } else {
-                viewModel.sendNotification(this,"working!!!!!", "Notification1")
             }
         }
     }

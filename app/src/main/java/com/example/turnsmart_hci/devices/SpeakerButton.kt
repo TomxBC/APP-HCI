@@ -108,7 +108,7 @@ fun SpeakerButton(
         Popup(onDismissRequest = { showPopup = false }){
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
                     .background(Color.Black.copy(alpha = 0.5f))
             ){
                 Box(
