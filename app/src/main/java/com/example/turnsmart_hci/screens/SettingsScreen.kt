@@ -29,7 +29,6 @@ fun SettingsScreen(
     notificationViewModel: NotificationViewModel
 ) {
     var selectedLanguage by remember { mutableStateOf("English") }
-    var notificationsEnabled by remember { mutableStateOf(true) }
 
     TurnSmartTheme {
         Column(
@@ -46,16 +45,16 @@ fun SettingsScreen(
                 }
             )
 
-            NotificationsSwitch(
-                notificationsEnabled = notificationsEnabled,
-                onToggleNotifications = { enabled ->
-                    notificationsEnabled = enabled
-                    notificationViewModel.setNotificationsEnabled(enabled)
-                }
+            Text(
+                text = "To activate notifications please access your device's settings",
+                modifier = Modifier.padding(start = 8.dp),
+                fontFamily = montserratFontFamily,
+                fontSize = 16.sp
             )
         }
     }
 }
+
 
 @Composable
 fun LanguageSelector(
@@ -97,32 +96,5 @@ fun LanguageSelector(
                 )
             }
         }
-    }
-}
-
-@Composable
-fun NotificationsSwitch(
-    notificationsEnabled: Boolean,
-    onToggleNotifications: (Boolean) -> Unit
-) {
-    val context = LocalContext.current
-    Row(
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = "Notifications:",
-            modifier = Modifier.weight(1f),
-            fontFamily = montserratFontFamily,
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
-            onTextLayout = {}
-
-        )
-        Switch(
-            checked = notificationsEnabled,
-            onCheckedChange = { isChecked ->
-                onToggleNotifications(isChecked)
-            }
-        )
     }
 }
