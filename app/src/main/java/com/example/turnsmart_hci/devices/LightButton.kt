@@ -31,6 +31,7 @@ import com.example.turnsmart_hci.data.model.Lamp
 import com.example.turnsmart_hci.data.model.Status
 import com.example.turnsmart_hci.data.ui.devices.LampViewModel
 import com.example.turnsmart_hci.notifications.NotificationViewModel
+import com.example.turnsmart_hci.tabletVersion.TabletDeviceButton
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_yellow
@@ -46,21 +47,42 @@ fun LightButton(
 
     val context = LocalContext.current
 
-    DeviceButton(
-        label = lamp.name,
-        onClick = { showPopup = true },
-        backgroundColor = pale_yellow,
-        icon = R.drawable.lights,
-        power = { on ->
-            if (on) {
-                lampViewModel.turnOn(lamp)
-                notificationViewModel.sendNotification(context,"Light turned on", lamp.name)
-            } else {
-                lampViewModel.turnOff(lamp)
-                notificationViewModel.sendNotification(context,"Light turned off", lamp.name)
+    if (layoutType == NavigationSuiteType.NavigationBar){
+        DeviceButton(
+            label = lamp.name,
+            onClick = { showPopup = true },
+            backgroundColor = pale_yellow,
+            icon = R.drawable.lights,
+            power = { on ->
+                if (on) {
+                    lampViewModel.turnOn(lamp)
+                    notificationViewModel.sendNotification(context,"Light turned on", lamp.name)
+                } else {
+                    lampViewModel.turnOff(lamp)
+                    notificationViewModel.sendNotification(context,"Light turned off", lamp.name)
+                }
             }
-        }
-    )
+        )
+    }else{
+        TabletDeviceButton(
+            label = lamp.name,
+            onClick = { showPopup = true },
+            backgroundColor = pale_yellow,
+            icon = R.drawable.lights,
+            power = { on ->
+                if (on) {
+                    lampViewModel.turnOn(lamp)
+                    notificationViewModel.sendNotification(context,"Light turned on", lamp.name)
+                } else {
+                    lampViewModel.turnOff(lamp)
+                    notificationViewModel.sendNotification(context,"Light turned off", lamp.name)
+                }
+            },
+            status = lamp.status.name
+        )
+    }
+
+
     if (showPopup) {
         Popup(
             onDismissRequest = {
@@ -73,7 +95,10 @@ fun LightButton(
                 Box(
                     modifier = Modifier
                         .align(Alignment.Center)
-                        .background(TurnSmartTheme.colors.background, shape = RoundedCornerShape(8.dp))
+                        .background(
+                            TurnSmartTheme.colors.background,
+                            shape = RoundedCornerShape(8.dp)
+                        )
                         .padding(16.dp)
                 ){
                     LightsScreen(
@@ -123,7 +148,8 @@ fun LightsScreen(
 ) {
     val context = LocalContext.current
     Box(
-        modifier = Modifier.verticalScroll(rememberScrollState())
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
             .fillMaxSize()
             .background(backgroundColor, shape = RoundedCornerShape(8.dp))
             .padding(16.dp)
@@ -161,11 +187,15 @@ fun LightsScreen(
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Bold
             )
-            Spacer(modifier = Modifier.height(16.dp).padding(10.dp))
+            Spacer(modifier = Modifier
+                .height(16.dp)
+                .padding(10.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth().padding(10.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
             ) {
                 Text(
                     text = if (isOn) "ON" else "OFF",
@@ -182,7 +212,9 @@ fun LightsScreen(
                     }
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp).padding(10.dp))
+            Spacer(modifier = Modifier
+                .height(16.dp)
+                .padding(10.dp))
             Text(
                 text = "Light Intensity:",
                 color = textColor,
@@ -217,7 +249,9 @@ fun LightsScreen(
                         tint = textColor
                     )
                 }
-                Spacer(modifier = Modifier.width(8.dp).padding(10.dp))
+                Spacer(modifier = Modifier
+                    .width(8.dp)
+                    .padding(10.dp))
                 Slider(
                     value = lightIntensity.toFloat(),
                     onValueChange = { newValue ->
@@ -240,7 +274,9 @@ fun LightsScreen(
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(16.dp).padding(10.dp))
+            Spacer(modifier = Modifier
+                .height(16.dp)
+                .padding(10.dp))
             Text(
                 text = "Light Color",
                 color = textColor,
@@ -249,7 +285,9 @@ fun LightsScreen(
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier.align(Alignment.Start)
             )
-            Spacer(modifier = Modifier.height(8.dp).padding(10.dp))
+            Spacer(modifier = Modifier
+                .height(8.dp)
+                .padding(10.dp))
             ColorSlider(
                 selectedColor = lightColor,
                 onColorSelected = onColorChange
