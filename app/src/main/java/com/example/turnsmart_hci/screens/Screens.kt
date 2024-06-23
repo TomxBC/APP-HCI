@@ -17,7 +17,7 @@ fun getScreen(route: String?){
         Screens.Devices.route -> Screens.Devices.title
         Screens.Automation.route -> Screens.Automation.title
         Screens.Settings.route -> Screens.Settings.title
-        else -> Screens.Favorite.title
+        else -> Screens.Devices.title
     }
 }
 

@@ -76,7 +76,7 @@ fun MainScreen(
     requestPermission: @Composable () -> Unit
 ) {
     val navController = rememberNavController()
-    var currentDestination by rememberSaveable { mutableStateOf(Screens.Favorite.route) }
+    var currentDestination by rememberSaveable { mutableStateOf(Screens.Devices.route) }
 
     TurnSmartTheme {
         NavigationSuiteScaffold(
