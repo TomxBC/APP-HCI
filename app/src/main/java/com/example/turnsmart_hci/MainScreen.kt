@@ -130,7 +130,8 @@ fun MainScreen(
                             layoutType = layoutType,
                         )
                     }
-                }
+                },
+                modifier = Modifier.fillMaxSize()
             )
         }
     }
