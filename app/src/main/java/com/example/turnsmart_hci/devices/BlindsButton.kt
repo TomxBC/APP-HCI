@@ -70,7 +70,8 @@ fun BlindsButton(
                     blindViewModel.close(blind)
                     notificationViewModel.sendNotification(context, "Blinds closed",blind.name)
                 }
-            }
+            },
+            device = blind
         )
     }else{
         TabletDeviceButton(

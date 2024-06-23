@@ -101,7 +101,8 @@ fun SpeakerButton(
                         speaker.name
                     )
                 }
-            }
+            },
+            device = speaker
         )
     }
 

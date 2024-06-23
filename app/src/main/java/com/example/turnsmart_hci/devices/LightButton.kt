@@ -61,7 +61,8 @@ fun LightButton(
                     lampViewModel.turnOff(lamp)
                     notificationViewModel.sendNotification(context,"Light turned off", lamp.name)
                 }
-            }
+            },
+            device = lamp
         )
     }else{
         TabletDeviceButton(

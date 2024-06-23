@@ -31,9 +31,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.turnsmart_hci.notifications.NotificationViewModel
+import com.example.turnsmart_hci.screens.FavoriteScreen
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 
 val bottomBarItems = listOf(
+    Screens.Favorite,
     Screens.Devices,
     Screens.Automation
 )
@@ -52,6 +54,12 @@ fun MainNavHost(
     ) {
         composable(Screens.Devices.route) {
             DevicesScreen(
+                notificationViewModel=notificationViewModel,
+                layoutType = layoutType
+            )
+        }
+        composable(Screens.Favorite.route) {
+            FavoriteScreen(
                 notificationViewModel=notificationViewModel,
                 layoutType = layoutType
             )
@@ -76,7 +84,7 @@ fun MainScreen(
     requestPermission: @Composable () -> Unit
 ) {
     val navController = rememberNavController()
-    var currentDestination by rememberSaveable { mutableStateOf(Screens.Favorite.route) }
+    var currentDestination by rememberSaveable { mutableStateOf(Screens.Devices.route) }
 
     TurnSmartTheme {
         NavigationSuiteScaffold(

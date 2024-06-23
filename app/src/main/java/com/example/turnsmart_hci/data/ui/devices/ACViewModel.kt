@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.turnsmart_hci.DataSourceException
 import com.example.turnsmart_hci.data.model.Error
 import com.example.turnsmart_hci.data.model.AC
+import com.example.turnsmart_hci.data.model.Lamp
 import com.example.turnsmart_hci.data.repositry.DeviceRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow

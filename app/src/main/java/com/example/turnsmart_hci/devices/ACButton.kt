@@ -55,7 +55,8 @@ fun ACButton(
                     acViewModel.turnOff(ac)
                     notificationViewModel.sendNotification(context, "AC turned off",ac.name)
                 }
-            }
+            },
+            device = ac
         )
     }else{
         TabletDeviceButton(

@@ -31,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.turnsmart_hci.R
+import com.example.turnsmart_hci.data.model.Device
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.ThemeColors
 
@@ -43,7 +44,8 @@ fun DeviceButton(
     textColor: Color = ThemeColors.DARK_TEXT.color,
     icon: Int,
     isOn: Boolean = false,
-    power: (Boolean) -> Unit
+    power: (Boolean) -> Unit,
+    device: Device
 ) {
     Button(
         onClick = onClick,
@@ -61,12 +63,30 @@ fun DeviceButton(
         enabled = enabled
     ) {
         var powerOn by remember { mutableStateOf(isOn) }
+        var isFav by remember { mutableStateOf(device.favorite) }
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxSize()
         ) {
+            IconButton(
+                onClick = {
+                    isFav = !isFav
+                    device.favorite = isFav
+                          },
+                modifier = Modifier
+                    .padding(top = 16.dp)
+            ) {
+                Icon(
+                    painter = painterResource(
+                        if (isFav) R.drawable.favorite_fill else R.drawable.favorite
+                    ),
+                    contentDescription = null,
+                    modifier = Modifier.size(35.dp),
+                    tint = Color.Black
+                )
+            }
             Icon(
                 painter = painterResource(icon),
                 contentDescription = null,

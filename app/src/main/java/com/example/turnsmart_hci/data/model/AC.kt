@@ -12,8 +12,9 @@ class AC (
     val temperature: Int,
     val horizontalSwing: String,
     val verticalSwing: String,
-    val fanSpeed: String
-    ) : Device(id, name, DeviceType.AC) {
+    val fanSpeed: String,
+    favorite: Boolean = false
+) : Device(id, name, DeviceType.AC) {
 
     override fun asRemoteModel(): RemoteDevice<RemoteACState> {
         val state = RemoteACState()

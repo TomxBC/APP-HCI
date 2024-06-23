@@ -9,7 +9,8 @@ class Lamp(
     name: String,
     val status: Status,
     val color: String,
-    val brightness: Int
+    val brightness: Int,
+    favorite: Boolean = false
 ) : Device(id, name, DeviceType.LAMP) {
 
 
