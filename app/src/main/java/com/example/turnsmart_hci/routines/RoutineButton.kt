@@ -69,6 +69,7 @@ fun RoutineButton(
             )
             IconButton(
                 onClick = {
+                    routineViewModel.executeRoutine()
                     //CREO QUE FALTA API EXECUTE
                     notificationViewModel.sendNotification(context,"Routine is being executed",routine.name)
                 },
