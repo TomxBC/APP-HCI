@@ -22,13 +22,16 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.turnsmart_hci.data.ui.getViewModelFactory
 import com.example.turnsmart_hci.data.ui.routines.RoutineViewModel
 import com.example.turnsmart_hci.data.ui.routines.RoutinesViewModel
+import com.example.turnsmart_hci.notifications.NotificationViewModel
 import com.example.turnsmart_hci.routines.RoutineButton
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
+import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 
 @Composable
 fun AutomationScreen(
     manyRoutinesViewModel: RoutinesViewModel = viewModel(factory = getViewModelFactory()),
-    routineViewModel: RoutineViewModel = viewModel(factory = getViewModelFactory())
+    routineViewModel: RoutineViewModel = viewModel(factory = getViewModelFactory()),
+    notificationViewModel: NotificationViewModel
 ) {
     val uiManyRoutinesState by manyRoutinesViewModel.uiState.collectAsState()
 
@@ -38,31 +41,33 @@ fun AutomationScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .align(Alignment.Center),
-                verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 val routines = uiManyRoutinesState.routines
-                Log.d("%s", routines.toString())
+
                 if(routines.isEmpty()) {
                     Text(
                         text = "You don't have routines",
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(bottom = 16.dp)
+                        modifier = Modifier.padding(bottom = 16.dp),
+                        fontFamily = montserratFontFamily,
+                        color = TurnSmartTheme.colors.onPrimary
                     )
                 } else {
+                    Text(
+                        text = "Your Routines",
+                        fontFamily = montserratFontFamily,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 25.sp,
+                        modifier = Modifier.padding(20.dp),
+                        color = TurnSmartTheme.colors.onPrimary
+                    )
                     routines.forEach { routine ->
-                        RoutineButton(routine = routine, routineViewModel = routineViewModel)
+                        RoutineButton(routine = routine, routineViewModel = routineViewModel, notificationViewModel = notificationViewModel)
                     }
-                    //Text(text = "Automation Screen", fontFamily = montserratFontFamily, fontWeight = FontWeight.SemiBold, fontSize = 30.sp, color = dark_purple)
                 }
             }
-            TabletRoutineButton(
-                label = "Routine 1",
-                onFavoriteClick = { /* Handle favorite click */ },
-                onPlayClick = { /* Handle play toggle */ },
-                backgroundColor = ThemeColors.PALE_BLUE.color
-            )
         }
     }
 

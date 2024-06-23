@@ -25,6 +25,7 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -43,21 +45,57 @@ import com.example.turnsmart_hci.data.model.Speaker
 import com.example.turnsmart_hci.data.ui.devices.SpeakerViewModel
 import com.example.turnsmart_hci.notifications.NotificationChannelApp
 import com.example.turnsmart_hci.notifications.NotificationViewModel
+import com.example.turnsmart_hci.tabletVersion.TabletDeviceButton
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_green
 import com.example.turnsmart_hci.ui.theme.pale_red
 
 @Composable
-fun SpeakerButton(speaker: Speaker, speakerViewModel: SpeakerViewModel) {
+fun SpeakerButton(
+    speaker: Speaker,
+    speakerViewModel: SpeakerViewModel,
+    notificationViewModel: NotificationViewModel,
+    //
+) {
     var showPopup by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
-    DeviceButton(
-        label = speaker.name,
-        onClick = { showPopup = true },
-        backgroundColor = pale_green,
-        icon = R.drawable.speaker
-    )
+//    if(layoutType == NavigationSuiteType.NavigationRail || layoutType == NavigationSuiteType.NavigationDrawer){
+//        TabletDeviceButton(
+//            label = speaker.name,
+//            onClick = { showPopup = true },
+//            backgroundColor = pale_green,
+//            icon = R.drawable.speaker,
+//            power = { on ->
+//                if (on) {
+//                    speakerViewModel.play(speaker)
+//                    notificationViewModel.sendNotification(context, "Playing ${speaker.song?.title}", speaker.name)
+//                } else {
+//                    speakerViewModel.stop(speaker)
+//                    notificationViewModel.sendNotification(context, "Stopped ${speaker.name}", speaker.name)
+//                }
+//            },
+//            status = speaker.status.name
+//        )
+//    }else{
+        DeviceButton(
+            label = speaker.name,
+            onClick = { showPopup = true },
+            backgroundColor = pale_green,
+            icon = R.drawable.speaker,
+            power = { on ->
+                if (on) {
+                    speakerViewModel.play(speaker)
+                    notificationViewModel.sendNotification(context, "Playing ${speaker.song?.title}", speaker.name)
+                } else {
+                    speakerViewModel.stop(speaker)
+                    notificationViewModel.sendNotification(context, "Stopped ${speaker.name}", speaker.name)
+                }
+            }
+        )
+
+
     if (showPopup) {
         Popup(onDismissRequest = { showPopup = false }){
             Box(
@@ -68,7 +106,10 @@ fun SpeakerButton(speaker: Speaker, speakerViewModel: SpeakerViewModel) {
                 Box(
                     modifier = Modifier
                         .align(Alignment.Center)
-                        .background(TurnSmartTheme.colors.background, shape = RoundedCornerShape(8.dp))
+                        .background(
+                            TurnSmartTheme.colors.background,
+                            shape = RoundedCornerShape(8.dp)
+                        )
                         .padding(16.dp)
                 ){
                     SpeakerScreen(
@@ -76,15 +117,37 @@ fun SpeakerButton(speaker: Speaker, speakerViewModel: SpeakerViewModel) {
                         volume = speaker.volume,
                         onVolumeChange = { vol ->
                             speakerViewModel.setVolume(speaker, vol)
+                            notificationViewModel.sendNotification(context, "Volume set to $vol", speaker.name)
                         },
-                        onPlay = { speakerViewModel.play(speaker) },
-                        onStop = { speakerViewModel.stop(speaker) },
-                        onPrevious = { speakerViewModel.previousSong(speaker) },
-                        onResume = { speakerViewModel.resume(speaker) },
-                        onNext = { speakerViewModel.nextSong(speaker) },
-                        onPause = { speakerViewModel.pause(speaker) },
+                        onPlay = {
+                            speakerViewModel.play(speaker)
+                            notificationViewModel.sendNotification(context, "Now playing ${speaker.song?.title}", speaker.name)
+                                 },
+                        onStop = {
+                            speakerViewModel.stop(speaker)
+                            notificationViewModel.sendNotification(context, "Stopped ${speaker.name}", speaker.name)
+                                 },
+                        onPrevious = {
+                            speakerViewModel.previousSong(speaker)
+                            notificationViewModel.sendNotification(context, "Now playing ${speaker.song?.title}", speaker.name)
+                                     },
+                        onResume = {
+                            speakerViewModel.resume(speaker)
+                            notificationViewModel.sendNotification(context, "Now playing ${speaker.song?.title}", speaker.name)
+                                   },
+                        onNext = {
+                            speakerViewModel.nextSong(speaker)
+                            notificationViewModel.sendNotification(context, "Now playing ${speaker.song?.title}", speaker.name)
+                                 },
+                        onPause = {
+                            speakerViewModel.pause(speaker)
+                            notificationViewModel.sendNotification(context, "Paused ${speaker.song?.title}", speaker.name)
+                                  },
                         genre = speaker.genre ?: "Music",
-                        onGenreSelect = { gen -> speakerViewModel.setGenre(speaker,gen) },
+                        onGenreSelect = { gen ->
+                            speakerViewModel.setGenre(speaker,gen)
+                            notificationViewModel.sendNotification(context, "Now playing $gen genre", speaker.name)
+                        },
                         onBackClick = { showPopup = false },
                         speaker = speaker
                     )
@@ -117,6 +180,7 @@ fun SpeakerScreen(
     var isPlaying by remember { mutableStateOf(false) }
     var showDialog by remember { mutableStateOf(false) }
     var currentSong by remember { mutableStateOf(speaker.song) }
+    var currentGenre by remember { mutableStateOf(genre) }
 
     val songs = when (genre) {
         "Pop" -> listOf("Song 1", "Song 2", "Song 3")
@@ -128,7 +192,8 @@ fun SpeakerScreen(
     }
 
     Box(
-        modifier = Modifier.verticalScroll(rememberScrollState())
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
             .fillMaxSize()
             .background(backgroundColor, shape = RoundedCornerShape(8.dp))
             .padding(16.dp)
@@ -217,7 +282,9 @@ fun SpeakerScreen(
                             onTextLayout = {}
                         )
                     }
-                    Spacer(modifier = Modifier.height(25.dp).padding(10.dp))
+                    Spacer(modifier = Modifier
+                        .height(25.dp)
+                        .padding(10.dp))
 
                     Slider(
                         value = 0f,
@@ -229,7 +296,9 @@ fun SpeakerScreen(
                     // Music Control Icons
                     Row(
                         horizontalArrangement = Arrangement.SpaceEvenly,
-                        modifier = Modifier.fillMaxWidth().padding(10.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp)
                     ) {
                         IconButton(onClick = {
                             onPrevious()
@@ -310,7 +379,7 @@ fun SpeakerScreen(
                         Spacer(modifier = Modifier.width(16.dp))
                         Box {
                             Text(
-                                text = genre,
+                                text = currentGenre,
                                 color = textColor,
                                 fontSize = 16.sp,
                                 fontFamily = montserratFontFamily,
@@ -331,6 +400,7 @@ fun SpeakerScreen(
                                         text = { Text(selectedGenre, onTextLayout = {}) },
                                         onClick = {
                                             onGenreSelect(selectedGenre)
+                                            currentGenre = selectedGenre
                                             expanded = false
                                         }
                                     )

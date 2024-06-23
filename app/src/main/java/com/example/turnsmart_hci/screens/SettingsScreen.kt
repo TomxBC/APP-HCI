@@ -14,11 +14,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.turnsmart_hci.notifications.NotificationViewModel
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(notificationViewModel: NotificationViewModel) {
     var selectedLanguage by remember { mutableStateOf("English") }
     var notificationsEnabled by remember { mutableStateOf(true) }
 
@@ -115,10 +116,4 @@ fun NotificationsSwitch(
             }
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SettingsScreenPreview() {
-    SettingsScreen()
 }

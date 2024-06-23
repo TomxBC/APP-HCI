@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -23,19 +24,34 @@ import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.data.model.AC
 import com.example.turnsmart_hci.data.model.Status
 import com.example.turnsmart_hci.data.ui.devices.ACViewModel
+import com.example.turnsmart_hci.notifications.NotificationViewModel
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_blue
 
 @Composable
-fun ACButton(ac: AC, acViewModel: ACViewModel) {
+fun ACButton(
+    ac: AC,
+    acViewModel: ACViewModel,
+    notificationViewModel: NotificationViewModel
+) {
     var showPopup by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     DeviceButton(
         label = ac.name,
         onClick = { showPopup = true },
         backgroundColor = pale_blue,
-        icon = R.drawable.ac
+        icon = R.drawable.ac,
+        power = { on ->
+            if (on) {
+                acViewModel.turnOn(ac)
+                notificationViewModel.sendNotification(context, "AC turned on",ac.name)
+            } else {
+                acViewModel.turnOff(ac)
+                notificationViewModel.sendNotification(context, "AC turned off",ac.name)
+            }
+        }
     )
 
     if (showPopup) {
@@ -48,7 +64,10 @@ fun ACButton(ac: AC, acViewModel: ACViewModel) {
                 Box(
                     modifier = Modifier
                         .align(Alignment.Center)
-                        .background(TurnSmartTheme.colors.background, shape = RoundedCornerShape(8.dp))
+                        .background(
+                            TurnSmartTheme.colors.background,
+                            shape = RoundedCornerShape(8.dp)
+                        )
                         .padding(16.dp)
                 ) {
                     AirConditionerScreen(
@@ -57,29 +76,36 @@ fun ACButton(ac: AC, acViewModel: ACViewModel) {
                         onToggle = { isOn ->
                             if (isOn) {
                                 acViewModel.turnOn(ac)
+                                notificationViewModel.sendNotification(context, "AC turned on",ac.name)
                             } else {
                                 acViewModel.turnOff(ac)
+                                notificationViewModel.sendNotification(context, "AC turned off",ac.name)
                             }
                         },
                         temperature = ac.temperature,
                         onSetTemperature = { temp ->
                             acViewModel.setTemperature(ac, temp)
+                            notificationViewModel.sendNotification(context, "Temperature changed to $temp°C",ac.name)
                         },
                         mode = ac.mode,
                         onSetMode = { mod ->
                             acViewModel.setMode(ac, mod)
+                            notificationViewModel.sendNotification(context, "Mode changed to $mod",ac.name)
                         },
                         verticalSwing = ac.verticalSwing,
                         onSetVerticalSwing = { vSwing ->
                             acViewModel.setVerticalSwing(ac, vSwing)
+                            notificationViewModel.sendNotification(context, "Vertical Swing changed to $vSwing",ac.name)
                         },
                         horizontalSwing = ac.horizontalSwing,
                         onSetHorizontalSwing = { hSwing ->
                             acViewModel.setHorizontalSwing(ac, hSwing)
+                            notificationViewModel.sendNotification(context, "Horizontal Swing changed to $hSwing",ac.name)
                         },
                         fanSpeed = ac.fanSpeed,
                         onSetFanSpeed = { speed ->
                             acViewModel.setFanSpeed(ac, speed)
+                            notificationViewModel.sendNotification(context, "Fan Speed changed to $speed",ac.name)
                         },
                         onBackClick = { showPopup = false }
                     )
@@ -109,14 +135,15 @@ fun AirConditionerScreen(
     backgroundColor: Color = TurnSmartTheme.colors.background,
     onBackClick: () -> Unit
 ) {
-    val modes = listOf("Fan", "Cooling", "Heating") //CAMBIARRR POR LO DE LENGUAJES
+    val modes = listOf("Fan", "Cool", "Heat") //CAMBIARRR POR LO DE LENGUAJES
     var expanded by remember { mutableStateOf(false) }
     val horizontalSwingPositions = listOf("Auto", "-90°", "-45°", "0°", "45°", "90°")
     val verticalSwingPositions = listOf("Auto", "0°", "22°", "45°", "67°", "90°")
     val fanSpeedPositions = listOf("Auto", "25%", "50%", "75%", "100%")
 
     Box(
-        modifier = Modifier.verticalScroll(rememberScrollState())
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
             .fillMaxSize()
             .background(backgroundColor, shape = RoundedCornerShape(8.dp))
             .padding(16.dp)
@@ -164,7 +191,9 @@ fun AirConditionerScreen(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth().padding(10.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
             ) {
                 Text(
                     text = if (isOn) "ON" else "OFF",
@@ -187,7 +216,9 @@ fun AirConditionerScreen(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth().padding(10.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
             ) {
                 Text(
                     text = "Mode:",
@@ -227,7 +258,9 @@ fun AirConditionerScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(25.dp).padding(10.dp))
+            Spacer(modifier = Modifier
+                .height(25.dp)
+                .padding(10.dp))
 
             // Temperature
             Text(
@@ -236,9 +269,13 @@ fun AirConditionerScreen(
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.align(Alignment.Start).padding(10.dp)
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(10.dp)
             )
-            Spacer(modifier = Modifier.height(10.dp).padding(10.dp))
+            Spacer(modifier = Modifier
+                .height(10.dp)
+                .padding(10.dp))
             Text(
                 text = "$temperature°C",
                 color = textColor,
@@ -248,7 +285,9 @@ fun AirConditionerScreen(
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth().padding(10.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
             ) {
                 IconButton(
                     onClick = { if (temperature > 0) onSetTemperature(temperature - 1) },
@@ -260,7 +299,9 @@ fun AirConditionerScreen(
                         tint = textColor
                     )
                 }
-                Spacer(modifier = Modifier.width(8.dp).padding(10.dp))
+                Spacer(modifier = Modifier
+                    .width(8.dp)
+                    .padding(10.dp))
                 Slider(
                     value = temperature.toFloat(),
                     onValueChange = { newValue ->
@@ -269,7 +310,9 @@ fun AirConditionerScreen(
                     valueRange = 18f..38f,
                     modifier = Modifier.weight(1f)
                 )
-                Spacer(modifier = Modifier.width(8.dp).padding(10.dp))
+                Spacer(modifier = Modifier
+                    .width(8.dp)
+                    .padding(10.dp))
                 IconButton(
                     onClick = { if (temperature < 100) onSetTemperature(temperature + 1) },
                     modifier = Modifier.size(24.dp)
@@ -282,7 +325,9 @@ fun AirConditionerScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(25.dp).padding(10.dp))
+            Spacer(modifier = Modifier
+                .height(25.dp)
+                .padding(10.dp))
 
             // Vertical Swing
             Text(
@@ -291,9 +336,13 @@ fun AirConditionerScreen(
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.align(Alignment.Start).padding(10.dp)
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(10.dp)
             )
-            Spacer(modifier = Modifier.height(10.dp).padding(10.dp))
+            Spacer(modifier = Modifier
+                .height(10.dp)
+                .padding(10.dp))
             Text(
                 text = verticalSwing,
                 color = textColor,
@@ -303,7 +352,9 @@ fun AirConditionerScreen(
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth().padding(10.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
             ) {
                 val verticalSwingIndex = verticalSwingPositions.indexOf(verticalSwing)
                 Slider(
@@ -312,12 +363,13 @@ fun AirConditionerScreen(
                         onSetVerticalSwing(verticalSwingPositions[newValue.toInt()])
                     },
                     valueRange = 0f..(verticalSwingPositions.size - 1).toFloat(),
-                    steps = verticalSwingPositions.size - 1,
                     modifier = Modifier.weight(1f)
                 )
             }
             Row(
-                modifier = Modifier.fillMaxWidth().padding(10.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 verticalSwingPositions.forEach { label ->
@@ -325,7 +377,9 @@ fun AirConditionerScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(25.dp).padding(10.dp))
+            Spacer(modifier = Modifier
+                .height(25.dp)
+                .padding(10.dp))
 
             // Horizontal Swing
             Text(
@@ -334,9 +388,13 @@ fun AirConditionerScreen(
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.align(Alignment.Start).padding(10.dp)
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(10.dp)
             )
-            Spacer(modifier = Modifier.height(10.dp).padding(10.dp))
+            Spacer(modifier = Modifier
+                .height(10.dp)
+                .padding(10.dp))
             Text(
                 text = horizontalSwing,
                 color = textColor,
@@ -346,7 +404,9 @@ fun AirConditionerScreen(
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth().padding(10.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
             ) {
                 val horizontalSwingIndex = horizontalSwingPositions.indexOf(horizontalSwing)
                 Slider(
@@ -355,12 +415,13 @@ fun AirConditionerScreen(
                         onSetHorizontalSwing(horizontalSwingPositions[newValue.toInt()])
                     },
                     valueRange = 0f..(horizontalSwingPositions.size - 1).toFloat(),
-                    steps = horizontalSwingPositions.size - 1,
                     modifier = Modifier.weight(1f)
                 )
             }
             Row(
-                modifier = Modifier.fillMaxWidth().padding(10.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 horizontalSwingPositions.forEach { label ->
@@ -368,7 +429,9 @@ fun AirConditionerScreen(
 
                 }
             }
-            Spacer(modifier = Modifier.height(25.dp).padding(10.dp))
+            Spacer(modifier = Modifier
+                .height(25.dp)
+                .padding(10.dp))
 
             // Fan Speed
             Text(
@@ -377,9 +440,13 @@ fun AirConditionerScreen(
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.align(Alignment.Start).padding(10.dp)
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(10.dp)
             )
-            Spacer(modifier = Modifier.height(10.dp).padding(10.dp))
+            Spacer(modifier = Modifier
+                .height(10.dp)
+                .padding(10.dp))
             Text(
                 text = fanSpeed,
                 color = textColor,
@@ -389,7 +456,9 @@ fun AirConditionerScreen(
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth().padding(10.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
             ) {
                 val fanSpeedIndex = fanSpeedPositions.indexOf(fanSpeed)
                 Slider(
@@ -398,12 +467,13 @@ fun AirConditionerScreen(
                         onSetFanSpeed(fanSpeedPositions[newValue.toInt()])
                     },
                     valueRange = 0f..(fanSpeedPositions.size - 1).toFloat(),
-                    steps = fanSpeedPositions.size - 1,
                     modifier = Modifier.weight(1f)
                 )
             }
             Row(
-                modifier = Modifier.fillMaxWidth().padding(10.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 fanSpeedPositions.forEach { label ->
@@ -414,45 +484,3 @@ fun AirConditionerScreen(
 
     }
 }
-
-//@Composable
-//fun AirConditionerScreenPreview() {
-//    var isOn by remember { mutableStateOf(true) }
-//    var temperature by remember { mutableIntStateOf(24) }
-//    var mode by remember { mutableStateOf("Cooling") }
-//    var verticalSwing by remember { mutableIntStateOf(2) }
-//    var horizontalSwing by remember { mutableIntStateOf(0) }
-//    var fanSpeed by remember { mutableIntStateOf(25) }
-//
-//    Surface {
-//        Column(
-//            modifier = Modifier
-//                .padding(16.dp)
-//                .fillMaxSize(),
-//            verticalArrangement = Arrangement.spacedBy(16.dp)
-//        ) {
-//            AirConditionerScreen(
-//                deviceName = "Living Room Air Conditioner",
-//                isOn = isOn,
-//                onToggle = { isOn = it },
-//                temperature = temperature,
-//                onSetTemperature = { temperature = it },
-//                mode = mode,
-//                onSetMode = { mode = it },
-//                verticalSwing = verticalSwing,
-//                onSetVerticalSwing = { },
-//                horizontalSwing = horizontalSwing,
-//                onSetHorizontalSwing = { },
-//                fanSpeed = fanSpeed,
-//                onSetFanSpeed = { },
-//                onBackClick = {}
-//            )
-//        }
-//    }
-//}
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun ACPreview() {
-//    AirConditionerScreenPreview()
-//}

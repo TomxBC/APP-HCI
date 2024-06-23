@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,6 +46,7 @@ import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.data.model.Blind
 import com.example.turnsmart_hci.data.model.Status
 import com.example.turnsmart_hci.data.ui.devices.BlindViewModel
+import com.example.turnsmart_hci.notifications.NotificationViewModel
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_blue
@@ -52,14 +54,28 @@ import com.example.turnsmart_hci.ui.theme.pale_red
 import com.example.turnsmart_hci.ui.theme.pale_yellow
 
 @Composable
-fun BlindsButton(blind: Blind, blindViewModel: BlindViewModel) {
+fun BlindsButton(
+    blind: Blind,
+    blindViewModel: BlindViewModel,
+    notificationViewModel: NotificationViewModel
+) {
     var showPopup by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     DeviceButton(
         label = blind.name,
         onClick = {showPopup = true},
         backgroundColor = pale_red,
-        icon = R.drawable.blinds
+        icon = R.drawable.blinds,
+        power = { on ->
+            if (on) {
+                blindViewModel.open(blind)
+                notificationViewModel.sendNotification(context, "Blinds opened",blind.name)
+            } else {
+                blindViewModel.close(blind)
+                notificationViewModel.sendNotification(context, "Blinds closed",blind.name)
+            }
+        }
     )
     if (showPopup) {
         Popup(onDismissRequest = { showPopup = false }){
@@ -80,13 +96,16 @@ fun BlindsButton(blind: Blind, blindViewModel: BlindViewModel) {
                         onToggle = { isOpen ->
                             if (isOpen) {
                                 blindViewModel.open(blind)
+                                notificationViewModel.sendNotification(context, "Blinds opened",blind.name)
                             } else {
                                 blindViewModel.close(blind)
+                                notificationViewModel.sendNotification(context, "Blinds closed",blind.name)
                             }
                         },
                         blindPosition = blind.level,
                         onPositionChange = { level ->
                             blindViewModel.setLevel(blind, level)
+                            notificationViewModel.sendNotification(context, "Blind position changed to $level%",blind.name)
                         },
                         onBackClick = { showPopup = false }
                     )
@@ -173,12 +192,20 @@ fun BlindsScreen(
             }
             Spacer(modifier = Modifier.height(16.dp).padding(10.dp))
             Text(
-                text = "Blind position: $blindPosition",
+                text = "Blind position:",
                 color = textColor,
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
                 fontWeight = FontWeight.Medium,
-                onTextLayout = {}
+                modifier = Modifier.align(Alignment.Start).padding(10.dp)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "$blindPosition%",
+                color = textColor,
+                fontSize = 25.sp,
+                fontFamily = montserratFontFamily,
+                fontWeight = FontWeight.Bold,
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,

@@ -14,7 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.turnsmart_hci.screens.AutomationScreen
-import com.example.turnsmart_hci.data.ui.devices.DevicesScreen
+import com.example.turnsmart_hci.screens.DevicesScreen
 import com.example.turnsmart_hci.screens.FavoriteScreen
 import com.example.turnsmart_hci.screens.SettingsScreen
 import com.example.turnsmart_hci.screens.Screens
@@ -41,23 +41,27 @@ val bottomBarItems = listOf(
 )
 
 @Composable
-fun MainNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
+fun MainNavHost(navController: NavHostController, modifier: Modifier = Modifier, notificationViewModel: NotificationViewModel) {
     NavHost(
         navController = navController,
         startDestination = Screens.Favorite.route,
         modifier = modifier
     ) {
         composable(Screens.Favorite.route) {
-            FavoriteScreen()
+            FavoriteScreen(notificationViewModel)
         }
         composable(Screens.Devices.route) {
-            DevicesScreen()
+            DevicesScreen(
+                notificationViewModel=notificationViewModel
+            )
         }
         composable(Screens.Automation.route) {
-            AutomationScreen()
+            AutomationScreen(
+                notificationViewModel=notificationViewModel
+            )
         }
         composable(Screens.Settings.route) {
-            SettingsScreen()
+            SettingsScreen(notificationViewModel)
         }
 
     }
@@ -65,7 +69,7 @@ fun MainNavHost(navController: NavHostController, modifier: Modifier = Modifier)
 
 @Composable
 fun MainScreen(
-    viewModel: NotificationViewModel,
+    notificationViewModel: NotificationViewModel,
     layoutType: NavigationSuiteType,
     requestPermission: () -> Unit
 ) {
@@ -105,14 +109,6 @@ fun MainScreen(
                 topBar ={
                     TurnSmartToolbar(navController)
                 },
-                floatingActionButton = {
-                    // UI elements and logic to trigger notification
-                    Button(onClick = {
-                        requestPermission()
-                    }) {
-                        Text("Send Notification")
-                    }
-                },
                 content = { innerPadding ->
                     Box(
                         modifier = Modifier
@@ -120,24 +116,15 @@ fun MainScreen(
                             .padding(innerPadding)
                             .background(TurnSmartTheme.colors.primary)
                     ) {
-                        MainNavHost(navController = navController)
+                        MainNavHost(
+                            navController = navController,
+                            notificationViewModel= notificationViewModel
+                        )
                     }
                 }
             )
         }
     }
 }
-
-//enum class AppDestinations(
-//    @StringRes val label: Int,
-//    @DrawableRes val icon: Int,
-//    @DrawableRes val iconFill: Int,
-//    @StringRes val contentDescription: Int
-//) {
-//    FAVORITES(R.string.favorite_label, R.drawable.favorite, R.drawable.favorite_fill, R.string.favorite_label),
-//    DEVICES(R.string.devices_label, R.drawable.devices,R.drawable.devices_fill, R.string.devices_label),
-//    AUTOMATION(R.string.automation_label, R.drawable.calendar, R.drawable.calendar_fill, R.string.automation_label),
-//    SETTINGS(R.string.settings_label, R.drawable.settings, R.drawable.settings_fill, R.string.settings_label)
-//}
 
 

@@ -11,13 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.turnsmart_hci.notifications.NotificationViewModel
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.dark_purple
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 
 
 @Composable
-fun FavoriteScreen() {
+fun FavoriteScreen(notificationViewModel: NotificationViewModel) {
     TurnSmartTheme {
         Box(modifier = Modifier.fillMaxSize()) {
             Column(

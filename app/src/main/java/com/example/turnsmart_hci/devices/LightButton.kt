@@ -1,5 +1,6 @@
 package com.example.turnsmart_hci.devices
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -18,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -27,19 +29,35 @@ import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.data.model.Lamp
 import com.example.turnsmart_hci.data.model.Status
 import com.example.turnsmart_hci.data.ui.devices.LampViewModel
+import com.example.turnsmart_hci.notifications.NotificationViewModel
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_yellow
 
 @Composable
-fun LightButton(lamp: Lamp, lampViewModel: LampViewModel) {
+fun LightButton(
+    lamp: Lamp,
+    lampViewModel: LampViewModel,
+    notificationViewModel: NotificationViewModel
+    ) {
     var showPopup by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
 
     DeviceButton(
         label = lamp.name,
         onClick = { showPopup = true },
         backgroundColor = pale_yellow,
-        icon = R.drawable.lights
+        icon = R.drawable.lights,
+        power = { on ->
+            if (on) {
+                lampViewModel.turnOn(lamp)
+                notificationViewModel.sendNotification(context,"Light turned on", lamp.name)
+            } else {
+                lampViewModel.turnOff(lamp)
+                notificationViewModel.sendNotification(context,"Light turned off", lamp.name)
+            }
+        }
     )
     if (showPopup) {
         Popup(
@@ -62,19 +80,24 @@ fun LightButton(lamp: Lamp, lampViewModel: LampViewModel) {
                         onToggle = { isOn ->
                             if (isOn) {
                                 lampViewModel.turnOn(lamp)
+                                notificationViewModel.sendNotification(context,"Light turned on", lamp.name)
                             } else {
                                 lampViewModel.turnOff(lamp)
+                                notificationViewModel.sendNotification(context,"Light turned off", lamp.name)
                             }
                         },
                         lightIntensity = lamp.brightness,
                         onIntensityChange = { intensity ->
                             lampViewModel.setBrightness(lamp, intensity)
+                            notificationViewModel.sendNotification(context,"Light brightness changed to $intensity%", lamp.name)
                         },
                         lightColor = Color.White,
                         onColorChange = { color ->
                             lampViewModel.setColor(lamp, "#${color.toArgb().and(0xFFFFFF).toString(16)}")
+                            notificationViewModel.sendNotification(context,"Light color changed", lamp.name)
                         },
-                        onBackClick = { showPopup = false }
+                        onBackClick = { showPopup = false },
+                        notificationViewModel = notificationViewModel
                     )
                 }
             }
@@ -93,8 +116,10 @@ fun LightsScreen(
     onColorChange: (Color) -> Unit,
     textColor: Color = TurnSmartTheme.colors.onPrimary,
     backgroundColor: Color = TurnSmartTheme.colors.background,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    notificationViewModel: NotificationViewModel,
 ) {
+    val context = LocalContext.current
     Box(
         modifier = Modifier.verticalScroll(rememberScrollState())
             .fillMaxSize()
@@ -177,7 +202,11 @@ fun LightsScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 IconButton(
-                    onClick = { if (lightIntensity > 0) onIntensityChange(lightIntensity - 1) },
+                    onClick = {
+                        if (lightIntensity > 0) {
+                            onIntensityChange(lightIntensity - 1)
+                        }
+                    },
                     modifier = Modifier.size(24.dp)
                 ) {
                     Icon(
@@ -197,7 +226,9 @@ fun LightsScreen(
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 IconButton(
-                    onClick = { if (lightIntensity < 100) onIntensityChange(lightIntensity + 1) },
+                    onClick = { if (lightIntensity < 100){
+                        onIntensityChange(lightIntensity + 1)
+                    } },
                     modifier = Modifier.size(24.dp)
                 ) {
                     Icon(
@@ -231,6 +262,7 @@ fun ColorSlider(
     onColorSelected: (Color) -> Unit
 ) {
     var sliderPosition by remember { mutableStateOf(0f) }
+    var selected by remember { mutableStateOf(selectedColor) }
 
     val colors = listOf(
         Color.Red,
@@ -251,15 +283,15 @@ fun ColorSlider(
         Box(
             modifier = Modifier
                 .size(40.dp)
-                .background(selectedColor, shape = CircleShape)
-                .border(2.dp, Color.Black, shape = CircleShape)
+                .background(selected, CircleShape)
+                .border(2.dp, Color.Black, CircleShape)
         )
         Spacer(modifier = Modifier.width(8.dp))
         Box(
             modifier = Modifier
                 .weight(1f)
                 .height(40.dp)
-                .background(gradient, shape = RoundedCornerShape(8.dp))
+                .background(gradient, RoundedCornerShape(8.dp))
         ) {
             Slider(
                 value = sliderPosition,
@@ -267,6 +299,7 @@ fun ColorSlider(
                     sliderPosition = position
                     val colorIndex = (position * (colors.size - 1)).toInt()
                     onColorSelected(colors[colorIndex])
+                    selected = colors[colorIndex]
                 },
                 valueRange = 0f..1f,
                 colors = SliderDefaults.colors(

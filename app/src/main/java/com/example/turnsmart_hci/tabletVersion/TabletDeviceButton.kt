@@ -21,16 +21,15 @@ import com.example.turnsmart_hci.ui.theme.ThemeColors
 
 @Composable
 fun TabletDeviceButton(
-    @StringRes label: Int,
+    label : String?,
     enabled: Boolean = true,
     onClick: () -> Unit,
     backgroundColor: Color,
     textColor: Color = ThemeColors.DARK_TEXT.color,
     icon: Int,
     isOn: Boolean = false,
-    onButton: (Boolean) -> Unit = {},
-    status: String,
-    modifier: Modifier = Modifier
+    power: (Boolean) -> Unit,
+    status: String
 ) {
     var powerOn by remember { mutableStateOf(isOn) }
 
@@ -39,7 +38,7 @@ fun TabletDeviceButton(
         colors = ButtonDefaults.buttonColors(
             containerColor = backgroundColor,
         ),
-        modifier = modifier
+        modifier = Modifier
             .padding(8.dp)
             .size(250.dp),
         enabled = enabled,
@@ -49,21 +48,9 @@ fun TabletDeviceButton(
             modifier = Modifier.fillMaxSize()
         ) {
             IconButton(
-                onClick = { /* Handle favorite icon click */ },
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(top = 16.dp)
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.favorite),
-                    contentDescription = null,
-                    modifier = Modifier.size(35.dp),
-                    tint = Color.Black
-                )
-            }
-            IconButton(
                 onClick = {
                     powerOn = !powerOn
+                    power(powerOn)
                 },
                 modifier = Modifier
                     .align(Alignment.TopEnd)
@@ -96,7 +83,7 @@ fun TabletDeviceButton(
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = stringResource(id = label),
+                    text = label ?: "no label",
                     color = textColor,
                     fontSize = 25.sp,
                     fontFamily = montserratFontFamily,
@@ -113,17 +100,4 @@ fun TabletDeviceButton(
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun TabletDeviceButtonPreview() {
-    // Sample preview function
-    TabletDeviceButton(
-        label = R.string.lights,
-        onClick = {},
-        icon = R.drawable.lights,
-        backgroundColor = ThemeColors.PALE_YELLOW.color,
-        status = "Off"
-    )
 }
