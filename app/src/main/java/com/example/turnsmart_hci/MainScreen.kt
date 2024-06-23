@@ -23,12 +23,14 @@ import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 
 import com.example.turnsmart_hci.navBars.TurnSmartToolbar
 
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import com.example.turnsmart_hci.notifications.NotificationViewModel
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
@@ -77,6 +79,11 @@ fun MainScreen(
 ) {
     val navController = rememberNavController()
     var currentDestination by rememberSaveable { mutableStateOf(Screens.Devices.route) }
+    val paddingModifier = when (layoutType) {
+        NavigationSuiteType.NavigationDrawer -> Modifier.padding(15.dp)
+        NavigationSuiteType.NavigationRail -> Modifier.padding(top = 15.dp, start = 15.dp)
+        else -> Modifier
+    }
 
     TurnSmartTheme {
         NavigationSuiteScaffold(
@@ -102,9 +109,9 @@ fun MainScreen(
                     )
                 }
             },
-            containerColor = TurnSmartTheme.colors.primary,
+            containerColor = TurnSmartTheme.colors.background,
             contentColor = TurnSmartTheme.colors.onPrimary,
-            modifier = Modifier.then(if (layoutType == NavigationSuiteType.NavigationDrawer) Modifier.padding(15.dp) else Modifier)
+            modifier = Modifier.then(paddingModifier)
         ) {
             Scaffold(
                 topBar ={

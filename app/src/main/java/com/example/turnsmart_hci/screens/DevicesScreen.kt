@@ -1,5 +1,6 @@
 package com.example.turnsmart_hci.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -49,7 +50,9 @@ fun DevicesScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     TurnSmartTheme {
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier.fillMaxSize().background(TurnSmartTheme.colors.background)
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
