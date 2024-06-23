@@ -80,7 +80,7 @@ fun MainScreen(
     val navController = rememberNavController()
     var currentDestination by rememberSaveable { mutableStateOf(Screens.Devices.route) }
     val paddingModifier = when (layoutType) {
-        NavigationSuiteType.NavigationDrawer -> Modifier.padding(15.dp)
+        NavigationSuiteType.NavigationDrawer -> Modifier.padding(10.dp)
         NavigationSuiteType.NavigationRail -> Modifier.padding(top = 15.dp, start = 15.dp)
         else -> Modifier
     }
