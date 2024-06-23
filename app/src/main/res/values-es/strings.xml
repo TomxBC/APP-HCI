@@ -50,5 +50,10 @@
     <string name="have_devices">Tus dispositivos</string>
     <string name="unkown">Dispositivo desconocido</string>
     <string name="routines">Tus rutinas</string>
+    <string name="notification_denied">Notificaciones desactivadas</string>
+    <string name="notification_title_allowed_devices">Notificaciones activadades para recibir actualizaciones de dispositivos</string>
+    <string name="notification_title_allowed_routines">Notificaciones activadades para recibir actualizaciones de routinas</string>
+    <string name="notification_title_allowed">Notificaciones Activadadas</string>
+    <string name="temperature_changed">Temperatura cambio a %1$d°C</string>
 
 </resources>

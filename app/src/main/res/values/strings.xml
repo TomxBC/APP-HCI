@@ -56,5 +56,31 @@
     <string name="have_devices">Your devices</string>
     <string name="unkown">Unknown type of device</string>
     <string name="routines">Your Routines</string>
+    <string name="notification_title_allowed_devices">Notifications activated for Devices</string>
+    <string name="notification_title_allowed_routines">Notifications activated for Routines</string>
+    <string name="notification_denied">Notifications disabled</string>
+    <string name="notification_title_allowed">Notifications Activated</string>
+    <string name="ac_turned_on">AC turned on</string>
+    <string name="ac_turned_off">AC turned off</string>
+    <string name="temperature_changed">Temperature changed to %1$d°C</string>
+    <string name="mode_changed">Mode changed to %1$s</string>
+    <string name="vertical_swing_changed">Vertical Swing changed to %1$s</string>
+    <string name="horizontal_swing_changed">Horizontal Swing changed to %1$s</string>
+    <string name="fan_speed_changed">Fan Speed changed to %1$s</string>
+    <string name="blinds_opened">Blinds opened</string>
+    <string name="blinds_closed">Blinds closed</string>
+    <string name="blinds_position_changed">\"Blind position changed to %1$s%\"</string>
+    <string name="light_turned_on">Light turned on</string>
+    <string name="light_turned_off">Light turned off</string>
+    <string name="light_intensity_changed">Light brightness changed to %1$s%</string>
+    <string name="light_color_changed">Light color changed</string>
+    <string name="playing_now">Playing %1$s</string>
+    <string name="stopped">Stopped %1$s</string>
+    <string name="stopped_playing">Stopped %1$s</string>
+    <string name="volume_changed">Volume set to %1$d</string>
+    <string name="paused_playing">Paused %1$s</string>
+    <string name="genre_changed">Now playing %1$s genre</string>
+    <string name="routine_executing">Routine is being executed</string>
+
 
 </resources>

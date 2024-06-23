@@ -64,7 +64,7 @@ fun TabletRoutineButton(
                         isPlaying = !isPlaying
                         if (isPlaying) {
                             scope.launch {
-                                notificationViewModel.sendNotification(context,"Routine is being executed",routine.name)
+                                notificationViewModel.sendNotification(context,R.string.routine_executing,routine.name)
                                 delay(5000)
                                 isPlaying = false }
                             routineViewModel.executeRoutine(routine)

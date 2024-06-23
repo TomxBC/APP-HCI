@@ -29,11 +29,11 @@ class MainActivity : ComponentActivity() {
     ) { isGranted: Boolean ->
         if (isGranted) {
             // Send notifications and show allowed message
-            NotificationViewModel().sendNotification(
+            NotificationViewModel().sendActivatedNotifications(
                 this,
-                "Notifications activated",
-                "You have allowed notifications."
-            )
+                R.string.notification_title_allowed_devices,
+                R.string.notification_title_allowed_routines,
+                R.string.notification_title_allowed)
         } else {
             // Show a dialog explaining that notifications need to be enabled in settings
             showToast(this, "Permission denied. Activate them in device's settings.")
@@ -78,11 +78,11 @@ class MainActivity : ComponentActivity() {
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             } else {
                 // Permission already granted
-                NotificationViewModel().sendNotification(
+                NotificationViewModel().sendActivatedNotifications(
                     this,
-                    "Notifications activated",
-                    "Notifications activated"
-                )
+                    R.string.notification_title_allowed_devices,
+                    R.string.notification_title_allowed_routines,
+                    R.string.notification_title_allowed)
             }
         }
     }

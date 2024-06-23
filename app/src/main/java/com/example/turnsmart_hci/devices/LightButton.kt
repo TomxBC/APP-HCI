@@ -56,10 +56,10 @@ fun LightButton(
             power = { on ->
                 if (on) {
                     lampViewModel.turnOn(lamp)
-                    notificationViewModel.sendNotification(context,"Light turned on", lamp.name)
+                    notificationViewModel.sendNotification(context,R.string.light_turned_on, lamp.name)
                 } else {
                     lampViewModel.turnOff(lamp)
-                    notificationViewModel.sendNotification(context,"Light turned off", lamp.name)
+                    notificationViewModel.sendNotification(context,R.string.light_turned_off, lamp.name)
                 }
             }
         )
@@ -72,10 +72,10 @@ fun LightButton(
             power = { on ->
                 if (on) {
                     lampViewModel.turnOn(lamp)
-                    notificationViewModel.sendNotification(context,"Light turned on", lamp.name)
+                    notificationViewModel.sendNotification(context,R.string.light_turned_on, lamp.name)
                 } else {
                     lampViewModel.turnOff(lamp)
-                    notificationViewModel.sendNotification(context,"Light turned off", lamp.name)
+                    notificationViewModel.sendNotification(context,R.string.light_turned_off, lamp.name)
                 }
             },
             status = lamp.status.name
@@ -107,21 +107,21 @@ fun LightButton(
                         onToggle = { isOn ->
                             if (isOn) {
                                 lampViewModel.turnOn(lamp)
-                                notificationViewModel.sendNotification(context,"Light turned on", lamp.name)
+                                notificationViewModel.sendNotification(context,R.string.light_turned_on, lamp.name)
                             } else {
                                 lampViewModel.turnOff(lamp)
-                                notificationViewModel.sendNotification(context,"Light turned off", lamp.name)
+                                notificationViewModel.sendNotification(context,R.string.light_turned_off, lamp.name)
                             }
                         },
                         lightIntensity = lamp.brightness,
                         onIntensityChange = { intensity ->
                             lampViewModel.setBrightness(lamp, intensity)
-                            notificationViewModel.sendNotification(context,"Light brightness changed to $intensity%", lamp.name)
+                            notificationViewModel.sendNotification(context,R.string.light_intensity_changed, lamp.name, intensity)
                         },
                         lightColor = Color.White,
                         onColorChange = { color ->
                             lampViewModel.setColor(lamp, "#${color.toArgb().and(0xFFFFFF).toString(16)}")
-                            notificationViewModel.sendNotification(context,"Light color changed", lamp.name)
+                            notificationViewModel.sendNotification(context,R.string.light_color_changed, lamp.name)
                         },
                         onBackClick = { showPopup = false },
                         notificationViewModel = notificationViewModel
