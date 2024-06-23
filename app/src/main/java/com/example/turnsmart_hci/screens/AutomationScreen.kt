@@ -13,10 +13,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.tabletVersion.TabletRoutineButton
 import com.example.turnsmart_hci.ui.theme.ThemeColors
 import com.example.turnsmart_hci.data.ui.getViewModelFactory
@@ -52,7 +54,7 @@ fun AutomationScreen(
 
                 if (routines.isEmpty()) {
                     Text(
-                        text = "You don't have routines",
+                        text = stringResource(R.string.no_routines),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(bottom = 16.dp),
@@ -61,7 +63,7 @@ fun AutomationScreen(
                     )
                 } else {
                     Text(
-                        text = "Your Routines",
+                        text = stringResource(R.string.routines),
                         fontFamily = montserratFontFamily,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 25.sp,

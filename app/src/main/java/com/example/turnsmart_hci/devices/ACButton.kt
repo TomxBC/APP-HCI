@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
@@ -157,7 +157,7 @@ fun AirConditionerScreen(
     backgroundColor: Color = TurnSmartTheme.colors.background,
     onBackClick: () -> Unit
 ) {
-    val modes = listOf("Fan", "Cool", "Heat") //CAMBIARRR POR LO DE LENGUAJES
+    val modes = listOf(stringResource(id = R.string.fan), stringResource(id = R.string.cool), stringResource(id = R.string.heat))
     var expanded by remember { mutableStateOf(false) }
     val horizontalSwingPositions = listOf("Auto", "-90°", "-45°", "0°", "45°", "90°")
     val verticalSwingPositions = listOf("Auto", "0°", "22°", "45°", "67°", "90°")
@@ -218,7 +218,7 @@ fun AirConditionerScreen(
                     .padding(10.dp)
             ) {
                 Text(
-                    text = if (isOn) "ON" else "OFF",
+                    text = if (isOn) stringResource(id = R.string.turn_on) else stringResource(id = R.string.turn_off),
                     color = textColor,
                     fontSize = 16.sp,
                     fontFamily = montserratFontFamily,
@@ -243,7 +243,7 @@ fun AirConditionerScreen(
                     .padding(10.dp)
             ) {
                 Text(
-                    text = "Mode:",
+                    text = stringResource(id = R.string.mode),
                     color = textColor,
                     fontSize = 16.sp,
                     fontFamily = montserratFontFamily,
@@ -286,7 +286,7 @@ fun AirConditionerScreen(
 
             // Temperature
             Text(
-                text = "Temperature:",
+                text = stringResource(id = R.string.temperature),
                 color = textColor,
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
@@ -353,7 +353,7 @@ fun AirConditionerScreen(
 
             // Vertical Swing
             Text(
-                text = "Vertical Swing:",
+                text = stringResource(id = R.string.v_swing),
                 color = textColor,
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
@@ -405,7 +405,7 @@ fun AirConditionerScreen(
 
             // Horizontal Swing
             Text(
-                text = "Horizontal Swing:",
+                text = stringResource(id = R.string.h_swing),
                 color = textColor,
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
@@ -457,7 +457,7 @@ fun AirConditionerScreen(
 
             // Fan Speed
             Text(
-                text = "Fan Speed:",
+                text = stringResource(id = R.string.fan_speed),
                 color = textColor,
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,

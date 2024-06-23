@@ -44,5 +44,14 @@
 
 
     <string name="unknown">Error when …</string>
+    <string name="fan" translatable="false">Fan</string>
+    <string name="cool" translatable="false">Cool</string>
+    <string name="heat" translatable="false">Heat</string>
+
+    <string name="no_devices">You don\'t have any devices</string>
+    <string name="no_routines">You don\'t have any routines</string>
+    <string name="have_devices">Your devices</string>
+    <string name="unkown">Unknown type of device</string>
+    <string name="routines">Your Routines</string>
 
 </resources>

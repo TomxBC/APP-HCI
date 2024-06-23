@@ -19,7 +19,9 @@ import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 
 @Composable
-fun SettingsScreen(notificationViewModel: NotificationViewModel) {
+fun SettingsScreen(
+    notificationViewModel: NotificationViewModel
+) {
     var selectedLanguage by remember { mutableStateOf("English") }
     var notificationsEnabled by remember { mutableStateOf(true) }
 
@@ -34,7 +36,7 @@ fun SettingsScreen(notificationViewModel: NotificationViewModel) {
                 selectedLanguage = selectedLanguage,
                 onLanguageSelected = { language ->
                     selectedLanguage = language
-                    // Implement logic to change app language
+                    notificationViewModel.setLanguage(language)
                 }
             )
 
@@ -42,7 +44,7 @@ fun SettingsScreen(notificationViewModel: NotificationViewModel) {
                 notificationsEnabled = notificationsEnabled,
                 onToggleNotifications = { enabled ->
                     notificationsEnabled = enabled
-                    // Implement logic to handle notifications
+                    notificationViewModel.setNotificationsEnabled(enabled)
                 }
             )
         }
@@ -64,8 +66,7 @@ fun LanguageSelector(
             modifier = Modifier.padding(bottom = 8.dp),
             fontFamily = montserratFontFamily,
             fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
-            onTextLayout = {}
+            fontSize = 20.sp
 
         )
         languages.forEach { language ->
@@ -75,7 +76,9 @@ fun LanguageSelector(
             ) {
                 RadioButton(
                     selected = selectedLanguage == language,
-                    onClick = { onLanguageSelected(language) }
+                    onClick = {
+                        onLanguageSelected(language)
+                    }
                 )
                 Text(
                     text = language,

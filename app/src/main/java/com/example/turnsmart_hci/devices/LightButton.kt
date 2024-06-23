@@ -1,6 +1,5 @@
 package com.example.turnsmart_hci.devices
 
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -22,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -198,13 +198,13 @@ fun LightsScreen(
                     .padding(10.dp)
             ) {
                 Text(
-                    text = if (isOn) "ON" else "OFF",
+                    text = if (isOn) stringResource(id = R.string.turn_on) else stringResource(id = R.string.turn_off),
                     color = textColor,
                     fontSize = 16.sp,
                     fontFamily = montserratFontFamily,
                     fontWeight = FontWeight.Medium,
                 )
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(20.dp))
                 Switch(
                     checked = isOn,
                     onCheckedChange = { isChecked ->
@@ -216,7 +216,7 @@ fun LightsScreen(
                 .height(16.dp)
                 .padding(10.dp))
             Text(
-                text = "Light Intensity:",
+                text = stringResource(id = R.string.brightness),
                 color = textColor,
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
@@ -278,7 +278,7 @@ fun LightsScreen(
                 .height(16.dp)
                 .padding(10.dp))
             Text(
-                text = "Light Color",
+                text = stringResource(id = R.string.light_color),
                 color = textColor,
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,

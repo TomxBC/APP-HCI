@@ -42,5 +42,10 @@
     <string name="fan_speed">Velocidad</string>
 
     <string name="unknown">Error cuando …</string>
+    <string name="no_devices">No tenes dispositivos</string>
+    <string name="no_routines">No tenes rutinas</string>
+    <string name="have_devices">Tus dispositivos</string>
+    <string name="unkown">Dispositivo desconocido</string>
+    <string name="routines">Tus rutinas</string>
 
 </resources>

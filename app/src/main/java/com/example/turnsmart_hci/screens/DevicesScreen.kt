@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,6 +34,7 @@ import com.example.turnsmart_hci.devices.SpeakerButton
 import com.example.turnsmart_hci.notifications.NotificationViewModel
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
+import com.example.turnsmart_hci.R
 
 @Composable
 fun DevicesScreen(
@@ -60,7 +62,7 @@ fun DevicesScreen(
 
                 if (devices.isEmpty()) {
                     Text(
-                        text = "You don't have any devices",
+                        text = stringResource(R.string.no_devices),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(bottom = 16.dp),
@@ -69,7 +71,7 @@ fun DevicesScreen(
                     )
                 } else {
                     Text(
-                        text = "Your Devices",
+                        text = stringResource(R.string.have_devices),
                         fontFamily = montserratFontFamily,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 25.sp,
@@ -119,7 +121,7 @@ fun DevicesScreen(
                                         )
                                     }
                                     else -> {
-                                        Text("Unknown device type")
+                                        Text(stringResource(R.string.unkown))
                                     }
                                 }
                             }
@@ -160,7 +162,7 @@ fun DevicesScreen(
                                     )
                                 }
                                 else -> {
-                                    Text("Unknown device type")
+                                    Text(stringResource(R.string.unkown))
                                 }
                             }
                         }
