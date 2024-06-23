@@ -73,44 +73,48 @@ fun DevicesScreen(
                         modifier = Modifier.padding(20.dp),
                         color = TurnSmartTheme.colors.onPrimary
                         )
-                    devices.forEach { device ->
-                        when (device) {
-                            is Lamp -> {
-                                LightButton(
-                                    lamp = device,
-                                    lampViewModel = lampViewModel,
-                                    notificationViewModel = notificationViewModel,
-                                    layoutType = layoutType
-                                )
-                            }
-                            is AC -> {
-                                ACButton(
-                                    ac = device,
-                                    acViewModel = acViewModel,
-                                    notificationViewModel = notificationViewModel,
-                                    layoutType = layoutType
-                                )
-                            }
-                            is Blind -> {
-                                BlindsButton(
-                                    blind = device,
-                                    blindViewModel = blindViewModel,
-                                    notificationViewModel = notificationViewModel,
-                                    layoutType = layoutType
-                                )
-                            }
-                            is Speaker -> {
-                                SpeakerButton(
-                                    speaker = device,
-                                    speakerViewModel = speakerViewModel,
-                                    notificationViewModel = notificationViewModel,
-                                    layoutType = layoutType
-                                )
+                    if(layoutType == NavigationSuiteType.NavigationBar){
+                        devices.forEach { device ->
+                            when (device) {
+                                is Lamp -> {
+                                    LightButton(
+                                        lamp = device,
+                                        lampViewModel = lampViewModel,
+                                        notificationViewModel = notificationViewModel,
+                                        layoutType = layoutType
+                                    )
+                                }
+                                is AC -> {
+                                    ACButton(
+                                        ac = device,
+                                        acViewModel = acViewModel,
+                                        notificationViewModel = notificationViewModel,
+                                        layoutType = layoutType
+                                    )
+                                }
+                                is Blind -> {
+                                    BlindsButton(
+                                        blind = device,
+                                        blindViewModel = blindViewModel,
+                                        notificationViewModel = notificationViewModel,
+                                        layoutType = layoutType
+                                    )
+                                }
+                                is Speaker -> {
+                                    SpeakerButton(
+                                        speaker = device,
+                                        speakerViewModel = speakerViewModel,
+                                        notificationViewModel = notificationViewModel,
+                                        layoutType = layoutType
+                                    )
 
-                            } else -> {
-                            Text("Unknown device type")
+                                } else -> {
+                                Text("Unknown device type")
+                            }
+                            }
                         }
-                        }
+                    }else{
+                        // applicar grid
                     }
                 }
             }

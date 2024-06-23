@@ -26,6 +26,7 @@ import com.example.turnsmart_hci.data.model.AC
 import com.example.turnsmart_hci.data.model.Status
 import com.example.turnsmart_hci.data.ui.devices.ACViewModel
 import com.example.turnsmart_hci.notifications.NotificationViewModel
+import com.example.turnsmart_hci.tabletVersion.TabletDeviceButton
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_blue
@@ -40,21 +41,40 @@ fun ACButton(
     var showPopup by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
-    DeviceButton(
-        label = ac.name,
-        onClick = { showPopup = true },
-        backgroundColor = pale_blue,
-        icon = R.drawable.ac,
-        power = { on ->
-            if (on) {
-                acViewModel.turnOn(ac)
-                notificationViewModel.sendNotification(context, "AC turned on",ac.name)
-            } else {
-                acViewModel.turnOff(ac)
-                notificationViewModel.sendNotification(context, "AC turned off",ac.name)
+    if (layoutType == NavigationSuiteType.NavigationBar){
+        DeviceButton(
+            label = ac.name,
+            onClick = { showPopup = true },
+            backgroundColor = pale_blue,
+            icon = R.drawable.ac,
+            power = { on ->
+                if (on) {
+                    acViewModel.turnOn(ac)
+                    notificationViewModel.sendNotification(context, "AC turned on",ac.name)
+                } else {
+                    acViewModel.turnOff(ac)
+                    notificationViewModel.sendNotification(context, "AC turned off",ac.name)
+                }
             }
-        }
-    )
+        )
+    }else{
+        TabletDeviceButton(
+            label = ac.name,
+            onClick = { showPopup = true },
+            backgroundColor = pale_blue,
+            icon = R.drawable.ac,
+            power = { on ->
+                if (on) {
+                    acViewModel.turnOn(ac)
+                    notificationViewModel.sendNotification(context, "AC turned on",ac.name)
+                } else {
+                    acViewModel.turnOff(ac)
+                    notificationViewModel.sendNotification(context, "AC turned off",ac.name)
+                }
+            },
+            status = ac.status.name
+        )
+    }
 
     if (showPopup) {
         Popup(onDismissRequest = { showPopup = false }) {

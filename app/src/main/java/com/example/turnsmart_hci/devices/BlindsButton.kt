@@ -48,6 +48,7 @@ import com.example.turnsmart_hci.data.model.Blind
 import com.example.turnsmart_hci.data.model.Status
 import com.example.turnsmart_hci.data.ui.devices.BlindViewModel
 import com.example.turnsmart_hci.notifications.NotificationViewModel
+import com.example.turnsmart_hci.tabletVersion.TabletDeviceButton
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_blue
@@ -64,21 +65,41 @@ fun BlindsButton(
     var showPopup by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
-    DeviceButton(
-        label = blind.name,
-        onClick = {showPopup = true},
-        backgroundColor = pale_red,
-        icon = R.drawable.blinds,
-        power = { on ->
-            if (on) {
-                blindViewModel.open(blind)
-                notificationViewModel.sendNotification(context, "Blinds opened",blind.name)
-            } else {
-                blindViewModel.close(blind)
-                notificationViewModel.sendNotification(context, "Blinds closed",blind.name)
+    if(layoutType == NavigationSuiteType.NavigationBar){
+        DeviceButton(
+            label = blind.name,
+            onClick = {showPopup = true},
+            backgroundColor = pale_red,
+            icon = R.drawable.blinds,
+            power = { on ->
+                if (on) {
+                    blindViewModel.open(blind)
+                    notificationViewModel.sendNotification(context, "Blinds opened",blind.name)
+                } else {
+                    blindViewModel.close(blind)
+                    notificationViewModel.sendNotification(context, "Blinds closed",blind.name)
+                }
             }
-        }
-    )
+        )
+    }else{
+        TabletDeviceButton(
+            label = blind.name,
+            onClick = {showPopup = true},
+            backgroundColor = pale_red,
+            icon = R.drawable.blinds,
+            power = { on ->
+                if (on) {
+                    blindViewModel.open(blind)
+                    notificationViewModel.sendNotification(context, "Blinds opened",blind.name)
+                } else {
+                    blindViewModel.close(blind)
+                    notificationViewModel.sendNotification(context, "Blinds closed",blind.name)
+                }
+            },
+            status = blind.status.name
+        )
+    }
+
     if (showPopup) {
         Popup(onDismissRequest = { showPopup = false }){
             Box(

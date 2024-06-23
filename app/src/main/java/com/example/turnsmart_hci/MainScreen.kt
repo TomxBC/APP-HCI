@@ -35,7 +35,6 @@ import com.example.turnsmart_hci.notifications.NotificationViewModel
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 
 val bottomBarItems = listOf(
-    Screens.Favorite,
     Screens.Devices,
     Screens.Automation
 )
@@ -49,12 +48,9 @@ fun MainNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screens.Favorite.route,
+        startDestination = Screens.Devices.route,
         modifier = modifier
     ) {
-        composable(Screens.Favorite.route) {
-            FavoriteScreen(notificationViewModel)
-        }
         composable(Screens.Devices.route) {
             DevicesScreen(
                 notificationViewModel=notificationViewModel,
