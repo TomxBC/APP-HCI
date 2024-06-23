@@ -112,7 +112,7 @@ fun ACButton(
                         mode = ac.mode,
                         onSetMode = { mod ->
                             acViewModel.setMode(ac, mod)
-                            notificationViewModel.sendNotification(context, R.string.mode_changed,ac.name)
+                            notificationViewModel.sendNotification(context, R.string.mode_changed,ac.name, mod)
                         },
                         verticalSwing = ac.verticalSwing,
                         onSetVerticalSwing = { vSwing ->
