@@ -19,9 +19,12 @@
     <string name="light_color">Color de la luz</string>
 
     <string name="open_blind">Abrir</string>
-    <string name="close_blind">Cerrar</string>
+    <string name="close">Cerrar</string>
     <string name="blind_position">Posición de la persiana</string>
 
+    <string name="artist">Artista:</string>
+    <string name="album">Álbum: </string>
+    <string name="duration">Duración: </string>
     <string name="playing">Reproduciendo ahora:</string>
     <string name="no_song">Sin canción</string>
     <string name="volume">Volumen</string>

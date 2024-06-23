@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -183,7 +184,7 @@ fun SpeakerScreen(
     onBackClick: () -> Unit,
     speaker: Speaker
 ) {
-    val genres = listOf("Pop", "Rock", "Jazz", "Classical", "Hip Hop")
+    val genres = listOf("Pop", "Rock", "Jazz", stringResource(id = R.string.classical), "Hip Hop")
     var expanded by remember { mutableStateOf(false) }
     var isPlaying by remember { mutableStateOf(false) }
     var showDialog by remember { mutableStateOf(false) }
@@ -257,7 +258,7 @@ fun SpeakerScreen(
                     modifier = Modifier.padding(25.dp)
                 ) {
                     Text(
-                        text = "Now Playing: ${currentSong?.title ?: "No Song"}",
+                        text = stringResource(id = R.string.playing) + " ${currentSong?.title ?: stringResource(id = R.string.no_song)}",
                         color = textColor,
                         fontSize = 16.sp,
                         fontFamily = montserratFontFamily,
@@ -266,7 +267,7 @@ fun SpeakerScreen(
                     )
                     if(currentSong != null){
                         Text(
-                            text = "Artist: ${currentSong?.artist}",
+                            text = stringResource(id = R.string.artist) + " ${currentSong?.artist}",
                             color = textColor,
                             fontSize = 16.sp,
                             fontFamily = montserratFontFamily,
@@ -274,7 +275,7 @@ fun SpeakerScreen(
                             onTextLayout = {}
                         )
                         Text(
-                            text = "Album: ${currentSong?.album}",
+                            text = stringResource(id = R.string.album) + " ${currentSong?.album}",
                             color = textColor,
                             fontSize = 16.sp,
                             fontFamily = montserratFontFamily,
@@ -282,7 +283,7 @@ fun SpeakerScreen(
                             onTextLayout = {}
                         )
                         Text(
-                            text = "Duration: ${currentSong?.duration}",
+                            text = stringResource(id = R.string.duration) + " ${currentSong?.duration}",
                             color = textColor,
                             fontSize = 16.sp,
                             fontFamily = montserratFontFamily,
@@ -377,7 +378,7 @@ fun SpeakerScreen(
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(
-                            text = "Genre:",
+                            text = stringResource(id = R.string.genre),
                             color = textColor,
                             fontSize = 16.sp,
                             fontFamily = montserratFontFamily,
@@ -430,7 +431,7 @@ fun SpeakerScreen(
                             },
                             confirmButton = {
                                 Button(onClick = { showDialog = false }) {
-                                    Text("Close", onTextLayout = {})
+                                    Text(stringResource(id = R.string.close), onTextLayout = {})
                                 }
                             }
                         )
@@ -440,7 +441,7 @@ fun SpeakerScreen(
             Spacer(modifier = Modifier.height(25.dp))
             // Volume Slider
             Text(
-                text = "Volume:",
+                text = stringResource(id = R.string.volume),
                 color = textColor,
                 fontSize = 16.sp,
                 fontFamily = montserratFontFamily,
