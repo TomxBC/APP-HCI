@@ -59,16 +59,18 @@ fun FavoriteScreen(
                     .fillMaxSize()
                     .align(Alignment.Center)
                     .padding(8.dp)
-                    .then(if(layoutType == NavigationSuiteType.NavigationBar) Modifier.verticalScroll(
-                        rememberScrollState()
-                    ) else(Modifier) ),
+                    .then(
+                        if (layoutType == NavigationSuiteType.NavigationBar) Modifier.verticalScroll(
+                            rememberScrollState()
+                        ) else (Modifier)
+                    ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 val favoriteDevices = uiState.devices.filter { it.favorite }
 
                 if (favoriteDevices.isEmpty()) {
                     Text(
-                        text = "You don't have favourites devices",
+                        text = stringResource(id =R.string.no_favorite),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(bottom = 16.dp),
@@ -77,7 +79,7 @@ fun FavoriteScreen(
                     )
                 } else {
                     Text(
-                        text = "Your favourites devices",
+                        text = stringResource(id =R.string.favorite),
                         fontFamily = montserratFontFamily,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 25.sp,

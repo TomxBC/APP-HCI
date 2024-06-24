@@ -77,7 +77,8 @@
     <string name="routine_executing">Se está ejecutando la rutina</string>
     <string name="change_language">"Para cambiar el idioma de la aplicación, ajuste la configuración de idioma en su dispositivo. Soportamos inglés, francés, español y portugués."</string>
     <string name="change_notifs">"Para activar las notificaciones, acceda a la configuración de su dispositivo."</string>
-
+    <string name="no_favorite">No tienes dispositivos favoritos</string>
+    <string name="favorite">Tus dispositivos favoritos</string>
 
 
 </resources>

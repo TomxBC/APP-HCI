@@ -83,6 +83,10 @@
     <string name="routine_executing">La routine est en cours d\'exécution</string>
     <string name="change_language">"Pour changer la langue de l'application, veuillez ajuster les paramètres de langue de votre appareil. Nous prenons en charge l'anglais, le français, l'espagnol et le portugais."</string>
     <string name="change_notifs">"Pour activer les notifications, veuillez accéder aux paramètres de votre appareil."</string>
+    <string name="no_favorite">Vous n\'avez pas d\'appareils favoris</string>
+    <string name="favorite">Vos appareils favoris</string>
+
+
 
 
 </resources>
