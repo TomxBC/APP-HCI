@@ -19,15 +19,20 @@ import com.example.turnsmart_hci.data.ui.devices.SpeakerViewModel
 import com.example.turnsmart_hci.data.ui.routines.RoutineViewModel
 import com.example.turnsmart_hci.data.ui.routines.RoutinesViewModel
 
+// Importa PreferencesManager
+import com.example.turnsmart_hci.data.ui.devices.PreferencesManager
 
 @Composable
 fun getViewModelFactory(defaultArgs: Bundle? = null): ViewModelFactory {
     val application = (LocalContext.current.applicationContext as TurnSmart)
     val deviceRepository = application.deviceRepository
     val routineRepository = application.routineRepository
+    // Crea una instancia de PreferencesManager
+    val preferencesManager = PreferencesManager(LocalContext.current)
     return ViewModelFactory(
         deviceRepository,
         routineRepository,
+        preferencesManager, // Pasa PreferencesManager
         LocalSavedStateRegistryOwner.current,
         defaultArgs
     )
@@ -36,6 +41,7 @@ fun getViewModelFactory(defaultArgs: Bundle? = null): ViewModelFactory {
 class ViewModelFactory (
     private val deviceRepository: DeviceRepository,
     private val routinesRepository: RoutineRepository,
+    private val preferencesManager: PreferencesManager, // Añade PreferencesManager
     owner: SavedStateRegistryOwner,
     defaultArgs: Bundle? = null
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
@@ -47,19 +53,19 @@ class ViewModelFactory (
     ) = with(modelClass) {
         when {
             isAssignableFrom(DevicesViewModel::class.java) ->
-                DevicesViewModel(deviceRepository)
+                DevicesViewModel(deviceRepository, preferencesManager) // Pasa PreferencesManager
 
             isAssignableFrom(ACViewModel::class.java) ->
-                ACViewModel(deviceRepository)
+                ACViewModel(deviceRepository, preferencesManager)
 
             isAssignableFrom(BlindViewModel::class.java) ->
-                BlindViewModel(deviceRepository)
+                BlindViewModel(deviceRepository, preferencesManager)
 
             isAssignableFrom(SpeakerViewModel::class.java) ->
-                SpeakerViewModel(deviceRepository)
+                SpeakerViewModel(deviceRepository, preferencesManager)
 
             isAssignableFrom(LampViewModel::class.java) ->
-                LampViewModel(deviceRepository)
+                LampViewModel(deviceRepository, preferencesManager)
 
             isAssignableFrom(RoutinesViewModel::class.java) ->
                 RoutinesViewModel(routinesRepository)

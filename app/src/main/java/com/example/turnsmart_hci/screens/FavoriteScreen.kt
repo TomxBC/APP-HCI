@@ -64,11 +64,11 @@ fun FavoriteScreen(
                     ) else(Modifier) ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                val devices = uiState.devices
+                val favoriteDevices = uiState.devices.filter { it.favorite }
 
-                if (devices.isEmpty()) {
+                if (favoriteDevices.isEmpty()) {
                     Text(
-                        text = stringResource(R.string.no_devices),
+                        text = "You don't have favourites devices",
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(bottom = 16.dp),
@@ -77,7 +77,7 @@ fun FavoriteScreen(
                     )
                 } else {
                     Text(
-                        text = stringResource(R.string.have_devices),
+                        text = "Your favourites devices",
                         fontFamily = montserratFontFamily,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 25.sp,
@@ -92,8 +92,8 @@ fun FavoriteScreen(
                             verticalArrangement = Arrangement.spacedBy(16.dp),
                             horizontalArrangement = Arrangement.spacedBy(1.dp)
                         ) {
-                            items(devices.size) { index ->
-                                when (val device = devices[index]) {
+                            items(favoriteDevices.size) { index ->
+                                when (val device = favoriteDevices[index]) {
                                     is Lamp -> {
                                         LightButton(
                                             lamp = device,
@@ -133,48 +133,39 @@ fun FavoriteScreen(
                             }
                         }
                     } else {
-                        devices.forEach { device ->
+                        favoriteDevices.forEach { device ->
                             when (device) {
                                 is Lamp -> {
-                                    if(device.favorite){
-                                        LightButton(
-                                            lamp = device,
-                                            lampViewModel = lampViewModel,
-                                            notificationViewModel = notificationViewModel,
-                                            layoutType = layoutType,
-                                        )
-                                    }
+                                    LightButton(
+                                        lamp = device,
+                                        lampViewModel = lampViewModel,
+                                        notificationViewModel = notificationViewModel,
+                                        layoutType = layoutType,
+                                    )
                                 }
                                 is AC -> {
-                                    if(device.favorite) {
-                                        ACButton(
-                                            ac = device,
-                                            acViewModel = acViewModel,
-                                            notificationViewModel = notificationViewModel,
-                                            layoutType = layoutType
-                                        )
-                                    }
+                                    ACButton(
+                                        ac = device,
+                                        acViewModel = acViewModel,
+                                        notificationViewModel = notificationViewModel,
+                                        layoutType = layoutType
+                                    )
                                 }
                                 is Blind -> {
-                                    if(device.favorite) {
-                                        BlindsButton(
-                                            blind = device,
-                                            blindViewModel = blindViewModel,
-                                            notificationViewModel = notificationViewModel,
-                                            layoutType = layoutType
-                                        )
-                                    }
+                                    BlindsButton(
+                                        blind = device,
+                                        blindViewModel = blindViewModel,
+                                        notificationViewModel = notificationViewModel,
+                                        layoutType = layoutType
+                                    )
                                 }
                                 is Speaker -> {
-                                    if(device.favorite){
-                                        SpeakerButton(
-                                            speaker = device,
-                                            speakerViewModel = speakerViewModel,
-                                            notificationViewModel = notificationViewModel,
-                                            layoutType = layoutType
-                                        )
-                                    }
-
+                                    SpeakerButton(
+                                        speaker = device,
+                                        speakerViewModel = speakerViewModel,
+                                        notificationViewModel = notificationViewModel,
+                                        layoutType = layoutType
+                                    )
                                 }
                                 else -> {
                                     Text(stringResource(R.string.unkown))

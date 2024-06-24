@@ -18,7 +18,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ACViewModel (
-    private val repository: DeviceRepository
+    private val repository: DeviceRepository,
+    private val preferencesManager: PreferencesManager
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ACUiState())
@@ -36,6 +37,10 @@ class ACViewModel (
         }
     }
 
+    fun toggleFavorite(deviceId: String) {
+        val currentFavoriteState = preferencesManager.isFavorite(deviceId)
+        preferencesManager.setFavorite(deviceId, !currentFavoriteState)
+    }
 
     fun turnOn(ac: AC) = runOnViewModelScope(
         { repository.executeDeviceAction(ac.id, AC.TURN_ON_ACTION) },

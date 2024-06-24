@@ -102,7 +102,10 @@ fun SpeakerButton(
                     )
                 }
             },
-            device = speaker
+            device = speaker,
+            onToggleFavorite = { deviceId ->
+                speakerViewModel.toggleFavorite(deviceId) // Llama al método toggleFavorite
+            }
         )
     }
 

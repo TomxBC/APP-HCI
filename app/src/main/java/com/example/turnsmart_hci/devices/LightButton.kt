@@ -42,12 +42,12 @@ fun LightButton(
     lampViewModel: LampViewModel,
     notificationViewModel: NotificationViewModel,
     layoutType: NavigationSuiteType
-    ) {
+) {
     var showPopup by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
 
-    if (layoutType == NavigationSuiteType.NavigationBar){
+    if (layoutType == NavigationSuiteType.NavigationBar) {
         DeviceButton(
             label = lamp.name,
             onClick = { showPopup = true },
@@ -56,15 +56,18 @@ fun LightButton(
             power = { on ->
                 if (on) {
                     lampViewModel.turnOn(lamp)
-                    notificationViewModel.sendNotification(context,"Light turned on", lamp.name)
+                    notificationViewModel.sendNotification(context, "Light turned on", lamp.name)
                 } else {
                     lampViewModel.turnOff(lamp)
-                    notificationViewModel.sendNotification(context,"Light turned off", lamp.name)
+                    notificationViewModel.sendNotification(context, "Light turned off", lamp.name)
                 }
             },
-            device = lamp
+            device = lamp,
+            onToggleFavorite = { deviceId ->
+                lampViewModel.toggleFavorite(deviceId) // Llama al método toggleFavorite
+            }
         )
-    }else{
+    } else {
         TabletDeviceButton(
             label = lamp.name,
             onClick = { showPopup = true },
@@ -73,26 +76,26 @@ fun LightButton(
             power = { on ->
                 if (on) {
                     lampViewModel.turnOn(lamp)
-                    notificationViewModel.sendNotification(context,"Light turned on", lamp.name)
+                    notificationViewModel.sendNotification(context, "Light turned on", lamp.name)
                 } else {
                     lampViewModel.turnOff(lamp)
-                    notificationViewModel.sendNotification(context,"Light turned off", lamp.name)
+                    notificationViewModel.sendNotification(context, "Light turned off", lamp.name)
                 }
             },
             status = lamp.status.name
         )
     }
 
-
     if (showPopup) {
         Popup(
             onDismissRequest = {
                 showPopup = false
-            }){
+            }
+        ) {
             Box(modifier = Modifier
                 .fillMaxSize()
                 .background(Color.Black.copy(alpha = 0.5f))
-            ){
+            ) {
                 Box(
                     modifier = Modifier
                         .align(Alignment.Center)
@@ -101,28 +104,28 @@ fun LightButton(
                             shape = RoundedCornerShape(8.dp)
                         )
                         .padding(16.dp)
-                ){
+                ) {
                     LightsScreen(
                         deviceName = lamp.name,
                         isOn = lamp.status == Status.ON,
                         onToggle = { isOn ->
                             if (isOn) {
                                 lampViewModel.turnOn(lamp)
-                                notificationViewModel.sendNotification(context,"Light turned on", lamp.name)
+                                notificationViewModel.sendNotification(context, "Light turned on", lamp.name)
                             } else {
                                 lampViewModel.turnOff(lamp)
-                                notificationViewModel.sendNotification(context,"Light turned off", lamp.name)
+                                notificationViewModel.sendNotification(context, "Light turned off", lamp.name)
                             }
                         },
                         lightIntensity = lamp.brightness,
                         onIntensityChange = { intensity ->
                             lampViewModel.setBrightness(lamp, intensity)
-                            notificationViewModel.sendNotification(context,"Light brightness changed to $intensity%", lamp.name)
+                            notificationViewModel.sendNotification(context, "Light brightness changed to $intensity%", lamp.name)
                         },
                         lightColor = Color.White,
                         onColorChange = { color ->
                             lampViewModel.setColor(lamp, "#${color.toArgb().and(0xFFFFFF).toString(16)}")
-                            notificationViewModel.sendNotification(context,"Light color changed", lamp.name)
+                            notificationViewModel.sendNotification(context, "Light color changed", lamp.name)
                         },
                         onBackClick = { showPopup = false },
                         notificationViewModel = notificationViewModel

@@ -30,7 +30,7 @@ class Speaker (
     val song: Song?,
     val volume: Int,
     val genre: String?,
-    favorite: Boolean
+    favorite: Boolean = false
 ) : Device(id, name, DeviceType.SPEAKER, favorite) {
 
     override fun asRemoteModel(): RemoteDevice<RemoteSpeakerState> {

@@ -37,7 +37,7 @@ import com.example.turnsmart_hci.ui.theme.ThemeColors
 
 @Composable
 fun DeviceButton(
-    label : String?,
+    label: String?,
     enabled: Boolean = true,
     onClick: () -> Unit,
     backgroundColor: Color,
@@ -45,8 +45,11 @@ fun DeviceButton(
     icon: Int,
     isOn: Boolean = false,
     power: (Boolean) -> Unit,
-    device: Device
+    device: Device,
+    onToggleFavorite: (String) -> Unit // Añade esta línea
 ) {
+    var isFav by remember { mutableStateOf(device.favorite) }
+
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
@@ -62,9 +65,6 @@ fun DeviceButton(
             ),
         enabled = enabled
     ) {
-        var powerOn by remember { mutableStateOf(isOn) }
-        var isFav by remember { mutableStateOf(device.favorite) }
-
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -73,8 +73,8 @@ fun DeviceButton(
             IconButton(
                 onClick = {
                     isFav = !isFav
-                    device.favorite = isFav
-                          },
+                    onToggleFavorite(device.id) // Llama a esta función
+                },
                 modifier = Modifier
                     .padding(top = 16.dp)
             ) {
@@ -106,19 +106,18 @@ fun DeviceButton(
             )
             IconButton(
                 onClick = {
-                    powerOn = !powerOn
-                    power(powerOn)
+                    power(!isOn)
                 },
                 modifier = Modifier
-                    .border(1.dp, if (powerOn) Color.White else Color.Black, CircleShape)
-                    .background(if (powerOn) Color.Black else Color.White, CircleShape)
+                    .border(1.dp, if (isOn) Color.White else Color.Black, CircleShape)
+                    .background(if (isOn) Color.Black else Color.White, CircleShape)
                     .size(26.dp),
             ) {
                 Icon(
                     painter = painterResource(R.drawable.power),
                     contentDescription = null,
                     modifier = Modifier.size(24.dp),
-                    tint = if (powerOn) Color.White else Color.Black
+                    tint = if (isOn) Color.White else Color.Black
                 )
             }
         }

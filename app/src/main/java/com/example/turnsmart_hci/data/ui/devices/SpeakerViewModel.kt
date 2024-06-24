@@ -18,7 +18,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SpeakerViewModel(
-    private val repository: DeviceRepository
+    private val repository: DeviceRepository,
+    private val preferencesManager: PreferencesManager
+
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(SpeakerUiState())
@@ -31,6 +33,10 @@ class SpeakerViewModel(
         ) { state, response ->
             state.copy(speakers = response)
         }
+    }
+    fun toggleFavorite(deviceId: String) {
+        val currentFavoriteState = preferencesManager.isFavorite(deviceId)
+        preferencesManager.setFavorite(deviceId, !currentFavoriteState)
     }
 
     fun setVolume(speaker: Speaker, volume: Int) = runOnViewModelScope(

@@ -11,7 +11,8 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class LampViewModel(
-    private val repository: DeviceRepository
+    private val repository: DeviceRepository,
+    private val preferencesManager: PreferencesManager
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LampUiState())
@@ -47,6 +48,10 @@ class LampViewModel(
         { state, _ -> state}
     )
 
+    fun toggleFavorite(deviceId: String) {
+        val currentFavoriteState = preferencesManager.isFavorite(deviceId)
+        preferencesManager.setFavorite(deviceId, !currentFavoriteState)
+    }
     private fun <T> collectOnViewModelScope(
         flow: Flow<T>,
         updateState: (LampUiState, T) -> LampUiState
