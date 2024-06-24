@@ -1,6 +1,7 @@
 package com.example.turnsmart_hci.screens
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -39,7 +40,7 @@ fun AutomationScreen(
     val uiManyRoutinesState by manyRoutinesViewModel.uiState.collectAsState()
 
     TurnSmartTheme {
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.fillMaxSize().background(TurnSmartTheme.colors.background)) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()

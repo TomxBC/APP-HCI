@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">TurnSmart</string>
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="favorite_label">Favori</string>
+    <string name="automation_label">Automatisation</string>
+    <string name="devices_label">Appareils</string>
+    <string name="settings_label">Paramètres</string>
+    <string name="language">Langue</string>
+    <string name="english">Anglais</string>
+    <string name="spanish">Espagnol</string>
+    <string name="notifications">Notifications</string>
+    <string name="lights">Lumières</string>
+    <string name="speakers">Haut-parleurs</string>
+    <string name="ac">Climatiseur</string>
+    <string name="blinds">Stores</string>
+
+    <string name="turn_on">Allumer</string>
+    <string name="turn_off">Éteindre</string>
+    <string name="brightness">Intensité de la lumière</string>
+    <string name="light_color">Couleur de la lumière</string>
+
+    <string name="open_blind">Ouvrir</string>
+    <string name="close">Fermer</string>
+    <string name="blind_position">Position des stores</string>
+
+    <string name="artist">Artiste :</string>
+    <string name="album">Album :</string>
+    <string name="duration">Durée :</string>
+    <string name="playing">En lecture :</string>
+    <string name="no_song">Aucune chanson</string>
+    <string name="volume">Volume</string>
+    <string name="queue">File d\'attente</string>
+    <string name="playlist">Liste de lecture</string>
+    <string name="genre">Genre</string>
+    <string name="pop">Pop</string>
+    <string name="rock">Rock</string>
+    <string name="jazz">Jazz</string>
+    <string name="classical">Classique</string>
+    <string name="hip_hop">Hip-Hop</string>
+
+    <string name="off_on">Éteindre/Allumer</string>
+    <string name="mode">Mode</string>
+    <string name="temperature">Température</string>
+    <string name="v_swing">Balayage vertical</string>
+    <string name="h_swing">Balayage horizontal</string>
+    <string name="fan_speed">Vitesse du ventilateur</string>
+
+    <string name="unknown">Erreur lors de ...</string>
+    <string name="fan" translatable="false">Ventilateur</string>
+    <string name="cool" translatable="false">Froid</string>
+    <string name="heat" translatable="false">Chaleur</string>
+
+    <string name="no_devices">Vous n\'avez aucun appareil</string>
+    <string name="no_routines">Vous n\'avez aucune routine</string>
+    <string name="have_devices">Vos appareils</string>
+    <string name="unkown">Type d\'appareil inconnu</string>
+    <string name="routines">Vos routines</string>
+    <string name="notification_title_allowed_devices">Notifications activées pour les appareils</string>
+    <string name="notification_title_allowed_routines">Notifications activées pour les routines</string>
+    <string name="notification_denied">Notifications désactivées</string>
+    <string name="notification_title_allowed">Notifications activées</string>
+    <string name="ac_turned_on">Climatiseur allumé</string>
+    <string name="ac_turned_off">Climatiseur éteint</string>
+    <string name="temperature_changed">Température modifiée à %1$d°C</string>
+    <string name="mode_changed">Mode modifié à %1$s</string>
+    <string name="vertical_swing_changed">Balayage vertical modifié à %1$s</string>
+    <string name="horizontal_swing_changed">Balayage horizontal modifié à %1$s</string>
+    <string name="fan_speed_changed">Vitesse du ventilateur modifiée à %1$s</string>
+    <string name="blinds_opened">Stores ouverts</string>
+    <string name="blinds_closed">Stores fermés</string>
+    <string name="blinds_position_changed">Position des stores modifiée à %1$d</string>
+    <string name="light_turned_on">Lumière allumée</string>
+    <string name="light_turned_off">Lumière éteinte</string>
+    <string name="light_intensity_changed">Intensité de la lumière modifiée à %1$d</string>
+    <string name="light_color_changed">Couleur de la lumière modifiée</string>
+    <string name="playing_now">Lecture de %1$s</string>
+    <string name="stopped">Arrêté %1$s</string>
+    <string name="stopped_playing">Arrêté %1$s</string>
+    <string name="volume_changed">Volume réglé à %1$d</string>
+    <string name="paused_playing">Lecture en pause %1$s</string>
+    <string name="genre_changed">Lecture du genre %1$s</string>
+    <string name="routine_executing">La routine est en cours d\'exécution</string>
+    <string name="change_language">"Pour changer la langue de l'application, veuillez ajuster les paramètres de langue de votre appareil. Nous prenons en charge l'anglais, le français, l'espagnol et le portugais."</string>
+    <string name="change_notifs">"Pour activer les notifications, veuillez accéder aux paramètres de votre appareil."</string>
+
+
+</resources>

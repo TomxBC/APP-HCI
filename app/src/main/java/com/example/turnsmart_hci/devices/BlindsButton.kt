@@ -65,10 +65,10 @@ fun BlindsButton(
             power = { on ->
                 if (on) {
                     blindViewModel.open(blind)
-                    notificationViewModel.sendNotification(context, "Blinds opened",blind.name)
+                    notificationViewModel.sendNotification(context, R.string.blinds_opened,blind.name)
                 } else {
                     blindViewModel.close(blind)
-                    notificationViewModel.sendNotification(context, "Blinds closed",blind.name)
+                    notificationViewModel.sendNotification(context, R.string.blinds_closed,blind.name)
                 }
             },
             device = blind,
@@ -85,10 +85,10 @@ fun BlindsButton(
             power = { on ->
                 if (on) {
                     blindViewModel.open(blind)
-                    notificationViewModel.sendNotification(context, "Blinds opened",blind.name)
+                    notificationViewModel.sendNotification(context, R.string.blinds_opened,blind.name)
                 } else {
                     blindViewModel.close(blind)
-                    notificationViewModel.sendNotification(context, "Blinds closed",blind.name)
+                    notificationViewModel.sendNotification(context, R.string.blinds_closed,blind.name)
                 }
             },
             status = blind.status.name,
@@ -118,16 +118,16 @@ fun BlindsButton(
                         onToggle = { isOpen ->
                             if (isOpen) {
                                 blindViewModel.open(blind)
-                                notificationViewModel.sendNotification(context, "Blinds opened",blind.name)
+                                notificationViewModel.sendNotification(context, R.string.blinds_opened,blind.name)
                             } else {
                                 blindViewModel.close(blind)
-                                notificationViewModel.sendNotification(context, "Blinds closed",blind.name)
+                                notificationViewModel.sendNotification(context, R.string.blinds_closed,blind.name)
                             }
                         },
                         blindPosition = blind.level,
                         onPositionChange = { level ->
                             blindViewModel.setLevel(blind, level)
-                            notificationViewModel.sendNotification(context, "Blind position changed to $level%",blind.name)
+                            notificationViewModel.sendNotification(context, R.string.blinds_position_changed,blind.name,level)
                         },
                         onBackClick = { showPopup = false }
                     )

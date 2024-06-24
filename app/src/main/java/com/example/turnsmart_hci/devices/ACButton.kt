@@ -50,10 +50,10 @@ fun ACButton(
             power = { on ->
                 if (on) {
                     acViewModel.turnOn(ac)
-                    notificationViewModel.sendNotification(context, "AC turned on",ac.name)
+                    notificationViewModel.sendNotification(context, R.string.ac_turned_on,ac.name)
                 } else {
                     acViewModel.turnOff(ac)
-                    notificationViewModel.sendNotification(context, "AC turned off",ac.name)
+                    notificationViewModel.sendNotification(context, R.string.ac_turned_off,ac.name)
                 }
             },
             device = ac,
@@ -70,10 +70,10 @@ fun ACButton(
             power = { on ->
                 if (on) {
                     acViewModel.turnOn(ac)
-                    notificationViewModel.sendNotification(context, "AC turned on",ac.name)
+                    notificationViewModel.sendNotification(context, R.string.ac_turned_on,ac.name)
                 } else {
                     acViewModel.turnOff(ac)
-                    notificationViewModel.sendNotification(context, "AC turned off",ac.name)
+                    notificationViewModel.sendNotification(context, R.string.ac_turned_off,ac.name)
                 }
             },
             status = ac.status.name,
@@ -106,36 +106,36 @@ fun ACButton(
                         onToggle = { isOn ->
                             if (isOn) {
                                 acViewModel.turnOn(ac)
-                                notificationViewModel.sendNotification(context, "AC turned on",ac.name)
+                                notificationViewModel.sendNotification(context, R.string.ac_turned_on,ac.name)
                             } else {
                                 acViewModel.turnOff(ac)
-                                notificationViewModel.sendNotification(context, "AC turned off",ac.name)
+                                notificationViewModel.sendNotification(context, R.string.ac_turned_off,ac.name)
                             }
                         },
                         temperature = ac.temperature,
                         onSetTemperature = { temp ->
                             acViewModel.setTemperature(ac, temp)
-                            notificationViewModel.sendNotification(context, "Temperature changed to $temp°C",ac.name)
+                            notificationViewModel.sendNotification(context, R.string.temperature_changed,ac.name,temp)
                         },
                         mode = ac.mode,
                         onSetMode = { mod ->
                             acViewModel.setMode(ac, mod)
-                            notificationViewModel.sendNotification(context, "Mode changed to $mod",ac.name)
+                            notificationViewModel.sendNotification(context, R.string.mode_changed,ac.name, mod)
                         },
                         verticalSwing = ac.verticalSwing,
                         onSetVerticalSwing = { vSwing ->
                             acViewModel.setVerticalSwing(ac, vSwing)
-                            notificationViewModel.sendNotification(context, "Vertical Swing changed to $vSwing",ac.name)
+                            notificationViewModel.sendNotification(context, R.string.vertical_swing_changed,ac.name,vSwing)
                         },
                         horizontalSwing = ac.horizontalSwing,
                         onSetHorizontalSwing = { hSwing ->
                             acViewModel.setHorizontalSwing(ac, hSwing)
-                            notificationViewModel.sendNotification(context, "Horizontal Swing changed to $hSwing",ac.name)
+                            notificationViewModel.sendNotification(context, R.string.horizontal_swing_changed,ac.name,hSwing)
                         },
                         fanSpeed = ac.fanSpeed,
                         onSetFanSpeed = { speed ->
                             acViewModel.setFanSpeed(ac, speed)
-                            notificationViewModel.sendNotification(context, "Fan Speed changed to $speed",ac.name)
+                            notificationViewModel.sendNotification(context, R.string.fan_speed_changed,ac.name, speed)
                         },
                         onBackClick = { showPopup = false }
                     )

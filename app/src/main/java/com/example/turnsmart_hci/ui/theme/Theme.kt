@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    background = Color(0xFF1C1B1F),
+    background = Color(0xFF312F38),
     surface = Color(0xFF1C1B1F),
 
     //bars

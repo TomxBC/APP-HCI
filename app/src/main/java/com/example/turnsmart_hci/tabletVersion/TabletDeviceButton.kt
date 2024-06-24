@@ -108,7 +108,7 @@ fun TabletDeviceButton(
                     color = textColor,
                     fontSize = 25.sp,
                     fontFamily = montserratFontFamily,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
                 )
             }
             Text(

@@ -5,7 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
 
-class NotificationChannelApp : Application(){
+class NotificationChannelApp : Application() {
     companion object{
         const val CHANNEL_ID = "Devices Status"
     }
@@ -26,5 +26,4 @@ class NotificationChannelApp : Application(){
             notificationManager.createNotificationChannel(channel)
         }
     }
-
 }

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">TurnSmart</string>
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="favorite_label">Favorito</string>
+    <string name="automation_label">Automação</string>
+    <string name="devices_label">Dispositivos</string>
+    <string name="settings_label">Configurações</string>
+    <string name="language">Idioma</string>
+    <string name="english">Inglês</string>
+    <string name="spanish">Espanhol</string>
+    <string name="notifications">Notificações</string>
+    <string name="lights">Luzes</string>
+    <string name="speakers">Alto-falantes</string>
+    <string name="ac">Ar Condicionado</string>
+    <string name="blinds">Persianas</string>
+
+    <string name="turn_on">Ligar</string>
+    <string name="turn_off">Desligar</string>
+    <string name="brightness">Intensidade da luz</string>
+    <string name="light_color">Cor da luz</string>
+
+    <string name="open_blind">Abrir</string>
+    <string name="close">Fechar</string>
+    <string name="blind_position">Posição das persianas</string>
+
+    <string name="artist">Artista:</string>
+    <string name="album">Álbum:</string>
+    <string name="duration">Duração:</string>
+    <string name="playing">Reproduzindo agora:</string>
+    <string name="no_song">Nenhuma música</string>
+    <string name="volume">Volume</string>
+    <string name="queue">Fila</string>
+    <string name="playlist">Lista de reprodução</string>
+    <string name="genre">Gênero</string>
+    <string name="pop">Pop</string>
+    <string name="rock">Rock</string>
+    <string name="jazz">Jazz</string>
+    <string name="classical">Clássico</string>
+    <string name="hip_hop">Hip-Hop</string>
+
+    <string name="off_on">Desligar/Ligar</string>
+    <string name="mode">Modo</string>
+    <string name="temperature">Temperatura</string>
+    <string name="v_swing">Oscilação Vertical</string>
+    <string name="h_swing">Oscilação Horizontal</string>
+    <string name="fan_speed">Velocidade do ventilador</string>
+
+    <string name="unknown">Erro ao ...</string>
+    <string name="fan" translatable="false">Ventilador</string>
+    <string name="cool" translatable="false">Frio</string>
+    <string name="heat" translatable="false">Calor</string>
+
+    <string name="no_devices">Você não tem nenhum dispositivo</string>
+    <string name="no_routines">Você não tem nenhuma rotina</string>
+    <string name="have_devices">Seus dispositivos</string>
+    <string name="unkown">Tipo de dispositivo desconhecido</string>
+    <string name="routines">Suas rotinas</string>
+    <string name="notification_title_allowed_devices">Notificações ativadas para Dispositivos</string>
+    <string name="notification_title_allowed_routines">Notificações ativadas para Rotinas</string>
+    <string name="notification_denied">Notificações desativadas</string>
+    <string name="notification_title_allowed">Notificações ativadas</string>
+    <string name="ac_turned_on">Ar condicionado ligado</string>
+    <string name="ac_turned_off">Ar condicionado desligado</string>
+    <string name="temperature_changed">Temperatura alterada para %1$d°C</string>
+    <string name="mode_changed">Modo alterado para %1$s</string>
+    <string name="vertical_swing_changed">Oscilação Vertical alterada para %1$s</string>
+    <string name="horizontal_swing_changed">Oscilação Horizontal alterada para %1$s</string>
+    <string name="fan_speed_changed">Velocidade do ventilador alterada para %1$s</string>
+    <string name="blinds_opened">Persianas abertas</string>
+    <string name="blinds_closed">Persianas fechadas</string>
+    <string name="blinds_position_changed">Posição das persianas alterada para %1$d</string>
+    <string name="light_turned_on">Luz ligada</string>
+    <string name="light_turned_off">Luz desligada</string>
+    <string name="light_intensity_changed">Intensidade da luz alterada para %1$d</string>
+    <string name="light_color_changed">Cor da luz alterada</string>
+    <string name="playing_now">Reproduzindo %1$s</string>
+    <string name="stopped">Parado %1$s</string>
+    <string name="stopped_playing">Parado %1$s</string>
+    <string name="volume_changed">Volume ajustado para %1$d</string>
+    <string name="paused_playing">Pausado %1$s</string>
+    <string name="genre_changed">Reproduzindo agora o gênero %1$s</string>
+    <string name="routine_executing">Rotina em execução</string>
+    <string name="change_language">"Para mudar o idioma do aplicativo, ajuste as configurações de idioma do seu dispositivo. Suportamos inglês, francês, espanhol e português."</string>
+    <string name="change_notifs">"Para ativar as notificações, acesse as configurações do seu dispositivo."</string>
+
+
+</resources>

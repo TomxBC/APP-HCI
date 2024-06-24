@@ -61,6 +61,7 @@ fun SpeakerButton(
 ) {
     var showPopup by remember { mutableStateOf(false) }
     val context = LocalContext.current
+    val songTitle = speaker.song?.title ?: "Unknown"
 
     if(layoutType == NavigationSuiteType.NavigationRail || layoutType == NavigationSuiteType.NavigationDrawer){
         TabletDeviceButton(
@@ -71,10 +72,10 @@ fun SpeakerButton(
             power = { on ->
                 if (on) {
                     speakerViewModel.play(speaker)
-                    notificationViewModel.sendNotification(context, "Playing ${speaker.song?.title}", speaker.name)
+                    notificationViewModel.sendNotification(context, R.string.playing_now, speaker.name,songTitle)
                 } else {
                     speakerViewModel.stop(speaker)
-                    notificationViewModel.sendNotification(context, "Stopped ${speaker.name}", speaker.name)
+                    notificationViewModel.sendNotification(context, R.string.stopped, speaker.name, speaker.name)
                 }
             },
             status = speaker.status.name,
@@ -94,15 +95,16 @@ fun SpeakerButton(
                     speakerViewModel.play(speaker)
                     notificationViewModel.sendNotification(
                         context,
-                        "Playing ${speaker.song?.title}",
+                        R.string.playing_now,
                         speaker.name
                     )
                 } else {
                     speakerViewModel.stop(speaker)
                     notificationViewModel.sendNotification(
                         context,
-                        "Stopped ${speaker.name}",
-                        speaker.name
+                        R.string.stopped_playing,
+                        speaker.name,
+                        songTitle
                     )
                 }
             },
@@ -134,36 +136,36 @@ fun SpeakerButton(
                         volume = speaker.volume,
                         onVolumeChange = { vol ->
                             speakerViewModel.setVolume(speaker, vol)
-                            notificationViewModel.sendNotification(context, "Volume set to $vol", speaker.name)
+                            notificationViewModel.sendNotification(context, R.string.volume_changed, speaker.name,vol)
                         },
                         onPlay = {
                             speakerViewModel.play(speaker)
-                            notificationViewModel.sendNotification(context, "Now playing ${speaker.song?.title}", speaker.name)
+                            notificationViewModel.sendNotification(context, R.string.playing_now, speaker.name,songTitle)
                                  },
                         onStop = {
                             speakerViewModel.stop(speaker)
-                            notificationViewModel.sendNotification(context, "Stopped ${speaker.name}", speaker.name)
+                            notificationViewModel.sendNotification(context, R.string.stopped_playing, speaker.name,songTitle)
                                  },
                         onPrevious = {
                             speakerViewModel.previousSong(speaker)
-                            notificationViewModel.sendNotification(context, "Now playing ${speaker.song?.title}", speaker.name)
+                            notificationViewModel.sendNotification(context, R.string.playing_now, speaker.name,songTitle)
                                      },
                         onResume = {
                             speakerViewModel.resume(speaker)
-                            notificationViewModel.sendNotification(context, "Now playing ${speaker.song?.title}", speaker.name)
+                            notificationViewModel.sendNotification(context, R.string.playing_now, speaker.name,songTitle)
                                    },
                         onNext = {
                             speakerViewModel.nextSong(speaker)
-                            notificationViewModel.sendNotification(context, "Now playing ${speaker.song?.title}", speaker.name)
+                            notificationViewModel.sendNotification(context, R.string.playing_now, speaker.name,songTitle)
                                  },
                         onPause = {
                             speakerViewModel.pause(speaker)
-                            notificationViewModel.sendNotification(context, "Paused ${speaker.song?.title}", speaker.name)
+                            notificationViewModel.sendNotification(context, R.string.paused_playing, speaker.name,songTitle)
                                   },
                         genre = speaker.genre ?: "Music",
                         onGenreSelect = { gen ->
                             speakerViewModel.setGenre(speaker,gen)
-                            notificationViewModel.sendNotification(context, "Now playing $gen genre", speaker.name)
+                            notificationViewModel.sendNotification(context, R.string.genre_changed, speaker.name, gen)
                         },
                         onBackClick = { showPopup = false },
                         speaker = speaker
@@ -197,7 +199,6 @@ fun SpeakerScreen(
     var isPlaying by remember { mutableStateOf(false) }
     var currentSong by remember { mutableStateOf(speaker.song) }
     var currentGenre by remember { mutableStateOf(genre) }
-
     Box(
         modifier = Modifier
             .verticalScroll(rememberScrollState())

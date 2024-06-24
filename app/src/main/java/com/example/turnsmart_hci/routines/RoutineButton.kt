@@ -37,6 +37,7 @@ import com.example.turnsmart_hci.notifications.NotificationViewModel
 import com.example.turnsmart_hci.ui.theme.darkText
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.pale_blue
+import com.example.turnsmart_hci.ui.theme.pale_purple
 
 @Composable
 fun RoutineButton(
@@ -49,7 +50,7 @@ fun RoutineButton(
     Button(
         onClick = { /* Handle button click if needed */ },
         colors = ButtonDefaults.buttonColors(
-            containerColor = pale_blue
+            containerColor = pale_purple
         ),
         modifier = Modifier
             .padding(8.dp)
@@ -70,7 +71,7 @@ fun RoutineButton(
             IconButton(
                 onClick = {
                     routineViewModel.executeRoutine(routine)
-                    notificationViewModel.sendNotification(context,"Routine is being executed",routine.name)
+                    notificationViewModel.sendNotification(context,R.string.routine_executing,routine.name)
                 },
                 modifier = Modifier.size(24.dp)
             ) {
