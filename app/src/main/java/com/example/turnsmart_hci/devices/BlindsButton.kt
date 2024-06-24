@@ -91,7 +91,11 @@ fun BlindsButton(
                     notificationViewModel.sendNotification(context, "Blinds closed",blind.name)
                 }
             },
-            status = blind.status.name
+            status = blind.status.name,
+            device = blind,
+            onToggleFavorite = { deviceId ->
+                blindViewModel.toggleFavorite(deviceId) // Llama al método toggleFavorite
+            }
         )
     }
 

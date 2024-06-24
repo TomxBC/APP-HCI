@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.turnsmart_hci.R
+import com.example.turnsmart_hci.data.model.Device
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
 import com.example.turnsmart_hci.ui.theme.ThemeColors
 
@@ -29,8 +30,11 @@ fun TabletDeviceButton(
     icon: Int,
     isOn: Boolean = false,
     power: (Boolean) -> Unit,
-    status: String
+    status: String,
+    device: Device,
+    onToggleFavorite: (String) -> Unit // Añade esta línea
 ) {
+    var isFav by remember { mutableStateOf(device.favorite) }
     var powerOn by remember { mutableStateOf(isOn) }
 
     Button(
@@ -47,6 +51,23 @@ fun TabletDeviceButton(
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
+            IconButton(
+                onClick = {
+                    isFav = !isFav
+                    onToggleFavorite(device.id) // Llama a esta función
+                },
+                modifier = Modifier
+                    .padding(top = 16.dp)
+            ) {
+                Icon(
+                    painter = painterResource(
+                        if (isFav) R.drawable.favorite_fill else R.drawable.favorite
+                    ),
+                    contentDescription = null,
+                    modifier = Modifier.size(35.dp),
+                    tint = Color.Black
+                )
+            }
             IconButton(
                 onClick = {
                     powerOn = !powerOn

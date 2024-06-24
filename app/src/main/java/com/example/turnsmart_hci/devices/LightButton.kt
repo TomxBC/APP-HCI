@@ -82,7 +82,11 @@ fun LightButton(
                     notificationViewModel.sendNotification(context, "Light turned off", lamp.name)
                 }
             },
-            status = lamp.status.name
+            status = lamp.status.name,
+            device = lamp,
+            onToggleFavorite = { deviceId ->
+                lampViewModel.toggleFavorite(deviceId) // Llama al método toggleFavorite
+            }
         )
     }
 

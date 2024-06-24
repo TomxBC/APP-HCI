@@ -64,7 +64,7 @@ fun DevicesScreen(
                     Text(
                         text = stringResource(R.string.no_devices),
                         fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(bottom = 16.dp),
                         fontFamily = montserratFontFamily,
                         color = TurnSmartTheme.colors.onPrimary

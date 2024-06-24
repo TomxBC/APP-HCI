@@ -77,7 +77,11 @@ fun SpeakerButton(
                     notificationViewModel.sendNotification(context, "Stopped ${speaker.name}", speaker.name)
                 }
             },
-            status = speaker.status.name
+            status = speaker.status.name,
+            device = speaker,
+            onToggleFavorite = { deviceId ->
+                speakerViewModel.toggleFavorite(deviceId) // Llama al método toggleFavorite
+            }
         )
     }else {
         DeviceButton(
@@ -191,18 +195,8 @@ fun SpeakerScreen(
     val genres = listOf("Pop", "Rock", "Jazz", stringResource(id = R.string.classical), "Hip Hop")
     var expanded by remember { mutableStateOf(false) }
     var isPlaying by remember { mutableStateOf(false) }
-    var showDialog by remember { mutableStateOf(false) }
     var currentSong by remember { mutableStateOf(speaker.song) }
     var currentGenre by remember { mutableStateOf(genre) }
-
-    val songs = when (genre) {
-        "Pop" -> listOf("Song 1", "Song 2", "Song 3")
-        "Rock" -> listOf("Song 4", "Song 5", "Song 6")
-        "Jazz" -> listOf("Song 7", "Song 8", "Song 9")
-        "Classical" -> listOf("Song 10", "Song 11", "Song 12")
-        "Hip Hop" -> listOf("Song 13", "Song 14", "Song 15")
-        else -> listOf()
-    }
 
     Box(
         modifier = Modifier
@@ -364,14 +358,6 @@ fun SpeakerScreen(
                                 modifier = Modifier.size(32.dp)
                             )
                         }
-                        IconButton(onClick = { showDialog = true }) {
-                            Icon(
-                                painter = painterResource(R.drawable.queue_music),
-                                contentDescription = "Queue",
-                                tint = textColor,
-                                modifier = Modifier.size(32.dp)
-                            )
-                        }
                     }
                     Spacer(modifier = Modifier.height(25.dp))
 
@@ -420,25 +406,6 @@ fun SpeakerScreen(
                                 }
                             }
                         }
-                    }
-
-                    if (showDialog) { //ACA VA LO DE PLAYLISTS
-                        AlertDialog(
-                            onDismissRequest = { showDialog = false },
-                            title = { Text(text = "Playlist: $genre", onTextLayout = {}) },
-                            text = {
-                                Column {
-                                    songs.forEach { song ->
-                                        Text(text = song, onTextLayout = {})
-                                    }
-                                }
-                            },
-                            confirmButton = {
-                                Button(onClick = { showDialog = false }) {
-                                    Text(stringResource(id = R.string.close), onTextLayout = {})
-                                }
-                            }
-                        )
                     }
                 }
             }

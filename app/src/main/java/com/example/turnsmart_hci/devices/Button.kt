@@ -76,14 +76,14 @@ fun DeviceButton(
                     onToggleFavorite(device.id) // Llama a esta función
                 },
                 modifier = Modifier
-                    .padding(top = 16.dp)
+                    .padding(10.dp)
             ) {
                 Icon(
                     painter = painterResource(
                         if (isFav) R.drawable.favorite_fill else R.drawable.favorite
                     ),
                     contentDescription = null,
-                    modifier = Modifier.size(35.dp),
+                    modifier = Modifier.size(60.dp),
                     tint = Color.Black
                 )
             }
