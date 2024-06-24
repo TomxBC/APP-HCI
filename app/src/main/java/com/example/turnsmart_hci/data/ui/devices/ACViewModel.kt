@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.turnsmart_hci.DataSourceException
 import com.example.turnsmart_hci.data.model.Error
 import com.example.turnsmart_hci.data.model.AC
+import com.example.turnsmart_hci.data.model.Lamp
 import com.example.turnsmart_hci.data.repositry.DeviceRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +18,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ACViewModel (
-    private val repository: DeviceRepository
+    private val repository: DeviceRepository,
+    private val preferencesManager: PreferencesManager
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ACUiState())
@@ -35,6 +37,10 @@ class ACViewModel (
         }
     }
 
+    fun toggleFavorite(deviceId: String) {
+        val currentFavoriteState = preferencesManager.isFavorite(deviceId)
+        preferencesManager.setFavorite(deviceId, !currentFavoriteState)
+    }
 
     fun turnOn(ac: AC) = runOnViewModelScope(
         { repository.executeDeviceAction(ac.id, AC.TURN_ON_ACTION) },

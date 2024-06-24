@@ -14,7 +14,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DevicesViewModel(
-    repository: DeviceRepository
+    private val repository: DeviceRepository,
+    private val preferencesManager: PreferencesManager // Recibe PreferencesManager
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DevicesUiState())
@@ -23,9 +24,27 @@ class DevicesViewModel(
     init {
         collectOnViewModelScope(
             repository.devices
-        ) { state, response -> state.copy(devices = response) }
+        ) { state, response ->
+            val updatedResponse = response.map { device ->
+                device.favorite = preferencesManager.isFavorite(device.id)
+                device
+            }
+            state.copy(devices = updatedResponse)
+        }
     }
 
+    fun toggleFavorite(deviceId: String) {
+        viewModelScope.launch {
+            val updatedDevices = _uiState.value.devices.map { device ->
+                if (device.id == deviceId) {
+                    device.favorite = !device.favorite
+                    preferencesManager.setFavorite(deviceId, device.favorite)
+                }
+                device
+            }
+            _uiState.update { it.copy(devices = updatedDevices) }
+        }
+    }
     private fun <T> collectOnViewModelScope(
         flow: Flow<T>,
         updateState: (DevicesUiState, T) -> DevicesUiState
@@ -44,3 +63,4 @@ class DevicesViewModel(
         }
     }
 }
+

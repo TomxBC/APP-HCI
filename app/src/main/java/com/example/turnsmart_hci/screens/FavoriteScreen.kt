@@ -1,7 +1,10 @@
 package com.example.turnsmart_hci.screens
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
@@ -18,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.turnsmart_hci.R
 import com.example.turnsmart_hci.data.model.AC
 import com.example.turnsmart_hci.data.model.Blind
 import com.example.turnsmart_hci.data.model.Lamp
@@ -35,10 +39,9 @@ import com.example.turnsmart_hci.devices.SpeakerButton
 import com.example.turnsmart_hci.notifications.NotificationViewModel
 import com.example.turnsmart_hci.ui.theme.TurnSmartTheme
 import com.example.turnsmart_hci.ui.theme.montserratFontFamily
-import com.example.turnsmart_hci.R
 
 @Composable
-fun DevicesScreen(
+fun FavoriteScreen(
     viewModel: DevicesViewModel = viewModel(factory = getViewModelFactory()),
     lampViewModel: LampViewModel = viewModel(factory = getViewModelFactory()),
     acViewModel: ACViewModel = viewModel(factory = getViewModelFactory()),
@@ -50,22 +53,22 @@ fun DevicesScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     TurnSmartTheme {
-        Box(
-            modifier = Modifier.fillMaxSize().background(TurnSmartTheme.colors.background)
-        ) {
+        Box(modifier = Modifier.fillMaxSize()) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .align(Alignment.Center)
                     .padding(8.dp)
-                    .then(if(layoutType == NavigationSuiteType.NavigationBar) Modifier.verticalScroll(rememberScrollState()) else(Modifier) ),
+                    .then(if(layoutType == NavigationSuiteType.NavigationBar) Modifier.verticalScroll(
+                        rememberScrollState()
+                    ) else(Modifier) ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                val devices = uiState.devices
+                val favoriteDevices = uiState.devices.filter { it.favorite }
 
-                if (devices.isEmpty()) {
+                if (favoriteDevices.isEmpty()) {
                     Text(
-                        text = stringResource(R.string.no_devices),
+                        text = "You don't have favourites devices",
                         fontSize = 24.sp,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(bottom = 16.dp),
@@ -74,7 +77,7 @@ fun DevicesScreen(
                     )
                 } else {
                     Text(
-                        text = stringResource(R.string.have_devices),
+                        text = "Your favourites devices",
                         fontFamily = montserratFontFamily,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 25.sp,
@@ -89,8 +92,8 @@ fun DevicesScreen(
                             verticalArrangement = Arrangement.spacedBy(16.dp),
                             horizontalArrangement = Arrangement.spacedBy(1.dp)
                         ) {
-                            items(devices.size) { index ->
-                                when (val device = devices[index]) {
+                            items(favoriteDevices.size) { index ->
+                                when (val device = favoriteDevices[index]) {
                                     is Lamp -> {
                                         LightButton(
                                             lamp = device,
@@ -130,14 +133,14 @@ fun DevicesScreen(
                             }
                         }
                     } else {
-                        devices.forEach { device ->
+                        favoriteDevices.forEach { device ->
                             when (device) {
                                 is Lamp -> {
                                     LightButton(
                                         lamp = device,
                                         lampViewModel = lampViewModel,
                                         notificationViewModel = notificationViewModel,
-                                        layoutType = layoutType
+                                        layoutType = layoutType,
                                     )
                                 }
                                 is AC -> {

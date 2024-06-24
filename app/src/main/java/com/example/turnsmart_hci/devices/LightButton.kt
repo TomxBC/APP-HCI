@@ -42,12 +42,12 @@ fun LightButton(
     lampViewModel: LampViewModel,
     notificationViewModel: NotificationViewModel,
     layoutType: NavigationSuiteType
-    ) {
+) {
     var showPopup by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
 
-    if (layoutType == NavigationSuiteType.NavigationBar){
+    if (layoutType == NavigationSuiteType.NavigationBar) {
         DeviceButton(
             label = lamp.name,
             onClick = { showPopup = true },
@@ -61,9 +61,13 @@ fun LightButton(
                     lampViewModel.turnOff(lamp)
                     notificationViewModel.sendNotification(context,R.string.light_turned_off, lamp.name)
                 }
+            },
+            device = lamp,
+            onToggleFavorite = { deviceId ->
+                lampViewModel.toggleFavorite(deviceId) // Llama al método toggleFavorite
             }
         )
-    }else{
+    } else {
         TabletDeviceButton(
             label = lamp.name,
             onClick = { showPopup = true },
@@ -78,20 +82,24 @@ fun LightButton(
                     notificationViewModel.sendNotification(context,R.string.light_turned_off, lamp.name)
                 }
             },
-            status = lamp.status.name
+            status = lamp.status.name,
+            device = lamp,
+            onToggleFavorite = { deviceId ->
+                lampViewModel.toggleFavorite(deviceId) // Llama al método toggleFavorite
+            }
         )
     }
-
 
     if (showPopup) {
         Popup(
             onDismissRequest = {
                 showPopup = false
-            }){
+            }
+        ) {
             Box(modifier = Modifier
                 .fillMaxSize()
                 .background(Color.Black.copy(alpha = 0.5f))
-            ){
+            ) {
                 Box(
                     modifier = Modifier
                         .align(Alignment.Center)
@@ -100,7 +108,7 @@ fun LightButton(
                             shape = RoundedCornerShape(8.dp)
                         )
                         .padding(16.dp)
-                ){
+                ) {
                     LightsScreen(
                         deviceName = lamp.name,
                         isOn = lamp.status == Status.ON,

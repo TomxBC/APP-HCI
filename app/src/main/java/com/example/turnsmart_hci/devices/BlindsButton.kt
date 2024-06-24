@@ -70,6 +70,10 @@ fun BlindsButton(
                     blindViewModel.close(blind)
                     notificationViewModel.sendNotification(context, R.string.blinds_closed,blind.name)
                 }
+            },
+            device = blind,
+            onToggleFavorite = { deviceId ->
+                blindViewModel.toggleFavorite(deviceId) // Llama al método toggleFavorite
             }
         )
     }else{
@@ -87,7 +91,11 @@ fun BlindsButton(
                     notificationViewModel.sendNotification(context, R.string.blinds_closed,blind.name)
                 }
             },
-            status = blind.status.name
+            status = blind.status.name,
+            device = blind,
+            onToggleFavorite = { deviceId ->
+                blindViewModel.toggleFavorite(deviceId) // Llama al método toggleFavorite
+            }
         )
     }
 

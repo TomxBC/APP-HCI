@@ -78,7 +78,11 @@ fun SpeakerButton(
                     notificationViewModel.sendNotification(context, R.string.stopped, speaker.name, speaker.name)
                 }
             },
-            status = speaker.status.name
+            status = speaker.status.name,
+            device = speaker,
+            onToggleFavorite = { deviceId ->
+                speakerViewModel.toggleFavorite(deviceId) // Llama al método toggleFavorite
+            }
         )
     }else {
         DeviceButton(
@@ -103,6 +107,10 @@ fun SpeakerButton(
                         songTitle
                     )
                 }
+            },
+            device = speaker,
+            onToggleFavorite = { deviceId ->
+                speakerViewModel.toggleFavorite(deviceId) // Llama al método toggleFavorite
             }
         )
     }
@@ -191,8 +199,6 @@ fun SpeakerScreen(
     var isPlaying by remember { mutableStateOf(false) }
     var currentSong by remember { mutableStateOf(speaker.song) }
     var currentGenre by remember { mutableStateOf(genre) }
-
-
     Box(
         modifier = Modifier
             .verticalScroll(rememberScrollState())

@@ -55,6 +55,10 @@ fun ACButton(
                     acViewModel.turnOff(ac)
                     notificationViewModel.sendNotification(context, R.string.ac_turned_off,ac.name)
                 }
+            },
+            device = ac,
+            onToggleFavorite = { deviceId ->
+                acViewModel.toggleFavorite(deviceId) // Llama al método toggleFavorite
             }
         )
     }else{
@@ -72,7 +76,11 @@ fun ACButton(
                     notificationViewModel.sendNotification(context, R.string.ac_turned_off,ac.name)
                 }
             },
-            status = ac.status.name
+            status = ac.status.name,
+            device = ac,
+            onToggleFavorite = { deviceId ->
+                acViewModel.toggleFavorite(deviceId) // Llama al método toggleFavorite
+            }
         )
     }
 

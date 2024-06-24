@@ -19,7 +19,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class BlindViewModel(
-    private val repository: DeviceRepository
+    private val repository: DeviceRepository,
+    private val preferencesManager: PreferencesManager
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(BlindUiState())
@@ -33,6 +34,11 @@ class BlindViewModel(
         ) { state, response ->
             state.copy(blinds = response)
         }
+    }
+
+    fun toggleFavorite(deviceId: String) {
+        val currentFavoriteState = preferencesManager.isFavorite(deviceId)
+        preferencesManager.setFavorite(deviceId, !currentFavoriteState)
     }
 
     fun open(blind : Blind) = runOnViewModelScope(

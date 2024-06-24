@@ -9,8 +9,9 @@ class Blind (
     id: String,
     name: String,
     val status: Status,
-    val level: Int
-    ) : Device(id, name, DeviceType.BLINDS) {
+    val level: Int,
+    favorite: Boolean = false
+) : Device(id, name, DeviceType.BLINDS) {
     override fun asRemoteModel(): RemoteDevice<RemoteBlindState> {
         val state = RemoteBlindState()
         state.status = Status.asRemoteModel(status)
